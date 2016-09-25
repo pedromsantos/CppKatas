@@ -1,6 +1,6 @@
 #define CATCH_CONFIG_MAIN
 
-#include "../catch.hpp"
+#include "catch.hpp"
 #include "../src/fizzBuzz.cpp"
 
 TEST_CASE( "Convert number to fizz buzz number", "[FizzBuzz]") {
