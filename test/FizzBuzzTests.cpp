@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../src/fizzBuzz.cpp"
+#include "../src/FizzBuzz.cpp"
 
 TEST_CASE( "Convert number to fizz buzz number", "[FizzBuzz]") {
     REQUIRE( FizzBuzz(1) == "1" );
