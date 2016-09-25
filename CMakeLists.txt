@@ -3,5 +3,5 @@ project(CppKatas)
 
 set(CMAKE_CXX_FLAGS "${CMAKE_CXX_FLAGS} -std=c++14")
 
-add_executable(Katas src/fizzBuzz.cpp)
+add_library(Katas STATIC src/fizzBuzz.cpp)
 add_executable(Tests test/fizzBuzzTests.cpp)

@@ -6,7 +6,7 @@ const std::string FizzBuzz(const unsigned int number)
     {
         return "fizzbuzz";
     }
-
+    
     if(number % 3 == 0)
     {
         return "fizz";
