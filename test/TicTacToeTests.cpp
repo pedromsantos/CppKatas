@@ -7,17 +7,29 @@ TEST_CASE("Play game of tic tac toe", "[TicTacToe]")
 
     SECTION( "Player X plays first" )
     {
-        REQUIRE(game->PlayTurn(X) == InProgress);
+        REQUIRE(game->PlayTurn(X, TOP, LEFT) == InProgress);
     }
 
     SECTION( "Player O cannot play first" )
     {
-        REQUIRE(game->PlayTurn(O) == InvalidPlayer);
+        REQUIRE(game->PlayTurn(O, TOP, LEFT) == InvalidPlayer);
     }
 
     SECTION( "Player O plays second" )
     {
-        game->PlayTurn(X);
-        REQUIRE(game->PlayTurn(O) == InProgress);
+        game->PlayTurn(X, TOP, LEFT);
+        REQUIRE(game->PlayTurn(O, MIDLDE, LEFT) == InProgress);
+    }
+
+    SECTION( "Players must alternate" )
+    {
+        game->PlayTurn(X, TOP, LEFT);
+        REQUIRE(game->PlayTurn(X, MIDLDE, LEFT) == InvalidPlayer);
+    }
+
+    SECTION( "Player cannot play in same position as previous player" )
+    {
+        game->PlayTurn(X, TOP, LEFT);
+        REQUIRE(game->PlayTurn(O, TOP, LEFT) == InvalidPosition);
     }
 }
