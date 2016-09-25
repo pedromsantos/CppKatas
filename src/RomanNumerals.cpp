@@ -1,6 +1,6 @@
 #include <string>
 
-const std::string RomanNumeral(const unsigned int romanNumber)
+const std::string RomanNumeral(const unsigned int arabicNumber)
 {
-    return "I";
+    return std::string(arabicNumber, 'I');
 }

@@ -3,4 +3,5 @@
 
 TEST_CASE( "Calculate roman numeral for arabic number", "[Fibonacci]") {
     REQUIRE( RomanNumeral(1) == "I" );
+    REQUIRE( RomanNumeral(2) == "II" );
 }
