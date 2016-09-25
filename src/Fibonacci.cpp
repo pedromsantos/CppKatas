@@ -1,4 +1,9 @@
 const unsigned int Fibonacci(const unsigned int index)
 {
-    return 0;
+    if(index > 1)
+    {
+        return index - 1;
+    }
+
+    return index;
 }
