@@ -2,20 +2,19 @@
 
 const std::string FizzBuzz(const unsigned int number)
 {
-    if(number % 3 == 0 && number % 5 == 0)
-    {
-        return "fizzbuzz";
-    }
+    std::string fizzBuzz = "";
 
     if(number % 3 == 0)
     {
-        return "fizz";
+        fizzBuzz = "fizz";
     }
 
     if(number % 5 == 0)
     {
-        return "buzz";
+        fizzBuzz += "buzz";
     }
 
-    return std::to_string(number);
+    return fizzBuzz.length() > 0
+           ? fizzBuzz
+           : std::to_string(number);
 }
