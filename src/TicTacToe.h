@@ -21,21 +21,21 @@ private:
 public:
     Turn(const Player player, const Row row, const Column column);
 
-    bool IsSamePosition(const Row row, const Column column);
+    bool IsSamePosition(const Row row, const Column column) const;
 
-    bool IsSamePlayer(const Player player);
+    bool IsSamePlayer(const Player player) const;
 };
 
 class TicTacToe
 {
     std::vector<Turn> turns;
 
-public:
-    const TurnStatus PlayTurn(const Player player, const Row row, const Column column);
-
     bool IsFirstTurn() const;
 
     bool IsPositionTaken(const Row &row, const Column &column) const;
+
+public:
+    TurnStatus PlayTurn(const Player player, const Row row, const Column column);
 };
 
 #endif //CPPKATAS_TICTACTOE_H
