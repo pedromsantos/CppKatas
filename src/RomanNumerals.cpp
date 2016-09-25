@@ -1,25 +1,23 @@
 #include <string>
+#include <map>
 
 const std::string RomanNumeral(const unsigned int arabicNumber)
 {
-    if(arabicNumber >= 10)
-    {
-        return "X" + RomanNumeral(arabicNumber - 10);
-    }
+    std::map<int, std::string> arabicToRoman =
+            {
+                    {1, "I"},
+                    {4, "IV"},
+                    {5, "V"},
+                    {9, "IX"},
+                    {10, "X"},
+            };
 
-    if(arabicNumber == 9)
+    for (auto i = arabicToRoman.rbegin(); i != arabicToRoman.rend(); ++i)
     {
-        return "IX";
-    }
-
-    if(arabicNumber >= 5)
-    {
-        return "V" + RomanNumeral(arabicNumber - 5);
-    }
-
-    if(arabicNumber == 4)
-    {
-        return "IV";
+        if(arabicNumber >= i->first)
+        {
+            return i->second + RomanNumeral(arabicNumber - i->first);
+        }
     }
 
     return std::string(arabicNumber, 'I');
