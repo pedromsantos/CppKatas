@@ -12,4 +12,5 @@ TEST_CASE( "Convert number to fizz buzz number", "[FizzBuzz]") {
     REQUIRE( FizzBuzz(5) == "buzz" );
     REQUIRE( FizzBuzz(10) == "buzz" );
     REQUIRE( FizzBuzz(20) == "buzz" );
+    REQUIRE( FizzBuzz(15) == "fizzbuzz" );
 }
