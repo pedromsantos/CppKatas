@@ -10,6 +10,14 @@ const std::string RomanNumeral(const unsigned int arabicNumber)
                     {5, "V"},
                     {9, "IX"},
                     {10, "X"},
+                    {40, "XL"},
+                    {50, "L"},
+                    {90, "XC"},
+                    {100, "C"},
+                    {400, "CD"},
+                    {500, "D"},
+                    {900, "CM"},
+                    {1000, "M"},
             };
 
     for (auto i = arabicToRoman.rbegin(); i != arabicToRoman.rend(); ++i)
@@ -20,5 +28,5 @@ const std::string RomanNumeral(const unsigned int arabicNumber)
         }
     }
 
-    return std::string(arabicNumber, 'I');
+    return std::string(arabicNumber, arabicToRoman[1][0]);
 }
