@@ -2,5 +2,5 @@
 
 const std::string RomanNumeral(const unsigned int romanNumber)
 {
-    return NULL;
+    return "I";
 }
