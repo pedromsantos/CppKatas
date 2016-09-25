@@ -20,7 +20,7 @@ const std::string RomanNumeral(const unsigned int arabicNumber)
                     {1000, "M"},
             };
 
-    for (auto i = arabicToRoman.rbegin(); i != arabicToRoman.rend(); ++i)
+    for(auto i = arabicToRoman.rbegin(); i != arabicToRoman.rend(); ++i)
     {
         if(arabicNumber >= i->first)
         {

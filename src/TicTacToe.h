@@ -1,0 +1,9 @@
+#ifndef CPPKATAS_TICTACTOE_H
+#define CPPKATAS_TICTACTOE_H
+
+class TicTacToe
+{
+
+};
+
+#endif //CPPKATAS_TICTACTOE_H
