@@ -2,9 +2,9 @@
 
 const std::string RomanNumeral(const unsigned int arabicNumber)
 {
-    if(arabicNumber == 10)
+    if(arabicNumber >= 10)
     {
-        return "X";
+        return "X" + RomanNumeral(arabicNumber - 10);
     }
 
     if(arabicNumber == 9)

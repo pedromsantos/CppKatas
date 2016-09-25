@@ -11,4 +11,6 @@ TEST_CASE( "Calculate roman numeral for arabic number", "[Fibonacci]") {
     REQUIRE( RomanNumeral(8) == "VIII" );
     REQUIRE( RomanNumeral(9) == "IX" );
     REQUIRE( RomanNumeral(10) == "X" );
+    REQUIRE( RomanNumeral(11) == "XI" );
+    REQUIRE( RomanNumeral(39) == "XXXIX" );
 }
