@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../src/TicTacToe.cpp"
+#include "../src/TicTacToe.h"
 
 TEST_CASE("Play game of tic tac toe", "[TicTacToe]")
 {

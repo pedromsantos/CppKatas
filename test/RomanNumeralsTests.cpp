@@ -1,5 +1,5 @@
 #include "catch.hpp"
-#include "../src/RomanNumerals.cpp"
+#include "../src/RomanNumerals.hpp"
 
 TEST_CASE( "Calculate roman numeral for arabic number", "[Fibonacci]") {
     REQUIRE( RomanNumeral(1) == "I" );

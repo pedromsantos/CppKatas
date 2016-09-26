@@ -1,6 +1,8 @@
+#include <algorithm> 
+
 #include "TicTacToe.h"
 
-TurnStatus TicTacToe::PlayTurn(const Player player, const Row row, const Column column)
+TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Column &column)
 {
     if(IsFirstTurn() && player == O)
     {
@@ -45,12 +47,12 @@ Turn::Turn(Player player, Row row, Column column)
     this->column = column;
 }
 
-bool Turn::IsSamePosition(const Row row, const Column column) const
+bool Turn::IsSamePosition(const Row &row, const Column &column) const
 {
     return this->row == row && this->column == column;
 }
 
-bool Turn::IsSamePlayer(const Player player) const
+bool Turn::IsSamePlayer(const Player &player) const
 {
     return this->player == player;
 }

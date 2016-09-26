@@ -1,4 +1,6 @@
-const unsigned int Fibonacci(const unsigned int index)
+#include "Fibonacci.hpp"
+
+unsigned int Fibonacci(const unsigned int index)
 {
     if(index == 0 || index == 1)
     {

@@ -1,7 +1,7 @@
 #ifndef CPPKATAS_TICTACTOE_H
 #define CPPKATAS_TICTACTOE_H
 
-#import <vector>
+#include <vector>
 
 enum Player { X, O };
 
@@ -21,9 +21,9 @@ private:
 public:
     Turn(const Player player, const Row row, const Column column);
 
-    bool IsSamePosition(const Row row, const Column column) const;
+    bool IsSamePosition(const Row &row, const Column &column) const;
 
-    bool IsSamePlayer(const Player player) const;
+    bool IsSamePlayer(const Player &player) const;
 };
 
 class TicTacToe
@@ -35,7 +35,7 @@ class TicTacToe
     bool IsPositionTaken(const Row &row, const Column &column) const;
 
 public:
-    TurnStatus PlayTurn(const Player player, const Row row, const Column column);
+    TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column);
 };
 
 #endif //CPPKATAS_TICTACTOE_H

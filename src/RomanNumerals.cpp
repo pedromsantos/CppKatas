@@ -1,7 +1,8 @@
-#include <string>
 #include <map>
 
-const std::string RomanNumeral(const unsigned int arabicNumber)
+#include "RomanNumerals.hpp"
+
+std::string RomanNumeral(const unsigned int arabicNumber)
 {
     std::map<int, std::string> arabicToRoman =
             {
