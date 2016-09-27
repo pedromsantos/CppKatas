@@ -34,7 +34,9 @@ class TicTacToe
 
     bool IsPositionTaken(const Row &row, const Column &column) const;
 
-public:
+	bool IsSamePlayerAsLastTurn(const Player& player);
+
+public:	
     TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column);
 };
 

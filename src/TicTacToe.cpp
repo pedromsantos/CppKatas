@@ -2,6 +2,11 @@
 
 #include "TicTacToe.h"
 
+bool TicTacToe::IsSamePlayerAsLastTurn(const Player& player)
+{
+	return turns.back().IsSamePlayer(player);
+}
+
 TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Column &column)
 {
     if(IsFirstTurn() && player == O)
@@ -9,7 +14,7 @@ TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Colum
         return InvalidPlayer;
     }
 
-    if(!IsFirstTurn() && turns.back().IsSamePlayer(player))
+    if(!IsFirstTurn() && IsSamePlayerAsLastTurn(player))
     {
         return InvalidPlayer;
     }
