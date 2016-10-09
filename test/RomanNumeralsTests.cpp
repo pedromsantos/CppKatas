@@ -1,7 +1,7 @@
 #include "catch.hpp"
 #include "../src/RomanNumerals.hpp"
 
-TEST_CASE( "Calculate roman numeral for arabic number", "[Fibonacci]") {
+TEST_CASE( "Calculate roman numeral for arabic number", "[RomanNumerlas]") {
     REQUIRE( RomanNumeral(1) == "I" );
     REQUIRE( RomanNumeral(2) == "II" );
     REQUIRE( RomanNumeral(4) == "IV" );
