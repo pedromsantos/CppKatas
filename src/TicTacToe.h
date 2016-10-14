@@ -2,19 +2,23 @@
 #define CPPKATAS_TICTACTOE_H
 
 #include <vector>
-#include "../Turn.hpp"
 
-enum TurnStatus { InProgress, InvalidPlayer, InvalidPosition };
+enum TurnStatus { InProgress, InvalidPlayer, InvalidPosition, Win };
+
+enum Player { X, O, NONE };
+
+enum Row { TOP = 0, MIDLDE = 1, BOTTOM = 2 };
+
+enum Column { LEFT = 0, CENTER = 1, RIGHT = 2 };
 
 class TicTacToe
 {
-    std::vector<Turn> turns;
+	Player lastPlayer = O;
 
-    bool IsFirstTurn() const;
+	const std::vector<std::vector<Player>> starting_turns{ { NONE, NONE, NONE },{ NONE, NONE, NONE },{ NONE, NONE, NONE } };
+	std::vector<std::vector<Player>> turns = starting_turns;	
 
     bool IsPositionTaken(const Row &row, const Column &column) const;
-
-	bool IsSamePlayerAsLastTurn(const Player& player) const;
 
 	void SaveTurn(const Player& player, const Row& row, const Column& column);
 	

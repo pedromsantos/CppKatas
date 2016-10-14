@@ -1,5 +1,3 @@
-#include <algorithm> 
-
 #include "TicTacToe.h"
 
 TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Column &column)
@@ -16,38 +14,27 @@ TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Colum
 
     SaveTurn(player, row, column);
 
+	if(turns[TOP][LEFT] == turns[TOP][CENTER] 
+		&& turns[TOP][LEFT] == turns[TOP][RIGHT])
+	{
+		return Win;
+	}
+
     return InProgress;
 }
 
 bool TicTacToe::IsPlayerInvalid(const Player& player) const
 {
-	return IsFirstTurn() 
-		? player == O
-		: IsSamePlayerAsLastTurn(player);
+	return player == lastPlayer;
 }
 
 bool TicTacToe::IsPositionTaken(const Row &row, const Column &column) const
 {
-    auto it = find_if(turns.begin(), turns.end(),
-                      [&row, &column](Turn t)
-                      {
-                          return t.IsSamePosition(row, column);
-                      });
-
-    return (it != turns.end());
+	return turns[row][column] != NONE;
 }
 
 void TicTacToe::SaveTurn(const Player& player, const Row& row, const Column& column)
 {
-	turns.push_back(Turn(player, row, column));
-}
-
-bool TicTacToe::IsFirstTurn() const
-{
-    return turns.size() == 0;
-}
-
-bool TicTacToe::IsSamePlayerAsLastTurn(const Player& player) const
-{
-	return turns.back().IsSamePlayer(player);
+	lastPlayer = player;
+	turns[row][column] = player;
 }

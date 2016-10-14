@@ -32,4 +32,20 @@ TEST_CASE("Play game of tic tac toe", "[TicTacToe]")
         game->PlayTurn(X, TOP, LEFT);
         REQUIRE(game->PlayTurn(O, TOP, LEFT) == InvalidPosition);
     }
+
+	SECTION("Player cannot play in any previous played position")
+	{
+		game->PlayTurn(X, TOP, LEFT);
+		game->PlayTurn(O, TOP, CENTER);
+		REQUIRE(game->PlayTurn(X, TOP, LEFT) == InvalidPosition);
+	}
+
+	SECTION("Player X wins if it fills all columns in top row")
+	{
+		game->PlayTurn(X, TOP, LEFT);
+		game->PlayTurn(O, MIDLDE, CENTER);
+		game->PlayTurn(X, TOP, CENTER);
+		game->PlayTurn(O, MIDLDE, LEFT);
+		REQUIRE(game->PlayTurn(X, TOP, RIGHT) == Win);
+	}	
 }
