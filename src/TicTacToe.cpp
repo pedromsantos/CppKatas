@@ -2,19 +2,9 @@
 
 #include "TicTacToe.h"
 
-bool TicTacToe::IsSamePlayerAsLastTurn(const Player& player)
-{
-	return turns.back().IsSamePlayer(player);
-}
-
 TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Column &column)
 {
-    if(IsFirstTurn() && player == O)
-    {
-        return InvalidPlayer;
-    }
-
-    if(!IsFirstTurn() && IsSamePlayerAsLastTurn(player))
+    if(IsTurnValid(player))
     {
         return InvalidPlayer;
     }
@@ -24,9 +14,16 @@ TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Colum
         return InvalidPosition;
     }
 
-    turns.push_back(Turn(player, row, column));
+    SaveTurn(player, row, column);
 
     return InProgress;
+}
+
+bool TicTacToe::IsTurnValid(const Player& player)
+{
+	return IsFirstTurn() 
+		? player == O
+		: IsSamePlayerAsLastTurn(player);
 }
 
 bool TicTacToe::IsPositionTaken(const Row &row, const Column &column) const
@@ -38,6 +35,11 @@ bool TicTacToe::IsPositionTaken(const Row &row, const Column &column) const
                       });
 
     return (it != turns.end());
+}
+
+void TicTacToe::SaveTurn(const Player& player, const Row& row, const Column& column)
+{
+	turns.push_back(Turn(player, row, column));
 }
 
 bool TicTacToe::IsFirstTurn() const
@@ -60,4 +62,9 @@ bool Turn::IsSamePosition(const Row &row, const Column &column) const
 bool Turn::IsSamePlayer(const Player &player) const
 {
     return this->player == player;
+}
+
+bool TicTacToe::IsSamePlayerAsLastTurn(const Player& player)
+{
+	return turns.back().IsSamePlayer(player);
 }

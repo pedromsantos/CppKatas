@@ -16,14 +16,14 @@ class Turn
 private:
     Player player;
     Row row;
-    Column column;
+    Column column;	
 
 public:
-    Turn(const Player player, const Row row, const Column column);
+    Turn(const Player player, const Row row, const Column column); 
 
-    bool IsSamePosition(const Row &row, const Column &column) const;
+	bool IsSamePosition(const Row &row, const Column &column) const;
 
-    bool IsSamePlayer(const Player &player) const;
+	bool IsSamePlayer(const Player &player) const;
 };
 
 class TicTacToe
@@ -35,6 +35,8 @@ class TicTacToe
     bool IsPositionTaken(const Row &row, const Column &column) const;
 
 	bool IsSamePlayerAsLastTurn(const Player& player);
+	void SaveTurn(const Player& player, const Row& row, const Column& column);
+	bool IsTurnValid(const Player& player);
 
 public:	
     TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column);
