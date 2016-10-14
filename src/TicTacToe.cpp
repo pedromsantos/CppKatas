@@ -2,33 +2,26 @@
 
 TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Column &column)
 {
+	auto status = InProgress;
+
     if(IsPlayerInvalid(player))
     {
-        return InvalidPlayer;
+		status = InvalidPlayer;
     }
 
     if(IsPositionTaken(row, column))
     {
-        return InvalidPosition;
+		status = InvalidPosition;
     }
 
     SaveTurn(player, row, column);
 
-	if(player == turns[TOP][LEFT]
-		&& turns[TOP][LEFT] == turns[TOP][CENTER] 
-		&& turns[TOP][LEFT] == turns[TOP][RIGHT])
+	if(ISWinner(player))
 	{
-		return Win;
+		status = Win;
 	}
 
-	if (player == turns[MIDLDE][LEFT]
-		&& turns[MIDLDE][LEFT] == turns[MIDLDE][CENTER]
-		&& turns[MIDLDE][LEFT] == turns[MIDLDE][RIGHT])
-	{
-		return Win;
-	}
-
-    return InProgress;
+    return status;
 }
 
 bool TicTacToe::IsPlayerInvalid(const Player& player) const
@@ -45,4 +38,19 @@ void TicTacToe::SaveTurn(const Player& player, const Row& row, const Column& col
 {
 	lastPlayer = player;
 	turns[row][column] = player;
+}
+
+bool TicTacToe::ISWinner(const Player& player) const
+{
+	for (const auto row : { TOP, MIDLDE, BOTTOM })
+	{
+		if (player == turns[row][LEFT]
+			&& player == turns[row][CENTER]
+			&& player == turns[row][RIGHT])
+		{
+			return true;
+		}
+	}
+
+	return false;
 }
