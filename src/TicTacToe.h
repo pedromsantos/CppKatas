@@ -14,9 +14,11 @@ class TicTacToe
 
     bool IsPositionTaken(const Row &row, const Column &column) const;
 
-	bool IsSamePlayerAsLastTurn(const Player& player);
+	bool IsSamePlayerAsLastTurn(const Player& player) const;
+
 	void SaveTurn(const Player& player, const Row& row, const Column& column);
-	bool IsTurnValid(const Player& player);
+	
+	bool IsPlayerInvalid(const Player& player) const;
 
 public:	
     TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column);

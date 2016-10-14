@@ -4,7 +4,7 @@
 
 TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Column &column)
 {
-    if(IsTurnValid(player))
+    if(IsPlayerInvalid(player))
     {
         return InvalidPlayer;
     }
@@ -19,7 +19,7 @@ TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Colum
     return InProgress;
 }
 
-bool TicTacToe::IsTurnValid(const Player& player)
+bool TicTacToe::IsPlayerInvalid(const Player& player) const
 {
 	return IsFirstTurn() 
 		? player == O
@@ -47,7 +47,7 @@ bool TicTacToe::IsFirstTurn() const
     return turns.size() == 0;
 }
 
-bool TicTacToe::IsSamePlayerAsLastTurn(const Player& player)
+bool TicTacToe::IsSamePlayerAsLastTurn(const Player& player) const
 {
 	return turns.back().IsSamePlayer(player);
 }
