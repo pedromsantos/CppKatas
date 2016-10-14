@@ -47,23 +47,6 @@ bool TicTacToe::IsFirstTurn() const
     return turns.size() == 0;
 }
 
-Turn::Turn(Player player, Row row, Column column)
-{
-    this->player = player;
-    this->row = row;
-    this->column = column;
-}
-
-bool Turn::IsSamePosition(const Row &row, const Column &column) const
-{
-    return this->row == row && this->column == column;
-}
-
-bool Turn::IsSamePlayer(const Player &player) const
-{
-    return this->player == player;
-}
-
 bool TicTacToe::IsSamePlayerAsLastTurn(const Player& player)
 {
 	return turns.back().IsSamePlayer(player);

@@ -2,29 +2,9 @@
 #define CPPKATAS_TICTACTOE_H
 
 #include <vector>
-
-enum Player { X, O };
+#include "../Turn.hpp"
 
 enum TurnStatus { InProgress, InvalidPlayer, InvalidPosition };
-
-enum Row { TOP, MIDLDE, BOTTOM};
-
-enum Column { LEFT, CENTER, RIGHT};
-
-class Turn
-{
-private:
-    Player player;
-    Row row;
-    Column column;	
-
-public:
-    Turn(const Player player, const Row row, const Column column); 
-
-	bool IsSamePosition(const Row &row, const Column &column) const;
-
-	bool IsSamePlayer(const Player &player) const;
-};
 
 class TicTacToe
 {
