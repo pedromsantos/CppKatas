@@ -14,8 +14,16 @@ TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Colum
 
     SaveTurn(player, row, column);
 
-	if(turns[TOP][LEFT] == turns[TOP][CENTER] 
+	if(player == turns[TOP][LEFT]
+		&& turns[TOP][LEFT] == turns[TOP][CENTER] 
 		&& turns[TOP][LEFT] == turns[TOP][RIGHT])
+	{
+		return Win;
+	}
+
+	if (player == turns[MIDLDE][LEFT]
+		&& turns[MIDLDE][LEFT] == turns[MIDLDE][CENTER]
+		&& turns[MIDLDE][LEFT] == turns[MIDLDE][RIGHT])
 	{
 		return Win;
 	}
