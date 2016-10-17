@@ -66,4 +66,22 @@ TEST_CASE("Play game of tic tac toe", "[TicTacToe]")
 		game->PlayTurn(O, MIDLDE, LEFT);
 		REQUIRE(game->PlayTurn(X, BOTTOM, RIGHT) == Win);
 	}
+
+	SECTION("Player X wins if it fills all rows in left column")
+	{
+		game->PlayTurn(X, TOP, LEFT);
+		game->PlayTurn(O, MIDLDE, CENTER);
+		game->PlayTurn(X, MIDLDE, LEFT);
+		game->PlayTurn(O, MIDLDE, RIGHT);
+		REQUIRE(game->PlayTurn(X, BOTTOM, LEFT) == Win);
+	}
+
+	SECTION("Player X wins if it fills all rows in center column")
+	{
+		game->PlayTurn(X, TOP, CENTER);
+		game->PlayTurn(O, MIDLDE, LEFT);
+		game->PlayTurn(X, MIDLDE, CENTER);
+		game->PlayTurn(O, MIDLDE, RIGHT);
+		REQUIRE(game->PlayTurn(X, BOTTOM, CENTER) == Win);
+	}
 }

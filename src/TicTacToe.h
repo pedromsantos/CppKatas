@@ -24,7 +24,7 @@ class TicTacToe
 	
 	bool IsPlayerInvalid(const Player& player) const;
 
-	bool ISWinner(const Player& player) const;
+	bool IsWinner(const Player& player) const;
 
 public:
     TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column);
