@@ -19,11 +19,10 @@ class TicTacToe
 	std::vector<std::vector<Player>> turns = starting_turns;	
 
     bool IsPositionTaken(const Row &row, const Column &column) const;
-
 	void SaveTurn(const Player& player, const Row& row, const Column& column);
-	
+	bool WinnerOnColumns(const Player& player) const;
+	bool WinsOnRows(const Player& player) const;
 	bool IsPlayerInvalid(const Player& player) const;
-
 	bool IsWinner(const Player& player) const;
 
 public:

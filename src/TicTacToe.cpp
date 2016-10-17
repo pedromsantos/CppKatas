@@ -42,6 +42,11 @@ void TicTacToe::SaveTurn(const Player& player, const Row& row, const Column& col
 
 bool TicTacToe::IsWinner(const Player& player) const
 {
+	return WinsOnRows(player) || WinnerOnColumns(player);
+}
+
+bool TicTacToe::WinsOnRows(const Player& player) const
+{
 	for (const auto row : { TOP, MIDLDE, BOTTOM })
 	{
 		if (player == turns[row][LEFT]
@@ -51,7 +56,11 @@ bool TicTacToe::IsWinner(const Player& player) const
 			return true;
 		}
 	}
+	return false;
+}
 
+bool TicTacToe::WinnerOnColumns(const Player& player) const
+{
 	for (const auto column : { LEFT, CENTER, RIGHT })
 	{
 		if (player == turns[TOP][column]
@@ -61,6 +70,5 @@ bool TicTacToe::IsWinner(const Player& player) const
 			return true;
 		}
 	}
-
 	return false;
 }
