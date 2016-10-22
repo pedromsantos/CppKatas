@@ -20,11 +20,12 @@ class TicTacToe
 
     bool IsPositionTaken(const Row &row, const Column &column) const;
 	void SaveTurn(const Player& player, const Row& row, const Column& column);
-	bool WinnerOnColumns(const Player& player) const;
-	bool WinsOnRows(const Player& player) const;
 	bool IsPlayerInvalid(const Player& player) const;
 	bool IsWinner(const Player& player) const;
-
+	bool WinnerOnColumns(const Player& player) const;
+	bool WinsOnRows(const Player& player) const;
+	bool WinnerOnLeftToRightDiagonal(const Player& player) const;
+	bool WinnerOnRightToLeftDiagonal(const Player& player) const;
 public:
     TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column);
 };

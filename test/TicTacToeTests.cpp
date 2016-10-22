@@ -93,4 +93,22 @@ TEST_CASE("Play game of tic tac toe", "[TicTacToe]")
 		game->PlayTurn(O, MIDLDE, CENTER);
 		REQUIRE(game->PlayTurn(X, BOTTOM, RIGHT) == Win);
 	}
+
+	SECTION("Player X wins if he has three in left to rigth diagonal")
+	{
+		game->PlayTurn(X, TOP, LEFT);
+		game->PlayTurn(O, TOP, CENTER);
+		game->PlayTurn(X, MIDLDE, CENTER);
+		game->PlayTurn(O, TOP, RIGHT);
+		REQUIRE(game->PlayTurn(X, BOTTOM, RIGHT) == Win);
+	}
+
+	SECTION("Player X wins if he has three in rigth to left diagonal")
+	{
+		game->PlayTurn(X, TOP, RIGHT);
+		game->PlayTurn(O, TOP, CENTER);
+		game->PlayTurn(X, MIDLDE, CENTER);
+		game->PlayTurn(O, TOP, LEFT);
+		REQUIRE(game->PlayTurn(X, BOTTOM, LEFT) == Win);
+	}
 }

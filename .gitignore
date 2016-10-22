@@ -72,3 +72,4 @@ Tests
 CTestTestfile.cmake
 CTestCostData.txt
 LastTest.log
+LastTestsFailed.log
