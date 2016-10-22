@@ -1,4 +1,4 @@
-#include "TicTacToe.h"
+#include "TicTacToe.hpp"
 
 TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Column &column)
 {
