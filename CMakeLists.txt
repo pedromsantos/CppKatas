@@ -11,3 +11,6 @@ add_library(Katas STATIC src/FizzBuzz.cpp src/Fibonacci.cpp src/RomanNumerals.cp
 add_executable(Tests test/FizzBuzzTests.cpp test/FibonacciTests.cpp test/main.cpp test/RomanNumeralsTests.cpp test/TicTacToeTests.cpp)
 
 target_link_libraries(Tests Katas)
+
+enable_testing()
+add_test(NAME Tests COMMAND ./bin/Tests)

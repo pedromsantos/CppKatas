@@ -68,3 +68,7 @@ Tests
 /CppKatas.sdf
 /ALL_BUILD.vcxproj.user
 /ALL_BUILD.vcxproj.filters
+
+CTestTestfile.cmake
+CTestCostData.txt
+LastTest.log
