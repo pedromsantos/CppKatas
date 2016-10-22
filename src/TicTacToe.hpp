@@ -24,8 +24,7 @@ class TicTacToe
 	bool IsWinner(const Player& player) const;
 	bool WinnerOnColumns(const Player& player) const;
 	bool WinsOnRows(const Player& player) const;
-	bool WinnerOnLeftToRightDiagonal(const Player& player) const;
-	bool WinnerOnRightToLeftDiagonal(const Player& player) const;
+	bool WinnerOnDiagonal(const Player& player, Column start, Column end) const;
 public:
     TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column);
 };

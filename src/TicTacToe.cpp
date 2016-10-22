@@ -44,8 +44,8 @@ bool TicTacToe::IsWinner(const Player& player) const
 {
 	return WinsOnRows(player) 
 		|| WinnerOnColumns(player)
-		|| WinnerOnLeftToRightDiagonal(player)
-		|| WinnerOnRightToLeftDiagonal(player);
+		|| WinnerOnDiagonal(player, LEFT, RIGHT)
+		|| WinnerOnDiagonal(player, RIGHT, LEFT);
 }
 
 bool TicTacToe::WinsOnRows(const Player& player) const
@@ -76,26 +76,9 @@ bool TicTacToe::WinnerOnColumns(const Player& player) const
 	return false;
 }
 
-bool TicTacToe::WinnerOnLeftToRightDiagonal(const Player& player) const
+bool TicTacToe::WinnerOnDiagonal(const Player& player, Column start, Column end) const
 {
-	if (player == turns[TOP][LEFT]
+	return (player == turns[TOP][start]
 			&& player == turns[MIDLDE][CENTER]
-			&& player == turns[BOTTOM][RIGHT])
-	{
-		return true;
-	}
-	
-	return false;
-}
-
-bool TicTacToe::WinnerOnRightToLeftDiagonal(const Player& player) const
-{
-	if (player == turns[TOP][RIGHT]
-			&& player == turns[MIDLDE][CENTER]
-			&& player == turns[BOTTOM][LEFT])
-	{
-		return true;
-	}
-	
-	return false;
+			&& player == turns[BOTTOM][end]);
 }
