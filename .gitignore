@@ -69,6 +69,7 @@ Tests
 /ALL_BUILD.vcxproj.user
 /ALL_BUILD.vcxproj.filters
 
+*.vcxproj.user
 CTestTestfile.cmake
 CTestCostData.txt
 LastTest.log
