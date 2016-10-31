@@ -42,13 +42,13 @@ void TicTacToe::SaveTurn(const Player& player, const Row& row, const Column& col
 
 bool TicTacToe::IsWinner(const Player& player) const
 {
-	return WinsOnRows(player) 
+	return WinnerOnRows(player) 
 		|| WinnerOnColumns(player)
 		|| WinnerOnDiagonal(player, LEFT, RIGHT)
 		|| WinnerOnDiagonal(player, RIGHT, LEFT);
 }
 
-bool TicTacToe::WinsOnRows(const Player& player) const
+bool TicTacToe::WinnerOnRows(const Player& player) const
 {
 	for (const auto row : { TOP, MIDLDE, BOTTOM })
 	{
