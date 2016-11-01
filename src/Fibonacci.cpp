@@ -2,10 +2,7 @@
 
 unsigned int Fibonacci(const unsigned int index)
 {
-    if (index == 0 || index == 1)
-    {
-        return index;
-    }
-
-    return Fibonacci(index - 1) + Fibonacci(index - 2);
+    return (index == 0 || index == 1) 
+		? index 
+		: Fibonacci(index - 1) + Fibonacci(index - 2);
 }
