@@ -1,6 +1,5 @@
 #include "test/catch.hpp"
 #include "MarsRover.hpp"
-#include "MarsRover.hpp"
 
 TEST_CASE("Mars Rover Tests", "[TicTacToe]")
 {
