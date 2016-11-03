@@ -1,6 +1,18 @@
+#include <string>
 #include "MarsRover.hpp"
 
-std::string Rover::Execute(const std::string& instructions)
+void InstructionParser::Parse(const string& instructions)
 {
+}
+
+Rover::Rover(InstructionParser& instructionParser)
+{
+	instruction_parser_ = &instructionParser;
+}
+
+string Rover::Execute(const string& instructions)
+{
+	instruction_parser_->Parse(instructions);
+
 	return  "";
 }

@@ -244,7 +244,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     <ClCompile Include="C:\Users\pedro.santos\src\CppKatas\src\Fibonacci.cpp" />
     <ClCompile Include="C:\Users\pedro.santos\src\CppKatas\src\RomanNumerals.cpp" />
     <ClCompile Include="C:\Users\pedro.santos\src\CppKatas\src\TicTacToe.cpp" />
-    <ClCompile Include="MarsRover.cpp" />
+    <ClCompile Include="src\MarsRover.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="C:/Users/pedro.santos/src/CppKatas/ZERO_CHECK.vcxproj">
@@ -252,7 +252,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
     </ProjectReference>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="MarsRover.hpp" />
+    <ClInclude Include="src\MarsRover.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">

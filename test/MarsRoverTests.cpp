@@ -1,7 +1,11 @@
 #include "catch.hpp"
-#include "../MarsRover.hpp"
+#include "fakeit.hpp"
 
-TEST_CASE("Mars Rover Tests", "[TicTacToe]")
+#include "../src/MarsRover.hpp"
+
+using namespace std;
+
+TEST_CASE("Mars Rover", "[TicTacToe]")
 {
 	SECTION("Acceptance Tests")
 	{
@@ -21,14 +25,39 @@ TEST_CASE("Mars Rover Tests", "[TicTacToe]")
 					{
 						auto endPosition = "1 3 N";
 
-						std::stringstream instructions;
-						instructions << gridSize << std::endl << startPosition << std::endl << commands << std::ends;
+						stringstream instructions;
+						instructions << gridSize << endl << startPosition << endl << commands << ends;
 
-						auto rover = std::make_unique<Rover>();
+						InstructionParser instructionParser;
 
-						REQUIRE(rover->Execute(instructions.str()) == endPosition);
+						Rover rover(instructionParser);
+						rover.Execute(instructions.str());
+
+						//REQUIRE(rover->Execute(instructions.str()) == endPosition);
 					}
 				}
+			}
+		}
+	}
+
+	SECTION("Unit Tests")
+	{
+		using namespace fakeit;	
+
+		SECTION("Mars rover should")
+		{
+			SECTION("Parse instructions")
+			{
+				stringstream instructions;
+				instructions << "5 5" << endl << "1 1 N" << endl << "LMLMLMLMM" << ends;
+
+				Mock<InstructionParser> instructionParser;
+				Fake(Method(instructionParser, Parse));
+
+				Rover rover(instructionParser.get());
+				rover.Execute(instructions.str());
+
+				Verify(Method(instructionParser, Parse));
 			}
 		}
 	}
