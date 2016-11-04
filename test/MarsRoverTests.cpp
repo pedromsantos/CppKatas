@@ -12,7 +12,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 	{
 		using namespace fakeit;
 
-		SECTION("Commands should")
+		SECTION("GridSizeCommand should")
 		{
 			Mock<Rover> rover;
 			Fake(Method(rover, InitializeGridSize));
@@ -24,6 +24,12 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				Verify(Method(rover, InitializeGridSize));
 			}
+		}
+
+		SECTION("Commands should")
+		{
+			Mock<Rover> rover;
+			Fake(Method(rover, InitializeGridSize));
 
 			SECTION("store grid size instruction")
 			{
