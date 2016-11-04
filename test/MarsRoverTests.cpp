@@ -7,6 +7,28 @@ using namespace std;
 
 TEST_CASE("Mars Rover", "[TicTacToe]")
 {
+	SECTION("Unit Tests")
+	{
+		using namespace fakeit;
+
+		SECTION("Mars rover should")
+		{
+			SECTION("Parse instructions")
+			{
+				stringstream instructions;
+				instructions << "5 5" << endl << "1 1 N" << endl << "LMLMLMLMM" << ends;
+
+				Mock<InstructionParser> instructionParser;
+				Fake(Method(instructionParser, Parse));
+
+				Rover rover(instructionParser.get());
+				rover.Execute(instructions.str());
+
+				Verify(Method(instructionParser, Parse));
+			}
+		}
+	}
+
 	SECTION("Acceptance Tests")
 	{
 		GIVEN("a grid of 5 by 5")
@@ -33,31 +55,9 @@ TEST_CASE("Mars Rover", "[TicTacToe]")
 						Rover rover(instructionParser);
 						rover.Execute(instructions.str());
 
-						//REQUIRE(rover->Execute(instructions.str()) == endPosition);
+						REQUIRE(rover.Execute(instructions.str()) == endPosition);
 					}
 				}
-			}
-		}
-	}
-
-	SECTION("Unit Tests")
-	{
-		using namespace fakeit;	
-
-		SECTION("Mars rover should")
-		{
-			SECTION("Parse instructions")
-			{
-				stringstream instructions;
-				instructions << "5 5" << endl << "1 1 N" << endl << "LMLMLMLMM" << ends;
-
-				Mock<InstructionParser> instructionParser;
-				Fake(Method(instructionParser, Parse));
-
-				Rover rover(instructionParser.get());
-				rover.Execute(instructions.str());
-
-				Verify(Method(instructionParser, Parse));
 			}
 		}
 	}
