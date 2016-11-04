@@ -1,30 +1,38 @@
 #include "catch.hpp"
 #include "fakeit.hpp"
 
-#include "../src/MarsRover.hpp"
+#include "../src/MarsRover/MarsRover.hpp"
+#include "../src/MarsRover/Commands.hpp"
 
 using namespace std;
 
-TEST_CASE("Mars Rover", "[TicTacToe]")
+TEST_CASE("Mars Rover", "[Mars Rover]")
 {
 	SECTION("Unit Tests")
 	{
 		using namespace fakeit;
 
-		SECTION("Mars rover should")
+		SECTION("Commands should")
 		{
-			SECTION("Parse instructions")
+			Mock<Rover> rover;
+			Fake(Method(rover, InitializeGridSize));
+
+			SECTION("initialize grid on rover")
 			{
-				stringstream instructions;
-				instructions << "5 5" << endl << "1 1 N" << endl << "LMLMLMLMM" << ends;
+				GridSizeCommand command(0, 0);
+				command.Execute(rover.get());
 
-				Mock<InstructionParser> instructionParser;
-				Fake(Method(instructionParser, Parse));
+				Verify(Method(rover, InitializeGridSize));
+			}
 
-				Rover rover(instructionParser.get());
-				rover.Execute(instructions.str());
+			SECTION("store grid size instruction")
+			{
+				Commands commands;	
 
-				Verify(Method(instructionParser, Parse));
+				commands.AddGridSizeCommand(0, 0);
+				commands.ExecuteNext(rover.get());
+
+				Verify(Method(rover, InitializeGridSize));
 			}
 		}
 	}
@@ -50,12 +58,10 @@ TEST_CASE("Mars Rover", "[TicTacToe]")
 						stringstream instructions;
 						instructions << gridSize << endl << startPosition << endl << commands << ends;
 
-						InstructionParser instructionParser;
-
-						Rover rover(instructionParser);
+						Rover rover;
 						rover.Execute(instructions.str());
 
-						REQUIRE(rover.Execute(instructions.str()) == endPosition);
+						//REQUIRE(rover.Execute(instructions.str()) == endPosition);
 					}
 				}
 			}
