@@ -1,6 +1,6 @@
+#include <string>
 #include "MarsRover.hpp"
 #include "Commands.hpp"
-#include <memory>
 
 vector<string> InstructionParser::Split(const string &text, char sep) const
 {
@@ -26,8 +26,6 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 	auto commands = make_unique<Commands>();
 
 	auto tokens = Split(instructions, ' ');
-
-
 
 	return commands;
 }

@@ -8,7 +8,7 @@ class Commands;
 
 class InstructionParser
 {
-	vector<string> InstructionParser::Split(const string &text, char sep) const;
+	vector<string> Split(const string &text, char sep) const;
 
 public:
 	virtual ~InstructionParser()
