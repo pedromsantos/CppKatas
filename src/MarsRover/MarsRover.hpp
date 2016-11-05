@@ -1,4 +1,5 @@
 #pragma once
+
 #include <memory>
 #include <vector>
 
@@ -8,24 +9,24 @@ class Commands;
 
 class InstructionParser
 {
-	vector<string> Split(const string &text, char sep) const;
+    vector<string> Split(const string &text, char sep) const;
 
 public:
-	virtual ~InstructionParser()
-	{
-	}
+    virtual ~InstructionParser()
+    {
+    }
 
-	unique_ptr<Commands> Parse(const string& instructions) const;
+    unique_ptr<Commands> Parse(const string &instructions) const;
 };
 
 class Rover
 {
-	unique_ptr<InstructionParser> instruction_parser_;
+    unique_ptr<InstructionParser> instruction_parser_;
 
 public:
-	Rover();
+    Rover();
 
-	void virtual InitializeGridSize(int width, int heigth) const;
+    void virtual InitializeGridSize(int width, int heigth) const;
 
-	string Execute(const string& instructions) const;
+    string Execute(const string &instructions) const;
 };

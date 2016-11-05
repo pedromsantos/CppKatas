@@ -8,86 +8,86 @@ using namespace std;
 
 TEST_CASE("Mars Rover", "[Mars Rover]")
 {
-	SECTION("Unit Tests")
-	{
-		using namespace fakeit;
+    SECTION("Unit Tests")
+    {
+        using namespace fakeit;
 
-		SECTION("GridSizeCommand should")
-		{
-			Mock<Rover> rover;
-			Fake(Method(rover, InitializeGridSize));
+        SECTION("GridSizeCommand should")
+        {
+            Mock<Rover> rover;
+            Fake(Method(rover, InitializeGridSize));
 
-			SECTION("initialize grid on rover")
-			{
-				GridSizeCommand command(0, 0);
-				command.Execute(rover.get());
+            SECTION("initialize grid on rover")
+            {
+                GridSizeCommand command(0, 0);
+                command.Execute(rover.get());
 
-				Verify(Method(rover, InitializeGridSize));
-			}
-		}
+                Verify(Method(rover, InitializeGridSize));
+            }
+        }
 
-		SECTION("Commands should")
-		{
-			Mock<Rover> rover;
-			Fake(Method(rover, InitializeGridSize));
+        SECTION("Commands should")
+        {
+            Mock<Rover> rover;
+            Fake(Method(rover, InitializeGridSize));
 
-			SECTION("store grid size instruction")
-			{
-				Commands commands;	
+            SECTION("store grid size instruction")
+            {
+                Commands commands;
 
-				commands.AddGridSizeCommand(0, 0);
-				commands.ExecuteNext(rover.get());
+                commands.AddGridSizeCommand(0, 0);
+                commands.ExecuteNext(rover.get());
 
-				Verify(Method(rover, InitializeGridSize));
-			}
-		}
+                Verify(Method(rover, InitializeGridSize));
+            }
+        }
 
-		SECTION("Instruction parser should")
-		{
-			Mock<Rover> rover;
-			Fake(Method(rover, InitializeGridSize));
+        SECTION("Instruction parser should")
+        {
+            Mock<Rover> rover;
+            Fake(Method(rover, InitializeGridSize));
 
-			SECTION("parse grid size instruction")
-			{
-				InstructionParser instructionParser;
+            SECTION("parse grid size instruction")
+            {
+                InstructionParser instructionParser;
 
-				auto commands = instructionParser.Parse("5 5");
+                auto commands = instructionParser.Parse("5 5");
 
-				commands->ExecuteNext(rover.get());
+                commands->ExecuteNext(rover.get());
 
-				Verify(Method(rover, InitializeGridSize));
-			}
-		}
-	}
+                Verify(Method(rover, InitializeGridSize));
+            }
+        }
+    }
 
-	SECTION("Acceptance Tests")
-	{
-		GIVEN("a grid of 5 by 5")
-		{
-			auto gridSize = "5 5";
+    SECTION("Acceptance Tests")
+    {
+        GIVEN("a grid of 5 by 5")
+        {
+            auto gridSize = "5 5";
 
-			GIVEN("a starting position of 1 2 N")
-			{
-				auto startPosition = "1 2 N";
+            GIVEN("a starting position of 1 2 N")
+            {
+                auto startPosition = "1 2 N";
 
-				WHEN("the commands LMLMLMLMM are executed")
-				{
-					auto commands = "LMLMLMLMM";
+                WHEN("the commands LMLMLMLMM are executed")
+                {
+                    auto commands = "LMLMLMLMM";
 
-					THEN("Then the final position should be 1 3 N")
-					{
-						auto endPosition = "1 3 N";
+                    THEN("Then the final position should be 1 3 N")
+                    {
+                        auto endPosition = "1 3 N";
 
-						stringstream instructions;
-						instructions << gridSize << endl << startPosition << endl << commands << ends;
+                        stringstream instructions;
+                        instructions << gridSize << endl << startPosition << endl << commands << ends;
 
-						Rover rover;
-						rover.Execute(instructions.str());
+                        Rover rover;
+                        rover.Execute(instructions.str());
 
-						//REQUIRE(rover.Execute(instructions.str()) == endPosition);
-					}
-				}
-			}
-		}
-	}
+                        //REQUIRE(rover.Execute(instructions.str()) == endPosition);
+                    }
+                }
+            }
+        }
+    }
 }

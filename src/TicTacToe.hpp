@@ -36,18 +36,26 @@ class TicTacToe
 {
     Player lastPlayer = O;
 
-    const std::vector<std::vector<Player>> starting_turns{{NONE, NONE, NONE}, {NONE, NONE, NONE}, {NONE, NONE, NONE}};
+    const std::vector<std::vector<Player>> starting_turns{{NONE, NONE, NONE},
+                                                          {NONE, NONE, NONE},
+                                                          {NONE, NONE, NONE}};
     std::vector<std::vector<Player>> turns = starting_turns;
 
-	void SaveTurn(const Player &player, const Row &row, const Column &column);
-    bool IsPositionTaken(const Row &row, const Column &column) const; 
-    bool IsPlayerInvalid(const Player &player) const;
-    bool IsWinner(const Player &player) const;
-    bool WinnerOnColumns(const Player &player) const;
-    bool WinnerOnRows(const Player &player) const;
-    bool WinnerOnDiagonal(const Player &player, Column start, Column end) const;
+    void SaveTurn(const Player &player, const Row &row, const Column &column);
 
-  public:
+    bool IsPositionTaken(const Row &row, const Column &column) const;
+
+    bool IsPlayerInvalid(const Player &player) const;
+
+    bool IsWinner(const Player &player) const;
+
+    bool WinnerOnColumns(const Player &player) const;
+
+    bool WinnerOnRows(const Player &player) const;
+
+    bool WinnerOnDiagonals(const Player &player, Column start, Column end) const;
+
+public:
     TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column);
 };
 

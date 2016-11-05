@@ -3,16 +3,16 @@
 
 void Commands::AddGridSizeCommand(int width, int heigth)
 {
-	auto command = make_unique<GridSizeCommand>(width, heigth);
-	commands.push_back(move(command));
+    auto command = make_unique<GridSizeCommand>(width, heigth);
+    commands.push_back(move(command));
 }
 
-void Commands::ExecuteNext(Rover& rover)
+void Commands::ExecuteNext(Rover &rover)
 {
-	commands.front()->Execute(rover);
+    commands.front()->Execute(rover);
 }
 
-void GridSizeCommand::Execute(Rover& rover)
+void GridSizeCommand::Execute(Rover &rover)
 {
-	rover.InitializeGridSize(width_, heigth_);
+    rover.InitializeGridSize(width_, heigth_);
 }
