@@ -27,6 +27,8 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 
 	auto tokens = Split(instructions, ' ');
 
+    commands->AddGridSizeCommand(stoi(tokens[0]), stoi(tokens[1]));
+
 	return commands;
 }
 

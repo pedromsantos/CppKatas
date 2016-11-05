@@ -41,6 +41,23 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				Verify(Method(rover, InitializeGridSize));
 			}
 		}
+
+		SECTION("Instruction parser should")
+		{
+			Mock<Rover> rover;
+			Fake(Method(rover, InitializeGridSize));
+
+			SECTION("parse grid size instruction")
+			{
+				InstructionParser instructionParser;
+
+				auto commands = instructionParser.Parse("5 5");
+
+				commands->ExecuteNext(rover.get());
+
+				Verify(Method(rover, InitializeGridSize));
+			}
+		}
 	}
 
 	SECTION("Acceptance Tests")
