@@ -4,6 +4,7 @@
 
 enum Direction
 {
+	North,
 	West
 };
 
@@ -64,4 +65,5 @@ public:
 	void AddGridSizeCommand(int width, int heigth);
 	void AddPositionCommand(int x, int y);
 	void Execute(Rover& rover);
+	void AddDirectionCommand(Direction direction);
 };

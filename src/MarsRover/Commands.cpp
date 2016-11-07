@@ -21,6 +21,12 @@ void Commands::AddPositionCommand(int x, int y)
 	commands.push_back(move(command));
 }
 
+void Commands::AddDirectionCommand(Direction direction)
+{
+	auto command = make_unique<DirectionCommand>(direction);
+	commands.push_back(move(command));
+}
+
 void GridSizeCommand::Execute(Rover& rover)
 {
 	rover.InitializeGridSize(width_, heigth_);
