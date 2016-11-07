@@ -254,6 +254,7 @@ if %errorlevel% neq 0 goto :VCEnd</Command>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="src\MarsRover\Commands.hpp" />
+    <ClInclude Include="src\MarsRover\Directions.hpp" />
     <ClInclude Include="src\MarsRover\MarsRover.hpp" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

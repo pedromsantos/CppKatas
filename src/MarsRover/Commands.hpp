@@ -2,12 +2,6 @@
 #include <vector>
 #include "MarsRover.hpp"
 
-enum Direction
-{
-	North,
-	West
-};
-
 class Command
 {
 public:

@@ -1,16 +1,21 @@
 #pragma once
 #include <memory>
 #include <vector>
+#include <map>
+#include "Directions.hpp"
 
 using namespace std;
 
 class Commands;
-enum Direction;
+
+typedef map<string, Direction> InstructionsToDirections;
 
 class InstructionParser
-{
+{	
+	static InstructionsToDirections instructionsToDirections_;
+	
 	vector<string> InstructionParser::Split(const string &text, char sep) const;
-
+		
 public:
 	virtual ~InstructionParser()
 	{
@@ -21,7 +26,7 @@ public:
 
 class Rover
 {
-	unique_ptr<InstructionParser> instruction_parser_;
+	unique_ptr<InstructionParser> instruction_parser_;	
 
 public:
 	Rover();

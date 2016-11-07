@@ -3,6 +3,14 @@
 #include <memory>
 #include <string>
 
+InstructionsToDirections InstructionParser::instructionsToDirections_ =
+	{
+		{ "N", North },
+		{ "E", East },
+		{ "S", South },
+		{ "W", West }
+	};
+
 vector<string> InstructionParser::Split(const string &text, char sep) const
 {
 	vector<string> tokens;
@@ -36,8 +44,12 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 	tokens = Split(instruction[1], ' ');
 	commands->AddPositionCommand(stoi(tokens[0]), stoi(tokens[1]));
 
+	auto direction = instructionsToDirections_[tokens[2]];
+	commands->AddDirectionCommand(direction);
+
 	return commands;
 }
+
 
 Rover::Rover()
 {
