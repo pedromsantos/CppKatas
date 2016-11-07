@@ -65,5 +65,4 @@ public:
 	void AddPositionCommand(int x, int y);
 	void Execute(Rover& rover);
 	void AddDirectionCommand(Direction direction);
-	void AddTurnLeftCommand();
 };

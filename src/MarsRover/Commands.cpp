@@ -27,6 +27,12 @@ void Commands::AddDirectionCommand(Direction direction)
 	commands.push_back(move(command));
 }
 
+void Commands::AddTurnLeftCommand()
+{
+	auto command = make_unique<TurnLeftCommand>();
+	commands.push_back(move(command));
+}
+
 void GridSizeCommand::Execute(Rover& rover)
 {
 	rover.InitializeGridSize(width_, heigth_);
