@@ -28,10 +28,13 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 {
 	auto commands = make_unique<Commands>();
 
-	auto tokens = Split(instructions, ' ');
+	auto instruction = Split(instructions, '\n');
 
+	auto tokens = Split(instruction[0], ' ');
 	commands->AddGridSizeCommand(stoi(tokens[0]), stoi(tokens[1]));
-	commands->AddPositionCommand(stoi(tokens[2]), stoi(tokens[3]));
+
+	tokens = Split(instruction[1], ' ');
+	commands->AddPositionCommand(stoi(tokens[0]), stoi(tokens[1]));
 
 	return commands;
 }

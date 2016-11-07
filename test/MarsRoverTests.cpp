@@ -77,7 +77,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				InstructionParser parser;
 
-				auto commands = parser.Parse("5 5\n 1 1");
+				auto commands = parser.Parse("5 5\n1 1");
 				commands->Execute(rover.get());
 
 				Verify(Method(rover, InitializeGridSize));
@@ -87,7 +87,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				InstructionParser parser;
 
-				auto commands = parser.Parse("5 5\n 1 1");
+				auto commands = parser.Parse("5 5\n1 1");
 				commands->Execute(rover.get());
 
 				Verify(Method(rover, InitializePosition));
@@ -95,7 +95,6 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 		}
 	}
 
-	/*
 	SECTION("Acceptance Tests")
 	{
 		GIVEN("a grid of 5 by 5")
@@ -126,5 +125,4 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			}
 		}
 	}
-	*/
 }
