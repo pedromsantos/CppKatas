@@ -3,6 +3,9 @@
 #include <vector>
 #include <map>
 #include "Directions.hpp"
+#include <type_traits>
+#include <type_traits>
+#include <type_traits>
 
 using namespace std;
 
@@ -18,11 +21,13 @@ class InstructionParser
 	void ParseGridSizeInstruction(unique_ptr<Commands>& commands, string line) const;
 	void ParsePositionInstruction(unique_ptr<Commands>& commands, string line) const;
 	void ParseDirectionInstruction(unique_ptr<Commands>& commands, string line) const;
+	void ParseMovementCommands(const unique_ptr<Commands>& commands, string line) const;
+	
 public:
 	virtual ~InstructionParser()
 	{
 	}
-
+	
 	unique_ptr<Commands> Parse(const string& instructions) const;
 };
 

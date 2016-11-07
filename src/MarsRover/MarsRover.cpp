@@ -45,6 +45,7 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 	ParseGridSizeInstruction(commands, instructionLines[0]);	
 	ParsePositionInstruction(commands, instructionLines[1]);
 	ParseDirectionInstruction(commands, instructionLines[1]);
+	ParseMovementCommands(commands, instructionLines[2]);
 
 	return commands;
 }
@@ -71,6 +72,11 @@ void InstructionParser::ParseDirectionInstruction(unique_ptr<Commands>& commands
 	auto rawDirection= tokens.back();
 	auto direction = instructionsToDirections_[rawDirection];
 	commands->AddDirectionCommand(direction);
+}
+
+void InstructionParser::ParseMovementCommands(const unique_ptr<Commands>& commands, string line) const
+{
+	commands->AddTurnLeftCommand();
 }
 
 Rover::Rover()
