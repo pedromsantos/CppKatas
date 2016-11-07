@@ -1,9 +1,12 @@
 #include "MarsRover.hpp"
 #include "Commands.hpp"
 
-void Commands::ExecuteNext(Rover& rover)
+void Commands::Execute(Rover& rover)
 {
-	commands.front()->Execute(rover);
+	for (auto const& command : commands)
+	{
+		command->Execute(rover);
+	}
 }
 
 void Commands::AddGridSizeCommand(int width, int heigth)

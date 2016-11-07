@@ -16,7 +16,9 @@ vector<string> InstructionParser::Split(const string &text, char sep) const
 	}
 	
 	if (end != start) {
-		tokens.push_back(text.substr(start));
+		auto token = text.substr(start);
+		token.erase(token.find_last_not_of(" \n\r\t") + 1);
+		tokens.push_back(token);
 	}
 
 	return tokens;
@@ -29,6 +31,7 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 	auto tokens = Split(instructions, ' ');
 
 	commands->AddGridSizeCommand(stoi(tokens[0]), stoi(tokens[1]));
+	commands->AddPositionCommand(stoi(tokens[2]), stoi(tokens[3]));
 
 	return commands;
 }
