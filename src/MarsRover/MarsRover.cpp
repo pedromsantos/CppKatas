@@ -38,16 +38,30 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 
 	auto instruction = Split(instructions, '\n');
 
-	auto tokens = Split(instruction[0], ' ');
-	commands->AddGridSizeCommand(stoi(tokens[0]), stoi(tokens[1]));
-
-	tokens = Split(instruction[1], ' ');
-	commands->AddPositionCommand(stoi(tokens[0]), stoi(tokens[1]));
-
-	auto direction = instructionsToDirections_[tokens[2]];
-	commands->AddDirectionCommand(direction);
+	ParseGridSizeInstruction(commands, instruction[0]);	
+	ParsePositionInstruction(commands, instruction[1]);
+	ParseDirectionInstruction(commands, instruction[1]);
 
 	return commands;
+}
+
+void InstructionParser::ParseGridSizeInstruction(unique_ptr<Commands>& commands, string line) const
+{
+	auto tokens = Split(line, ' ');
+	commands->AddGridSizeCommand(stoi(tokens[0]), stoi(tokens[1]));
+}
+
+void InstructionParser::ParsePositionInstruction(unique_ptr<Commands>& commands, string line) const
+{
+	auto tokens = Split(line, ' ');
+	commands->AddPositionCommand(stoi(tokens[0]), stoi(tokens[1]));
+}
+
+void InstructionParser::ParseDirectionInstruction(unique_ptr<Commands>& commands, string line) const
+{
+	auto tokens = Split(line, ' ');
+	auto direction = instructionsToDirections_[tokens[2]];
+	commands->AddDirectionCommand(direction);
 }
 
 Rover::Rover()
