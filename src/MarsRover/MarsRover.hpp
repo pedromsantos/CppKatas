@@ -33,9 +33,19 @@ public:
 
 class Rover
 {
+	int x_;
+	int y_;
+	int width_;
+	int heigth_;
+	Direction direction_;	
+
+	static map<Direction, Direction> turnRight_;
+	static map<Direction, Direction> turnLeft_;
+
 public:
 	Rover();
-
+	Rover(int width, int heigth, int x, int y, Direction direction);
+	
 	void virtual InitializeGridSize(int width, int heigth) const;
 	void virtual InitializePosition(int x, int y) const;
 	void virtual InitializeDirection(Direction direction) const;
@@ -45,4 +55,19 @@ public:
 	void virtual TurnLeft();
 	void virtual TurnRight();
 	void virtual Move();
+
+	virtual bool isEqual(const Rover& rover) const
+	{
+		return
+			rover.width_ == width_
+			&& rover.heigth_ == heigth_
+			&& rover.x_ == x_
+			&& rover.y_ == y_
+			&& rover.direction_ == direction_;
+	}
 };
+
+inline bool operator==(const Rover& lRover, const Rover& rRover) {
+	return typeid(lRover) == typeid(rRover)
+		&& lRover.isEqual(rRover);
+}

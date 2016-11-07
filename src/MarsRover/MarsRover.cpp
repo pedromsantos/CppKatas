@@ -92,7 +92,29 @@ void InstructionParser::ParseMovementCommands(const unique_ptr<Commands>& comman
 	}
 }
 
+map<Direction, Direction> Rover::turnRight_ =
+{
+	{North, East},
+	{East, South},
+	{South, West},
+	{West, North}
+};
+
+map<Direction, Direction> Rover::turnLeft_ =
+{
+	{ North, West },
+	{ East, North },
+	{ South, East },
+	{ West, South }
+};
+
 Rover::Rover()
+	: x_(0), y_(0), width_(1), heigth_(1), direction_(North)
+{
+}
+
+Rover::Rover(int width, int heigth, int x, int y, Direction direction)
+	: x_(x), y_(y), width_(width), heigth_(heigth), direction_(direction)
 {
 }
 
@@ -115,10 +137,12 @@ string Rover::Execute(const string& instructions) const
 
 void Rover::TurnLeft()
 {
+	direction_ = turnLeft_[direction_];
 }
 
 void Rover::TurnRight()
 {
+	direction_ = turnRight_[direction_];
 }
 
 void Rover::Move()

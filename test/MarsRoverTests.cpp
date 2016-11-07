@@ -12,6 +12,85 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 	{
 		using namespace fakeit;
 
+		SECTION("Rover should")
+		{
+			SECTION("turn right")
+			{
+				SECTION("from North to East")
+				{
+					Rover rover(1, 1, 0, 0, North);
+					Rover finalRover(1, 1, 0, 0, East);
+					rover.TurnRight();
+
+					REQUIRE(rover == finalRover);
+				}
+				SECTION("from East to South")
+				{
+					Rover rover(1, 1, 0, 0, East);
+					Rover finalRover(1, 1, 0, 0, South);
+					rover.TurnRight();
+
+					REQUIRE(rover == finalRover);
+				}
+
+				SECTION("from South to West")
+				{
+					Rover rover(1, 1, 0, 0, South);
+					Rover finalRover(1, 1, 0, 0, West);
+					rover.TurnRight();
+
+					REQUIRE(rover == finalRover);
+				}
+
+				SECTION("from West to North")
+				{
+					Rover rover(1, 1, 0, 0, West);
+					Rover finalRover(1, 1, 0, 0, North);
+					rover.TurnRight();
+
+					REQUIRE(rover == finalRover);
+				}
+			}
+
+			SECTION("turn left")
+			{
+				SECTION("from North to West")
+				{
+					Rover rover(1, 1, 0, 0, North);
+					Rover finalRover(1, 1, 0, 0, West);
+					rover.TurnLeft();
+
+					REQUIRE(rover == finalRover);
+				}
+				SECTION("from West to South")
+				{
+					Rover rover(1, 1, 0, 0, West);
+					Rover finalRover(1, 1, 0, 0, South);
+					rover.TurnLeft();
+
+					REQUIRE(rover == finalRover);
+				}
+
+				SECTION("from South to East")
+				{
+					Rover rover(1, 1, 0, 0, South);
+					Rover finalRover(1, 1, 0, 0, East);
+					rover.TurnLeft();
+
+					REQUIRE(rover == finalRover);
+				}
+
+				SECTION("from East to North")
+				{
+					Rover rover(1, 1, 0, 0, East);
+					Rover finalRover(1, 1, 0, 0, North);
+					rover.TurnLeft();
+
+					REQUIRE(rover == finalRover);
+				}
+			}
+		}
+
 		SECTION("Grid size command should")
 		{
 			Mock<Rover> rover;
