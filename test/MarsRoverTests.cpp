@@ -392,7 +392,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 						Rover rover;
 						rover.Execute(instructions.str());
 
-						//REQUIRE(rover.Execute(instructions.str()) == endPosition);
+						REQUIRE(rover.Execute(instructions.str()) == endPosition);
 					}
 				}
 			}
