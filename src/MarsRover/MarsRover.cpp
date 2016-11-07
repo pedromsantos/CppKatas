@@ -139,6 +139,15 @@ Rover::Rover(int width, int heigth, int x, int y, Direction direction)
 	};
 }
 
+string Rover::Execute(const string& instructions)
+{
+	instruction_parser_
+		->Parse(instructions)
+		->Execute(this);
+
+	return to_string(x_) + " " + to_string(y_) + " " + directionToDescription_[direction_];
+}
+
 void Rover::InitializeGridSize(int width, int heigth)
 {
 	width_ = width;
@@ -154,15 +163,6 @@ void Rover::InitializePosition(int x, int y)
 void Rover::InitializeDirection(Direction direction)
 {
 	direction_ = direction;
-}
-
-string Rover::Execute(const string& instructions)
-{
-	instruction_parser_
-		->Parse(instructions)
-		->Execute(this);
-
-	return to_string(x_) + " " + to_string(y_) + " " + directionToDescription_[direction_];
 }
 
 void Rover::TurnLeft()
