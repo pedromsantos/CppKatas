@@ -79,4 +79,5 @@ public:
 	void AddDirectionCommand(Direction direction);
 	void AddTurnLeftCommand();
 	void AddTurnRightCommand();
+	void AddMoveCommand();
 };

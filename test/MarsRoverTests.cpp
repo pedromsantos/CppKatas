@@ -104,6 +104,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			Fake(Method(rover, InitializeDirection));
 			Fake(Method(rover, TurnLeft));
 			Fake(Method(rover, TurnRight));
+			Fake(Method(rover, Move));
 
 			SECTION("store grid size instruction")
 			{
@@ -153,6 +154,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				commands.Execute(rover.get());
 
 				Verify(Method(rover, TurnRight));
+			}
+
+			SECTION("store move instruction")
+			{
+				Commands commands;
+
+				commands.AddMoveCommand();
+				commands.Execute(rover.get());
+
+				Verify(Method(rover, Move));
 			}
 		}
 
