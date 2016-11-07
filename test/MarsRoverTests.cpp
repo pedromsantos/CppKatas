@@ -44,6 +44,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 		{
 			Mock<Rover> rover;
 			Fake(Method(rover, InitializeGridSize));
+			Fake(Method(rover, InitializePosition));
 
 			SECTION("store grid size instruction")
 			{
@@ -53,6 +54,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				commands.ExecuteNext(rover.get());
 
 				Verify(Method(rover, InitializeGridSize));
+			}
+
+			SECTION("store position instruction")
+			{
+				Commands commands;
+
+				commands.AddPositionCommand(0, 0);
+				commands.ExecuteNext(rover.get());
+
+				Verify(Method(rover, InitializePosition));
 			}
 		}
 	}

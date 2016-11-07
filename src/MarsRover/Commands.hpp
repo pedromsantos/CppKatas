@@ -42,6 +42,6 @@ class Commands
 
 public:
 	void AddGridSizeCommand(int width, int heigth);
-
+	void AddPositionCommand(int x, int y);
 	void ExecuteNext(Rover& rover);
 };
