@@ -44,4 +44,5 @@ public:
 	
 	void virtual TurnLeft();
 	void virtual TurnRight();
+	void virtual Move();
 };

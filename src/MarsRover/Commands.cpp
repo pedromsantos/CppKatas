@@ -63,3 +63,8 @@ void TurnRightCommand::Execute(Rover& rover)
 {
 	rover.TurnRight();
 }
+
+void MoveCommand::Execute(Rover& rover)
+{
+	rover.Move();
+}

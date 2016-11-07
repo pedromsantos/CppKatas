@@ -117,3 +117,7 @@ void Rover::TurnLeft()
 void Rover::TurnRight()
 {
 }
+
+void Rover::Move()
+{
+}

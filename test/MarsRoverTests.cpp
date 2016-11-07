@@ -82,6 +82,20 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			}
 		}
 
+		SECTION("Move command should")
+		{
+			Mock<Rover> rover;
+			Fake(Method(rover, Move));
+
+			SECTION("move rover forward")
+			{
+				MoveCommand command;
+				command.Execute(rover.get());
+
+				Verify(Method(rover, Move));
+			}
+		}
+
 		SECTION("Commands should")
 		{
 			Mock<Rover> rover;
