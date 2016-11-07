@@ -5,6 +5,7 @@
 using namespace std;
 
 class Commands;
+enum Direction;
 
 class InstructionParser
 {
@@ -26,8 +27,8 @@ public:
 	Rover();
 
 	void virtual InitializeGridSize(int width, int heigth) const;
-
 	void virtual InitializePosition(int x, int y) const;
+	void virtual InitializeDirection(Direction direction) const;
 
 	string Execute(const string& instructions) const;
 };

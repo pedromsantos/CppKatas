@@ -6,7 +6,7 @@
 vector<string> InstructionParser::Split(const string &text, char sep) const
 {
 	vector<string> tokens;
-	size_t start = 0, end = 0;
+	size_t start = 0, end;
 	
 	while ((end = text.find(sep, start)) != string::npos) {
 		if (end != start) {
@@ -49,6 +49,10 @@ void Rover::InitializeGridSize(int width, int heigth) const
 }
 
 void Rover::InitializePosition(int x, int y) const
+{
+}
+
+void Rover::InitializeDirection(Direction direction) const
 {
 }
 

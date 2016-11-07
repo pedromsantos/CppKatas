@@ -2,6 +2,11 @@
 #include <vector>
 #include "MarsRover.hpp"
 
+enum Direction
+{
+	West
+};
+
 class Command
 {
 public:
@@ -35,6 +40,21 @@ public:
 
 	void Execute(Rover& rover) override;
 };
+
+
+class DirectionCommand : public Command
+{
+	Direction direction_;
+
+public:
+	DirectionCommand(Direction direction)
+		: direction_(direction)
+	{
+	}
+
+	void Execute(Rover& rover) override;
+};
+
 
 class Commands
 {

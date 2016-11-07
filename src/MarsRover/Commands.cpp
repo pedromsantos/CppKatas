@@ -30,3 +30,8 @@ void PositionCommand::Execute(Rover& rover)
 {
 	rover.InitializePosition(x_, y_);
 }
+
+void DirectionCommand::Execute(Rover& rover)
+{
+	rover.InitializeDirection(direction_);
+}
