@@ -89,6 +89,44 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 					REQUIRE(rover == finalRover);
 				}
 			}
+
+			SECTION("Move ")
+			{
+				SECTION("North")
+				{
+					Rover rover(1, 1, 0, 0, North);
+					Rover finalRover(1, 1, 0, 1, North);
+					rover.Move();
+
+					REQUIRE(rover == finalRover);
+				}
+				SECTION("South")
+				{
+					Rover rover(1, 1, 0, 0, South);
+					Rover finalRover(1, 1, 0, -1, South);
+					rover.Move();
+
+					REQUIRE(rover == finalRover);
+				}
+
+				SECTION("West")
+				{
+					Rover rover(1, 1, 0, 0, West);
+					Rover finalRover(1, 1, -1, 0, West);
+					rover.Move();
+
+					REQUIRE(rover == finalRover);
+				}
+
+				SECTION("East")
+				{
+					Rover rover(1, 1, 0, 0, East);
+					Rover finalRover(1, 1, 1, 0, East);
+					rover.Move();
+
+					REQUIRE(rover == finalRover);
+				}
+			}
 		}
 
 		SECTION("Grid size command should")

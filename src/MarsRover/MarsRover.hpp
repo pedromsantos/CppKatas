@@ -6,6 +6,8 @@
 #include <type_traits>
 #include <type_traits>
 #include <type_traits>
+#include <functional>
+#include <map>
 
 using namespace std;
 
@@ -38,10 +40,11 @@ class Rover
 	int width_;
 	int heigth_;
 	Direction direction_;	
+	map<Direction, function<void()>> move_;
 
 	static map<Direction, Direction> turnRight_;
 	static map<Direction, Direction> turnLeft_;
-
+	
 public:
 	Rover();
 	Rover(int width, int heigth, int x, int y, Direction direction);

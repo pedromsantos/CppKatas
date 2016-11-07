@@ -2,6 +2,7 @@
 #include "Commands.hpp"
 #include <memory>
 #include <string>
+#include <functional>
 
 InstructionsToDirections InstructionParser::instructionsToDirections_ =
 	{
@@ -109,13 +110,20 @@ map<Direction, Direction> Rover::turnLeft_ =
 };
 
 Rover::Rover()
-	: x_(0), y_(0), width_(1), heigth_(1), direction_(North)
-{
+	: Rover(0, 0, 1, 1, North)
+{	
 }
 
 Rover::Rover(int width, int heigth, int x, int y, Direction direction)
 	: x_(x), y_(y), width_(width), heigth_(heigth), direction_(direction)
 {
+	move_ =
+	{
+		{ North, [&, this]() { y_ = y_ + 1;} },
+		{ South, [&, this]() { y_ = y_ - 1;} },
+		{ East, [&, this]() { x_ = x_ + 1;} },
+		{ West, [&, this]() { x_ = x_ - 1;} },
+	};
 }
 
 void Rover::InitializeGridSize(int width, int heigth) const
@@ -147,4 +155,5 @@ void Rover::TurnRight()
 
 void Rover::Move()
 {
+	move_[direction_]();
 }
