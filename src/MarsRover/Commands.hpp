@@ -56,6 +56,12 @@ public:
 	void Execute(Rover& rover) override;
 };
 
+class TurnRightCommand : public Command
+{
+public:
+	void Execute(Rover& rover) override;
+};
+
 class Commands
 {
 	vector<unique_ptr<Command >> commands;

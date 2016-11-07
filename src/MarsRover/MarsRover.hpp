@@ -43,4 +43,5 @@ public:
 	string Execute(const string& instructions) const;
 	
 	void virtual TurnLeft();
+	void virtual TurnRight();
 };

@@ -52,3 +52,8 @@ void TurnLeftCommand::Execute(Rover& rover)
 {
 	rover.TurnLeft();
 }
+
+void TurnRightCommand::Execute(Rover& rover)
+{
+	rover.TurnRight();
+}

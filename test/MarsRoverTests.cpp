@@ -68,6 +68,20 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			}
 		}
 
+		SECTION("Turn right command should")
+		{
+			Mock<Rover> rover;
+			Fake(Method(rover, TurnRight));
+
+			SECTION("turn rover right")
+			{
+				TurnRightCommand command;
+				command.Execute(rover.get());
+
+				Verify(Method(rover, TurnRight));
+			}
+		}
+
 		SECTION("Commands should")
 		{
 			Mock<Rover> rover;
@@ -114,7 +128,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				commands.Execute(rover.get());
 
 				Verify(Method(rover, TurnLeft));
-			}
+			}	
 		}
 
 		SECTION("Instruction parser should")
