@@ -36,11 +36,11 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 {
 	auto commands = make_unique<Commands>();
 
-	auto instruction = Split(instructions, '\n');
+	auto instructionLines = Split(instructions, '\n');
 
-	ParseGridSizeInstruction(commands, instruction[0]);	
-	ParsePositionInstruction(commands, instruction[1]);
-	ParseDirectionInstruction(commands, instruction[1]);
+	ParseGridSizeInstruction(commands, instructionLines[0]);	
+	ParsePositionInstruction(commands, instructionLines[1]);
+	ParseDirectionInstruction(commands, instructionLines[1]);
 
 	return commands;
 }
@@ -48,19 +48,24 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 void InstructionParser::ParseGridSizeInstruction(unique_ptr<Commands>& commands, string line) const
 {
 	auto tokens = Split(line, ' ');
-	commands->AddGridSizeCommand(stoi(tokens[0]), stoi(tokens[1]));
+	auto width = stoi(tokens[0]);
+	auto heigth = stoi(tokens[1]);
+	commands->AddGridSizeCommand(width, heigth);
 }
 
 void InstructionParser::ParsePositionInstruction(unique_ptr<Commands>& commands, string line) const
 {
 	auto tokens = Split(line, ' ');
-	commands->AddPositionCommand(stoi(tokens[0]), stoi(tokens[1]));
+	auto x = stoi(tokens[0]);
+	auto y = stoi(tokens[1]);
+	commands->AddPositionCommand(x, y);
 }
 
 void InstructionParser::ParseDirectionInstruction(unique_ptr<Commands>& commands, string line) const
 {
 	auto tokens = Split(line, ' ');
-	auto direction = instructionsToDirections_[tokens[2]];
+	auto rawDirection= tokens.back();
+	auto direction = instructionsToDirections_[rawDirection];
 	commands->AddDirectionCommand(direction);
 }
 
