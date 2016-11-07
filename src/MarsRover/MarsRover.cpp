@@ -76,7 +76,14 @@ void InstructionParser::ParseDirectionInstruction(unique_ptr<Commands>& commands
 
 void InstructionParser::ParseMovementCommands(const unique_ptr<Commands>& commands, string line) const
 {
-	commands->AddTurnLeftCommand();
+	if (line[0] == 'L')
+	{
+		commands->AddTurnLeftCommand();
+	}
+	else
+	{
+		commands->AddTurnRightCommand();
+	}
 }
 
 Rover::Rover()

@@ -149,8 +149,9 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			Fake(Method(rover, InitializePosition));
 			Fake(Method(rover, InitializeDirection));
 			Fake(Method(rover, TurnLeft));
+			Fake(Method(rover, TurnRight));
 
-			SECTION("Parse grid size instruction")
+			SECTION("parse grid size instruction")
 			{
 				InstructionParser parser;
 
@@ -160,7 +161,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				Verify(Method(rover, InitializeGridSize));
 			}
 
-			SECTION("Parse position instruction")
+			SECTION("parse position instruction")
 			{
 				InstructionParser parser;
 
@@ -170,7 +171,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				Verify(Method(rover, InitializePosition));
 			}
 
-			SECTION("Parse direction instruction")
+			SECTION("parse direction instruction")
 			{
 				InstructionParser parser;
 
@@ -180,7 +181,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				Verify(Method(rover, InitializeDirection));
 			}
 
-			SECTION("Parse turn left instruction")
+			SECTION("parse turn left instruction")
 			{
 				InstructionParser parser;
 
@@ -188,6 +189,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				commands->Execute(rover.get());
 
 				Verify(Method(rover, TurnLeft));
+			}
+
+			SECTION("parse turn right instruction")
+			{
+				InstructionParser parser;
+
+				auto commands = parser.Parse("5 5\n1 1 W\nR");
+				commands->Execute(rover.get());
+
+				Verify(Method(rover, TurnRight));
 			}
 		}
 	}
