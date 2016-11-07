@@ -117,30 +117,41 @@ Rover::Rover()
 Rover::Rover(int width, int heigth, int x, int y, Direction direction)
 	: x_(x), y_(y), width_(width), heigth_(heigth), direction_(direction)
 {
+	instruction_parser_ = make_unique<InstructionParser>();
+
 	move_ =
 	{
-		{ North, [&, this]() { y_ = y_ + 1;} },
-		{ South, [&, this]() { y_ = y_ - 1;} },
-		{ East, [&, this]() { x_ = x_ + 1;} },
-		{ West, [&, this]() { x_ = x_ - 1;} },
+		{ North, [this]() { y_ = y_ + 1;} },
+		{ South, [this]() { y_ = y_ - 1;} },
+		{ East, [this]() { x_ = x_ + 1;} },
+		{ West, [this]() { x_ = x_ - 1;} },
 	};
 }
 
-void Rover::InitializeGridSize(int width, int heigth) const
+void Rover::InitializeGridSize(int width, int heigth)
 {
+	width_ = width;
+	heigth_ = heigth;
 }
 
-void Rover::InitializePosition(int x, int y) const
+void Rover::InitializePosition(int x, int y)
 {
+	x_ = x;
+	y_ = y;
 }
 
-void Rover::InitializeDirection(Direction direction) const
+void Rover::InitializeDirection(Direction direction)
 {
+	direction_ = direction;
 }
 
-string Rover::Execute(const string& instructions) const
+string Rover::Execute(const string& instructions)
 {
-	return  "";
+	auto commands = instruction_parser_->Parse(instructions);
+	
+	commands->Execute(this);
+
+	return " ";
 }
 
 void Rover::TurnLeft()

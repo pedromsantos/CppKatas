@@ -41,6 +41,7 @@ class Rover
 	int heigth_;
 	Direction direction_;	
 	map<Direction, function<void()>> move_;
+	unique_ptr<InstructionParser> instruction_parser_;
 
 	static map<Direction, Direction> turnRight_;
 	static map<Direction, Direction> turnLeft_;
@@ -49,11 +50,11 @@ public:
 	Rover();
 	Rover(int width, int heigth, int x, int y, Direction direction);
 	
-	void virtual InitializeGridSize(int width, int heigth) const;
-	void virtual InitializePosition(int x, int y) const;
-	void virtual InitializeDirection(Direction direction) const;
+	void virtual InitializeGridSize(int width, int heigth);
+	void virtual InitializePosition(int x, int y);
+	void virtual InitializeDirection(Direction direction);
 
-	string Execute(const string& instructions) const;
+	string Execute(const string& instructions);
 	
 	void virtual TurnLeft();
 	void virtual TurnRight();

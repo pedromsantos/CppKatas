@@ -5,7 +5,7 @@
 class Command
 {
 public:
-	void virtual Execute(Rover& rover) {};
+	void virtual Execute(Rover* rover) {};
 };
 
 class GridSizeCommand : public Command
@@ -19,7 +19,7 @@ public:
 	{
 	}
 
-	void Execute(Rover& rover) override;	
+	void Execute(Rover* rover) override;	
 };
 
 class PositionCommand : public Command
@@ -33,7 +33,7 @@ public:
 	{
 	}
 
-	void Execute(Rover& rover) override;
+	void Execute(Rover* rover) override;
 };
 
 
@@ -47,25 +47,25 @@ public:
 	{
 	}
 
-	void Execute(Rover& rover) override;
+	void Execute(Rover* rover) override;
 };
 
 class TurnLeftCommand : public Command
 {
 public:
-	void Execute(Rover& rover) override;
+	void Execute(Rover* rover) override;
 };
 
 class TurnRightCommand : public Command
 {
 public:
-	void Execute(Rover& rover) override;
+	void Execute(Rover* rover) override;
 };
 
 class MoveCommand : public Command
 {
 public:
-	void Execute(Rover& rover) override;
+	void Execute(Rover* rover) override;
 };
 
 class Commands
@@ -75,7 +75,7 @@ class Commands
 public:
 	void AddGridSizeCommand(int width, int heigth);
 	void AddPositionCommand(int x, int y);
-	void Execute(Rover& rover);
+	void Execute(Rover* rover);
 	void AddDirectionCommand(Direction direction);
 	void AddTurnLeftCommand();
 	void AddTurnRightCommand();

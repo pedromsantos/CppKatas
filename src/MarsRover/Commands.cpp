@@ -1,7 +1,7 @@
 #include "MarsRover.hpp"
 #include "Commands.hpp"
 
-void Commands::Execute(Rover& rover)
+void Commands::Execute(Rover* rover)
 {
 	for (auto const& command : commands)
 	{
@@ -45,32 +45,32 @@ void Commands::AddMoveCommand()
 	commands.push_back(move(command));
 }
 
-void GridSizeCommand::Execute(Rover& rover)
+void GridSizeCommand::Execute(Rover* rover)
 {
-	rover.InitializeGridSize(width_, heigth_);
+	rover->InitializeGridSize(width_, heigth_);
 }
 
-void PositionCommand::Execute(Rover& rover)
+void PositionCommand::Execute(Rover* rover)
 {
-	rover.InitializePosition(x_, y_);
+	rover->InitializePosition(x_, y_);
 }
 
-void DirectionCommand::Execute(Rover& rover)
+void DirectionCommand::Execute(Rover* rover)
 {
-	rover.InitializeDirection(direction_);
+	rover->InitializeDirection(direction_);
 }
 
-void TurnLeftCommand::Execute(Rover& rover)
+void TurnLeftCommand::Execute(Rover* rover)
 {
-	rover.TurnLeft();
+	rover->TurnLeft();
 }
 
-void TurnRightCommand::Execute(Rover& rover)
+void TurnRightCommand::Execute(Rover* rover)
 {
-	rover.TurnRight();
+	rover->TurnRight();
 }
 
-void MoveCommand::Execute(Rover& rover)
+void MoveCommand::Execute(Rover* rover)
 {
-	rover.Move();
+	rover->Move();
 }
