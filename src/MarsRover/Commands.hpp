@@ -50,6 +50,11 @@ public:
 	void Execute(Rover& rover) override;
 };
 
+class TurnLeftCommand : public Command
+{
+public:
+	void Execute(Rover& rover) override;
+};
 
 class Commands
 {

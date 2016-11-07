@@ -93,3 +93,7 @@ string Rover::Execute(const string& instructions) const
 {
 	return  "";
 }
+
+void Rover::TurnLeft()
+{
+}

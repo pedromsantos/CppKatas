@@ -41,3 +41,8 @@ void DirectionCommand::Execute(Rover& rover)
 {
 	rover.InitializeDirection(direction_);
 }
+
+void TurnLeftCommand::Execute(Rover& rover)
+{
+	rover.TurnLeft();
+}

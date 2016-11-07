@@ -36,4 +36,6 @@ public:
 	void virtual InitializeDirection(Direction direction) const;
 
 	string Execute(const string& instructions) const;
+	
+	void virtual TurnLeft();
 };
