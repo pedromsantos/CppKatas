@@ -72,4 +72,5 @@ public:
 	void Execute(Rover& rover);
 	void AddDirectionCommand(Direction direction);
 	void AddTurnLeftCommand();
+	void AddTurnRightCommand();
 };

@@ -89,6 +89,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			Fake(Method(rover, InitializePosition));
 			Fake(Method(rover, InitializeDirection));
 			Fake(Method(rover, TurnLeft));
+			Fake(Method(rover, TurnRight));
 
 			SECTION("store grid size instruction")
 			{
@@ -129,6 +130,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				Verify(Method(rover, TurnLeft));
 			}	
+
+			SECTION("store turn right instruction")
+			{
+				Commands commands;
+
+				commands.AddTurnRightCommand();
+				commands.Execute(rover.get());
+
+				Verify(Method(rover, TurnRight));
+			}
 		}
 
 		SECTION("Instruction parser should")
