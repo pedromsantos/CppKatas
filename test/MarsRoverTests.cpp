@@ -241,11 +241,12 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				InstructionParser parser;
 
-				auto commands = parser.Parse("5 5\n1 1 W\nLR");
+				auto commands = parser.Parse("5 5\n1 1 W\nLRM");
 				commands->Execute(rover.get());
 
 				Verify(Method(rover, TurnLeft));
 				Verify(Method(rover, TurnRight));
+				Verify(Method(rover, Move));
 			}
 		}
 	}
