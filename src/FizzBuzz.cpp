@@ -15,6 +15,6 @@ std::string FizzBuzz(const unsigned int number)
     }
 
     return fizzBuzz.length() > 0
-               ? fizzBuzz
-               : std::to_string(number);
+           ? fizzBuzz
+           : std::to_string(number);
 }

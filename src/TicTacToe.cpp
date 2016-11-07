@@ -6,19 +6,19 @@ TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Colum
 
     if (IsPlayerInvalid(player))
     {
-	status = InvalidPlayer;
+        status = InvalidPlayer;
     }
 
     if (IsPositionTaken(row, column))
     {
-	status = InvalidPosition;
+        status = InvalidPosition;
     }
 
     SaveTurn(player, row, column);
 
     if (IsWinner(player))
     {
-	status = Win;
+        status = Win;
     }
 
     return status;
@@ -42,17 +42,18 @@ void TicTacToe::SaveTurn(const Player &player, const Row &row, const Column &col
 
 bool TicTacToe::IsWinner(const Player &player) const
 {
-    return WinnerOnRows(player) || WinnerOnColumns(player) || WinnerOnDiagonal(player, LEFT, RIGHT) || WinnerOnDiagonal(player, RIGHT, LEFT);
+    return WinnerOnRows(player) || WinnerOnColumns(player) || WinnerOnDiagonals(player, LEFT, RIGHT) ||
+           WinnerOnDiagonals(player, RIGHT, LEFT);
 }
 
 bool TicTacToe::WinnerOnRows(const Player &player) const
 {
     for (const auto row : {TOP, MIDLDE, BOTTOM})
     {
-	if (player == turns[row][LEFT] && player == turns[row][CENTER] && player == turns[row][RIGHT])
-	{
-	    return true;
-	}
+        if (player == turns[row][LEFT] && player == turns[row][CENTER] && player == turns[row][RIGHT])
+        {
+            return true;
+        }
     }
     return false;
 }
@@ -61,15 +62,15 @@ bool TicTacToe::WinnerOnColumns(const Player &player) const
 {
     for (const auto column : {LEFT, CENTER, RIGHT})
     {
-	if (player == turns[TOP][column] && player == turns[MIDLDE][column] && player == turns[BOTTOM][column])
-	{
-	    return true;
-	}
+        if (player == turns[TOP][column] && player == turns[MIDLDE][column] && player == turns[BOTTOM][column])
+        {
+            return true;
+        }
     }
     return false;
 }
 
-bool TicTacToe::WinnerOnDiagonal(const Player &player, Column start, Column end) const
+bool TicTacToe::WinnerOnDiagonals(const Player &player, Column start, Column end) const
 {
     return (player == turns[TOP][start] && player == turns[MIDLDE][CENTER] && player == turns[BOTTOM][end]);
 }
