@@ -50,10 +50,8 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 	return commands;
 }
 
-
 Rover::Rover()
 {
-	instruction_parser_ = make_unique<InstructionParser>();
 }
 
 void Rover::InitializeGridSize(int width, int heigth) const
@@ -70,7 +68,5 @@ void Rover::InitializeDirection(Direction direction) const
 
 string Rover::Execute(const string& instructions) const
 {
-	instruction_parser_->Parse(instructions);
-
 	return  "";
 }

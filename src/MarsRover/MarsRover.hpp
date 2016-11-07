@@ -26,8 +26,6 @@ public:
 
 class Rover
 {
-	unique_ptr<InstructionParser> instruction_parser_;	
-
 public:
 	Rover();
 
