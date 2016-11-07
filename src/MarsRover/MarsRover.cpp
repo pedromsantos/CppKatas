@@ -78,6 +78,10 @@ void InstructionParser::ParseMovementCommands(const unique_ptr<Commands>& comman
 {
 	for (auto movement : line) 
 	{
+		if (movement == 'M')
+		{
+			commands->AddMoveCommand();
+		}
 		if (movement == 'L')
 		{
 			commands->AddTurnLeftCommand();

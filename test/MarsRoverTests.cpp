@@ -175,6 +175,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			Fake(Method(rover, InitializeDirection));
 			Fake(Method(rover, TurnLeft));
 			Fake(Method(rover, TurnRight));
+			Fake(Method(rover, Move));
 
 			SECTION("parse grid size instruction")
 			{
@@ -224,6 +225,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				commands->Execute(rover.get());
 
 				Verify(Method(rover, TurnRight));
+			}
+
+			SECTION("parse move instruction")
+			{
+				InstructionParser parser;
+
+				auto commands = parser.Parse("5 5\n1 1 W\nM");
+				commands->Execute(rover.get());
+
+				Verify(Method(rover, Move));
 			}
 
 			SECTION("parse multiple turn instructions")
