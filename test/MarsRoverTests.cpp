@@ -200,6 +200,17 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				Verify(Method(rover, TurnRight));
 			}
+
+			SECTION("parse multiple turn instructions")
+			{
+				InstructionParser parser;
+
+				auto commands = parser.Parse("5 5\n1 1 W\nLR");
+				commands->Execute(rover.get());
+
+				Verify(Method(rover, TurnLeft));
+				Verify(Method(rover, TurnRight));
+			}
 		}
 	}
 
