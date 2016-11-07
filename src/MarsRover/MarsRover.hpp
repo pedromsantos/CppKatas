@@ -27,5 +27,7 @@ public:
 
 	void virtual InitializeGridSize(int width, int heigth) const;
 
+	void virtual InitializePosition(int x, int y) const;
+
 	string Execute(const string& instructions) const;
 };

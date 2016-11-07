@@ -27,8 +27,6 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 
 	auto tokens = Split(instructions, ' ');
 
-
-
 	return commands;
 }
 
@@ -38,6 +36,10 @@ Rover::Rover()
 }
 
 void Rover::InitializeGridSize(int width, int heigth) const
+{
+}
+
+void Rover::InitializePosition(int x, int y) const
 {
 }
 

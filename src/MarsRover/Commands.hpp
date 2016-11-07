@@ -22,6 +22,20 @@ public:
 	void Execute(Rover& rover) override;	
 };
 
+class PositionCommand : public Command
+{
+	int x_;
+	int y_;
+
+public:
+	PositionCommand(int x, int y)
+		: x_(x), y_(y)
+	{
+	}
+
+	void Execute(Rover& rover) override;
+};
+
 class Commands
 {
 	vector<unique_ptr<Command >> commands;
