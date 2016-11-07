@@ -16,14 +16,18 @@ vector<string> InstructionParser::Split(const string &text, char sep) const
 	vector<string> tokens;
 	size_t start = 0, end;
 	
-	while ((end = text.find(sep, start)) != string::npos) {
-		if (end != start) {
+	while ((end = text.find(sep, start)) != string::npos) 
+	{
+		if (end != start) 
+		{
 			tokens.push_back(text.substr(start, end - start));
 		}
+
 		start = end + 1;
 	}
 	
-	if (end != start) {
+	if (end != start) 
+	{
 		auto token = text.substr(start);
 		token.erase(token.find_last_not_of(" \n\r\t") + 1);
 		tokens.push_back(token);
