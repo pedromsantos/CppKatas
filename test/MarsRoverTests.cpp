@@ -12,7 +12,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 	{
 		using namespace fakeit;
 
-		SECTION("GridSizeCommand should")
+		SECTION("Grid size command should")
 		{
 			Mock<Rover> rover;
 			Fake(Method(rover, InitializeGridSize));
@@ -26,7 +26,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			}
 		}
 
-		SECTION("PositionCommand should")
+		SECTION("Position command should")
 		{
 			Mock<Rover> rover;
 			Fake(Method(rover, InitializePosition));
@@ -64,6 +64,23 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				commands.ExecuteNext(rover.get());
 
 				Verify(Method(rover, InitializePosition));
+			}
+		}
+
+		SECTION("Instruction parser should")
+		{
+			Mock<Rover> rover;
+			Fake(Method(rover, InitializeGridSize));
+			Fake(Method(rover, InitializePosition));
+
+			SECTION("Parse grid size instruction")
+			{
+				InstructionParser parser;
+
+				auto commands = parser.Parse("5 5");
+				commands->ExecuteNext(rover.get());
+
+				Verify(Method(rover, InitializeGridSize));
 			}
 		}
 	}
