@@ -374,6 +374,34 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 		{
 			auto gridSize = "5 5";
 
+			GIVEN("a starting position of 1 1 N")
+			{
+				auto startPosition = "1 1 N";
+
+				WHEN("the commands L are executed")
+				{
+					auto commands = "L";
+
+					THEN("Then the final position should be 1 1 W")
+					{
+						auto endPosition = "1 1 W";
+
+						stringstream instructions;
+						instructions << gridSize << endl << startPosition << endl << commands << ends;
+
+						Rover rover;
+						rover.Execute(instructions.str());
+
+						REQUIRE(rover.Execute(instructions.str()) == endPosition);
+					}
+				}
+			}
+		}
+
+		GIVEN("a grid of 5 by 5")
+		{
+			auto gridSize = "5 5";
+
 			GIVEN("a starting position of 1 2 N")
 			{
 				auto startPosition = "1 2 N";
@@ -392,7 +420,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 						Rover rover;
 						rover.Execute(instructions.str());
 
-						//REQUIRE(rover.Execute(instructions.str()) == endPosition);
+						REQUIRE(rover.Execute(instructions.str()) == endPosition);
 					}
 				}
 			}

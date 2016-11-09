@@ -45,6 +45,7 @@ class Rover
 
 	static map<Direction, Direction> turnRight_;
 	static map<Direction, Direction> turnLeft_;
+	static map<Direction, string> directions_;
 	
 public:
 	Rover();

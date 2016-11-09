@@ -89,7 +89,10 @@ void InstructionParser::ParseMovementCommands(const unique_ptr<Commands>& comman
 			commands->AddTurnLeftCommand();
 		}
 		
-		commands->AddMoveCommand();
+		if (movement == 'M')
+		{
+			commands->AddMoveCommand();
+		}
 	}
 }
 
@@ -109,8 +112,16 @@ map<Direction, Direction> Rover::turnLeft_ =
 	{ West, South }
 };
 
+map<Direction, string> Rover::directions_ =
+{
+	{ North, "N" },
+	{ East, "E" },
+	{ South, "S" },
+	{ West, "W" }
+};
+
 Rover::Rover()
-	: Rover(0, 0, 1, 1, North)
+	: Rover(0, 0, 0, 0, North)
 {	
 }
 
@@ -147,11 +158,11 @@ void Rover::InitializeDirection(Direction direction)
 
 string Rover::Execute(const string& instructions)
 {
-	auto commands = instruction_parser_->Parse(instructions);
-	
-	commands->Execute(this);
+	instruction_parser_
+		->Parse(instructions)	
+		->Execute(this);
 
-	return " ";
+	return to_string(x_) + " " + to_string(y_) + " " + directions_[direction_];
 }
 
 void Rover::TurnLeft()
