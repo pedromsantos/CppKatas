@@ -7,6 +7,7 @@
 #include <type_traits>
 #include <type_traits>
 #include <functional>
+#include <string>
 #include <map>
 
 using namespace std;
@@ -35,9 +36,11 @@ public:
 
 struct Plateau
 {
+private:
 	int width_;
 	int heigth_;
 
+public:
 	Plateau(int width, int height)
 		:width_(width), heigth_(height)
 	{
@@ -57,11 +60,13 @@ inline bool operator==(const Plateau& lPlateau, const Plateau& rPlateau) {
 
 struct Position
 {
+private:
 	int x_;
 	int y_;
 
 	map<Direction, function<Position(int, int)>> move_;
 
+public:
 	Position(int x, int y)
 		:x_(x), y_(y)
 	{
@@ -83,6 +88,11 @@ struct Position
 	Position Move(Direction direction)
 	{
 		return move_[direction](x_, y_);
+	}
+
+	string ToString()
+	{
+		return to_string(x_) + " " + to_string(y_);
 	}
 };
 

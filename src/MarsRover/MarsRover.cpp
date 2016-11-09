@@ -152,7 +152,7 @@ string Rover::Execute(const string& instructions)
 		->Parse(instructions)	
 		->Execute(this);
 
-	return to_string(position_.x_) + " " + to_string(position_.y_) + " " + directions_[direction_];
+	return position_.ToString() + " " + directions_[direction_];
 }
 
 void Rover::TurnLeft()
