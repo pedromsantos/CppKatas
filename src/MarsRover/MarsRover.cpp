@@ -121,34 +121,34 @@ map<Direction, string> Rover::directions_ =
 };
 
 Rover::Rover()
-	: Rover(0, 0, 0, 0, Direction::North)
+	: Rover(Plateau(0,0), Position(0,0), Direction::North)
 {	
 }
 
-Rover::Rover(int width, int heigth, int x, int y, Direction direction)
-	: x_(x), y_(y), width_(width), heigth_(heigth), direction_(direction)
+Rover::Rover(Plateau plateau, Position position, Direction direction)
+	: plateau_(plateau), position_(position) , direction_(direction)
 {
 	instruction_parser_ = make_unique<InstructionParser>();
 
 	move_ =
 	{
-		{Direction::North, [this]() { y_ = y_ + 1;} },
-		{Direction::South, [this]() { y_ = y_ - 1;} },
-		{Direction::East, [this]() { x_ = x_ + 1;} },
-		{Direction::West, [this]() { x_ = x_ - 1;} },
+		{Direction::North, [this]() { position_.y_ = position_.y_ + 1;} },
+		{Direction::South, [this]() { position_.y_ = position_.y_ - 1;} },
+		{Direction::East, [this]() { position_.x_ = position_.x_ + 1;} },
+		{Direction::West, [this]() { position_.x_ = position_.x_ - 1;} },
 	};
 }
 
 void Rover::InitializeGridSize(int width, int heigth)
 {
-	width_ = width;
-	heigth_ = heigth;
+	plateau_.width_ = width;
+	plateau_.heigth_ = heigth;
 }
 
 void Rover::InitializePosition(int x, int y)
 {
-	x_ = x;
-	y_ = y;
+	position_.x_ = x;
+	position_.y_ = y;
 }
 
 void Rover::InitializeDirection(Direction direction)
@@ -162,7 +162,7 @@ string Rover::Execute(const string& instructions)
 		->Parse(instructions)	
 		->Execute(this);
 
-	return to_string(x_) + " " + to_string(y_) + " " + directions_[direction_];
+	return to_string(position_.x_) + " " + to_string(position_.y_) + " " + directions_[direction_];
 }
 
 void Rover::TurnLeft()

@@ -33,12 +33,54 @@ public:
 	unique_ptr<Commands> Parse(const string& instructions) const;
 };
 
-class Rover
+struct Plateau
+{
+	int width_;
+	int heigth_;
+
+	Plateau(int width, int height)
+		:width_(width), heigth_(height)
+	{
+	}
+
+	bool IsEqual(const Plateau& other) const
+	{
+		return heigth_ == other.heigth_
+			&& width_ == other.width_;
+	}
+};
+
+inline bool operator==(const Plateau& lPlateau, const Plateau& rPlateau) {
+	return typeid(lPlateau) == typeid(rPlateau)
+		&& lPlateau.IsEqual(rPlateau);
+}
+
+struct Position
 {
 	int x_;
 	int y_;
-	int width_;
-	int heigth_;
+
+	Position(int x, int y)
+		:x_(x), y_(y)
+	{
+	}
+
+	bool IsEqual(const Position& other) const
+	{
+		return x_ == other.x_
+			&& y_ == other.y_;
+	}
+};
+
+inline bool operator==(const Position& lPosition, const Position& rPosition) {
+	return typeid(lPosition) == typeid(rPosition)
+		&& lPosition.IsEqual(rPosition);
+}
+
+class Rover
+{
+	Plateau plateau_;
+	Position position_;
 	Direction direction_;	
 	map<Direction, function<void()>> move_;
 	unique_ptr<InstructionParser> instruction_parser_;
@@ -49,7 +91,7 @@ class Rover
 	
 public:
 	Rover();
-	Rover(int width, int heigth, int x, int y, Direction direction);
+	Rover(Plateau plateau, Position position, Direction direction);
 	
 	void virtual InitializeGridSize(int width, int heigth);
 	void virtual InitializePosition(int x, int y);
@@ -61,18 +103,16 @@ public:
 	void virtual TurnRight();
 	void virtual Move();
 
-	virtual bool isEqual(const Rover& rover) const
+	virtual bool IsEqual(const Rover& rover) const
 	{
-		return
-			rover.width_ == width_
-			&& rover.heigth_ == heigth_
-			&& rover.x_ == x_
-			&& rover.y_ == y_
+		return 
+			rover.plateau_ == plateau_
+			&& rover.position_ == position_
 			&& rover.direction_ == direction_;
 	}
 };
 
 inline bool operator==(const Rover& lRover, const Rover& rRover) {
 	return typeid(lRover) == typeid(rRover)
-		&& lRover.isEqual(rRover);
+		&& lRover.IsEqual(rRover);
 }

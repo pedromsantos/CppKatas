@@ -14,20 +14,23 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 		SECTION("Rover should")
 		{
+			Plateau plateau(1, 1);
+			Position position(0, 0);
+
 			SECTION("turn right")
 			{
 				SECTION("from North to East")
 				{
-					Rover rover(1, 1, 0, 0, Direction::North);
-					Rover finalRover(1, 1, 0, 0, Direction::East);
+					Rover rover(plateau, position, Direction::North);
+					Rover finalRover(plateau, position, Direction::East);
 					rover.TurnRight();
 
 					REQUIRE(rover == finalRover);
 				}
 				SECTION("from East to South")
 				{
-					Rover rover(1, 1, 0, 0, Direction::East);
-					Rover finalRover(1, 1, 0, 0, Direction::South);
+					Rover rover(plateau, position, Direction::East);
+					Rover finalRover(plateau, position, Direction::South);
 					rover.TurnRight();
 
 					REQUIRE(rover == finalRover);
@@ -35,8 +38,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("from South to West")
 				{
-					Rover rover(1, 1, 0, 0, Direction::South);
-					Rover finalRover(1, 1, 0, 0, Direction::West);
+					Rover rover(plateau, position, Direction::South);
+					Rover finalRover(plateau, position, Direction::West);
 					rover.TurnRight();
 
 					REQUIRE(rover == finalRover);
@@ -44,8 +47,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("from West to North")
 				{
-					Rover rover(1, 1, 0, 0, Direction::West);
-					Rover finalRover(1, 1, 0, 0, Direction::North);
+					Rover rover(plateau, position, Direction::West);
+					Rover finalRover(plateau, position, Direction::North);
 					rover.TurnRight();
 
 					REQUIRE(rover == finalRover);
@@ -56,16 +59,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				SECTION("from North to West")
 				{
-					Rover rover(1, 1, 0, 0, Direction::North);
-					Rover finalRover(1, 1, 0, 0, Direction::West);
+					Rover rover(plateau, position, Direction::North);
+					Rover finalRover(plateau, position, Direction::West);
 					rover.TurnLeft();
 
 					REQUIRE(rover == finalRover);
 				}
 				SECTION("from West to South")
 				{
-					Rover rover(1, 1, 0, 0, Direction::West);
-					Rover finalRover(1, 1, 0, 0, Direction::South);
+					Rover rover(plateau, position, Direction::West);
+					Rover finalRover(plateau, position, Direction::South);
 					rover.TurnLeft();
 
 					REQUIRE(rover == finalRover);
@@ -73,8 +76,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("from South to East")
 				{
-					Rover rover(1, 1, 0, 0, Direction::South);
-					Rover finalRover(1, 1, 0, 0, Direction::East);
+					Rover rover(plateau, position, Direction::South);
+					Rover finalRover(plateau, position, Direction::East);
 					rover.TurnLeft();
 
 					REQUIRE(rover == finalRover);
@@ -82,8 +85,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("from East to North")
 				{
-					Rover rover(1, 1, 0, 0, Direction::East);
-					Rover finalRover(1, 1, 0, 0, Direction::North);
+					Rover rover(plateau, position, Direction::East);
+					Rover finalRover(plateau, position, Direction::North);
 					rover.TurnLeft();
 
 					REQUIRE(rover == finalRover);
@@ -94,16 +97,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				SECTION("North")
 				{
-					Rover rover(1, 1, 0, 0, Direction::North);
-					Rover finalRover(1, 1, 0, 1, Direction::North);
+					Rover rover(plateau, position, Direction::North);
+					Rover finalRover(plateau, Position(0, 1), Direction::North);
 					rover.Move();
 
 					REQUIRE(rover == finalRover);
 				}
 				SECTION("South")
 				{
-					Rover rover(1, 1, 0, 0, Direction::South);
-					Rover finalRover(1, 1, 0, -1, Direction::South);
+					Rover rover(plateau, position, Direction::South);
+					Rover finalRover(plateau, Position(0, -1), Direction::South);
 					rover.Move();
 
 					REQUIRE(rover == finalRover);
@@ -111,8 +114,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("West")
 				{
-					Rover rover(1, 1, 0, 0, Direction::West);
-					Rover finalRover(1, 1, -1, 0, Direction::West);
+					Rover rover(plateau, position, Direction::West);
+					Rover finalRover(plateau, Position(-1, 0), Direction::West);
 					rover.Move();
 
 					REQUIRE(rover == finalRover);
@@ -120,8 +123,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("East")
 				{
-					Rover rover(1, 1, 0, 0, Direction::East);
-					Rover finalRover(1, 1, 1, 0, Direction::East);
+					Rover rover(plateau, position, Direction::East);
+					Rover finalRover(plateau, Position(1, 0), Direction::East);
 					rover.Move();
 
 					REQUIRE(rover == finalRover);
