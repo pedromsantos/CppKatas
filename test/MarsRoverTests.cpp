@@ -12,6 +12,50 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 	{
 		using namespace fakeit;
 
+		SECTION("Position should")
+		{
+			SECTION("update x or y when moving")
+			{
+				Position position(1, 1);
+
+				SECTION("north")
+				{
+					Position finalPosition(1, 2);
+
+					position.Move(Direction::North);
+
+					REQUIRE(position == finalPosition);
+				}
+
+				SECTION("south")
+				{
+					Position finalPosition(1, 0);
+
+					position.Move(Direction::South);
+
+					REQUIRE(position == finalPosition);
+				}
+
+				SECTION("east")
+				{
+					Position finalPosition(2, 1);
+
+					position.Move(Direction::East);
+
+					REQUIRE(position == finalPosition);
+				}
+
+				SECTION("west")
+				{
+					Position finalPosition(0, 1);
+
+					position.Move(Direction::West);
+
+					REQUIRE(position == finalPosition);
+				}
+			}
+		}
+
 		SECTION("Rover should")
 		{
 			Plateau plateau(1, 1);
@@ -93,7 +137,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				}
 			}
 
-			SECTION("Move ")
+			SECTION("Move")
 			{
 				SECTION("North")
 				{
@@ -213,7 +257,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				command.Execute(&rover.get());
 
 				Verify(Method(rover, Move));
-			}
+			}	
 		}
 
 		SECTION("Commands should")
