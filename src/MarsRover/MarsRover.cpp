@@ -1,8 +1,9 @@
-#include "MarsRover.hpp"
-#include "Commands.hpp"
 #include <memory>
 #include <string>
 #include <functional>
+
+#include "MarsRover.hpp"
+#include "Commands.hpp"
 
 InstructionsToDirections InstructionParser::instructionsToDirections_ =
 	{

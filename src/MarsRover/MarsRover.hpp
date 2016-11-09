@@ -1,14 +1,12 @@
 #pragma once
 #include <memory>
 #include <vector>
-#include <map>
-#include "Directions.hpp"
-#include <type_traits>
-#include <type_traits>
 #include <type_traits>
 #include <functional>
 #include <string>
 #include <map>
+
+#include "Directions.hpp"
 
 using namespace std;
 
