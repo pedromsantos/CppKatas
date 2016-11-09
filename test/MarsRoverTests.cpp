@@ -18,16 +18,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				SECTION("from North to East")
 				{
-					Rover rover(1, 1, 0, 0, North);
-					Rover finalRover(1, 1, 0, 0, East);
+					Rover rover(1, 1, 0, 0, Direction::North);
+					Rover finalRover(1, 1, 0, 0, Direction::East);
 					rover.TurnRight();
 
 					REQUIRE(rover == finalRover);
 				}
 				SECTION("from East to South")
 				{
-					Rover rover(1, 1, 0, 0, East);
-					Rover finalRover(1, 1, 0, 0, South);
+					Rover rover(1, 1, 0, 0, Direction::East);
+					Rover finalRover(1, 1, 0, 0, Direction::South);
 					rover.TurnRight();
 
 					REQUIRE(rover == finalRover);
@@ -35,8 +35,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("from South to West")
 				{
-					Rover rover(1, 1, 0, 0, South);
-					Rover finalRover(1, 1, 0, 0, West);
+					Rover rover(1, 1, 0, 0, Direction::South);
+					Rover finalRover(1, 1, 0, 0, Direction::West);
 					rover.TurnRight();
 
 					REQUIRE(rover == finalRover);
@@ -44,8 +44,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("from West to North")
 				{
-					Rover rover(1, 1, 0, 0, West);
-					Rover finalRover(1, 1, 0, 0, North);
+					Rover rover(1, 1, 0, 0, Direction::West);
+					Rover finalRover(1, 1, 0, 0, Direction::North);
 					rover.TurnRight();
 
 					REQUIRE(rover == finalRover);
@@ -56,16 +56,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				SECTION("from North to West")
 				{
-					Rover rover(1, 1, 0, 0, North);
-					Rover finalRover(1, 1, 0, 0, West);
+					Rover rover(1, 1, 0, 0, Direction::North);
+					Rover finalRover(1, 1, 0, 0, Direction::West);
 					rover.TurnLeft();
 
 					REQUIRE(rover == finalRover);
 				}
 				SECTION("from West to South")
 				{
-					Rover rover(1, 1, 0, 0, West);
-					Rover finalRover(1, 1, 0, 0, South);
+					Rover rover(1, 1, 0, 0, Direction::West);
+					Rover finalRover(1, 1, 0, 0, Direction::South);
 					rover.TurnLeft();
 
 					REQUIRE(rover == finalRover);
@@ -73,8 +73,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("from South to East")
 				{
-					Rover rover(1, 1, 0, 0, South);
-					Rover finalRover(1, 1, 0, 0, East);
+					Rover rover(1, 1, 0, 0, Direction::South);
+					Rover finalRover(1, 1, 0, 0, Direction::East);
 					rover.TurnLeft();
 
 					REQUIRE(rover == finalRover);
@@ -82,8 +82,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("from East to North")
 				{
-					Rover rover(1, 1, 0, 0, East);
-					Rover finalRover(1, 1, 0, 0, North);
+					Rover rover(1, 1, 0, 0, Direction::East);
+					Rover finalRover(1, 1, 0, 0, Direction::North);
 					rover.TurnLeft();
 
 					REQUIRE(rover == finalRover);
@@ -94,16 +94,16 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				SECTION("North")
 				{
-					Rover rover(1, 1, 0, 0, North);
-					Rover finalRover(1, 1, 0, 1, North);
+					Rover rover(1, 1, 0, 0, Direction::North);
+					Rover finalRover(1, 1, 0, 1, Direction::North);
 					rover.Move();
 
 					REQUIRE(rover == finalRover);
 				}
 				SECTION("South")
 				{
-					Rover rover(1, 1, 0, 0, South);
-					Rover finalRover(1, 1, 0, -1, South);
+					Rover rover(1, 1, 0, 0, Direction::South);
+					Rover finalRover(1, 1, 0, -1, Direction::South);
 					rover.Move();
 
 					REQUIRE(rover == finalRover);
@@ -111,8 +111,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("West")
 				{
-					Rover rover(1, 1, 0, 0, West);
-					Rover finalRover(1, 1, -1, 0, West);
+					Rover rover(1, 1, 0, 0, Direction::West);
+					Rover finalRover(1, 1, -1, 0, Direction::West);
 					rover.Move();
 
 					REQUIRE(rover == finalRover);
@@ -120,8 +120,8 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 				SECTION("East")
 				{
-					Rover rover(1, 1, 0, 0, East);
-					Rover finalRover(1, 1, 1, 0, East);
+					Rover rover(1, 1, 0, 0, Direction::East);
+					Rover finalRover(1, 1, 1, 0, Direction::East);
 					rover.Move();
 
 					REQUIRE(rover == finalRover);
@@ -164,7 +164,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 
 			SECTION("initialize direction on rover")
 			{
-				DirectionCommand command(West);
+				DirectionCommand command(Direction::West);
 				command.Execute(&rover.get());
 
 				Verify(Method(rover, InitializeDirection));
@@ -247,7 +247,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				Commands commands;
 
-				commands.AddDirectionCommand(North);
+				commands.AddDirectionCommand(Direction::North);
 				commands.Execute(&rover.get());
 
 				Verify(Method(rover, InitializeDirection));

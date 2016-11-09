@@ -6,10 +6,10 @@
 
 InstructionsToDirections InstructionParser::instructionsToDirections_ =
 	{
-		{ "N", North },
-		{ "E", East },
-		{ "S", South },
-		{ "W", West }
+		{ "N", Direction::North },
+		{ "E", Direction::East },
+		{ "S", Direction::South },
+		{ "W", Direction::West }
 	};
 
 vector<string> InstructionParser::Split(const string &text, char sep) const
@@ -98,30 +98,30 @@ void InstructionParser::ParseMovementCommands(const unique_ptr<Commands>& comman
 
 map<Direction, Direction> Rover::turnRight_ =
 {
-	{North, East},
-	{East, South},
-	{South, West},
-	{West, North}
+	{Direction::North, Direction::East},
+	{Direction::East, Direction::South},
+	{Direction::South, Direction::West},
+	{Direction::West, Direction::North}
 };
 
 map<Direction, Direction> Rover::turnLeft_ =
 {
-	{ North, West },
-	{ East, North },
-	{ South, East },
-	{ West, South }
+	{Direction::North, Direction::West },
+	{Direction::East, Direction::North },
+	{Direction::South, Direction::East },
+	{Direction::West, Direction::South }
 };
 
 map<Direction, string> Rover::directions_ =
 {
-	{ North, "N" },
-	{ East, "E" },
-	{ South, "S" },
-	{ West, "W" }
+	{Direction::North, "N" },
+	{Direction::East, "E" },
+	{Direction::South, "S" },
+	{Direction::West, "W" }
 };
 
 Rover::Rover()
-	: Rover(0, 0, 0, 0, North)
+	: Rover(0, 0, 0, 0, Direction::North)
 {	
 }
 
@@ -132,10 +132,10 @@ Rover::Rover(int width, int heigth, int x, int y, Direction direction)
 
 	move_ =
 	{
-		{ North, [this]() { y_ = y_ + 1;} },
-		{ South, [this]() { y_ = y_ - 1;} },
-		{ East, [this]() { x_ = x_ + 1;} },
-		{ West, [this]() { x_ = x_ - 1;} },
+		{Direction::North, [this]() { y_ = y_ + 1;} },
+		{Direction::South, [this]() { y_ = y_ - 1;} },
+		{Direction::East, [this]() { x_ = x_ + 1;} },
+		{Direction::West, [this]() { x_ = x_ - 1;} },
 	};
 }
 
