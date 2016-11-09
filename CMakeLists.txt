@@ -13,4 +13,4 @@ add_executable(Tests test/FizzBuzzTests.cpp test/FibonacciTests.cpp test/main.cp
 target_link_libraries(Tests Katas)
 
 enable_testing()
-add_test(NAME Tests COMMAND ./bin/Tests)
+add_test(NAME Tests COMMAND Tests)
