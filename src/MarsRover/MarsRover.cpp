@@ -141,14 +141,12 @@ Rover::Rover(Plateau plateau, Position position, Direction direction)
 
 void Rover::InitializeGridSize(int width, int heigth)
 {
-	plateau_.width_ = width;
-	plateau_.heigth_ = heigth;
+	plateau_ = Plateau(width, heigth);
 }
 
 void Rover::InitializePosition(int x, int y)
 {
-	position_.x_ = x;
-	position_.y_ = y;
+	position_ = Position(x, y);
 }
 
 void Rover::InitializeDirection(Direction direction)
