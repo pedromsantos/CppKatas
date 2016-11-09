@@ -60,29 +60,29 @@ struct Position
 	int x_;
 	int y_;
 
-	map<Direction, function<void()>> move_;
+	map<Direction, function<Position(int, int)>> move_;
 
 	Position(int x, int y)
 		:x_(x), y_(y)
 	{
 		move_ =
 		{
-			{ Direction::North, [this]() { y_ = y_ + 1;} },
-			{ Direction::South, [this]() { y_ = y_ - 1;} },
-			{ Direction::East, [this]() { x_ = x_ + 1;} },
-			{ Direction::West, [this]() { x_ = x_ - 1;} },
+			{ Direction::North, [](int x, int y) { return Position(x, y + 1);} },
+			{ Direction::South, [](int x, int y) {return Position(x, y - 1);} },
+			{ Direction::East, [](int x, int y) { return Position(x + 1, y);} },
+			{ Direction::West, [](int x, int y) { return Position(x - 1, y);} },
 		};
 	}
-
+	
 	bool IsEqual(const Position& other) const
 	{
 		return x_ == other.x_
 			&& y_ == other.y_;
 	}
 
-	void Move(Direction direction)
+	Position Move(Direction direction)
 	{
-		move_[direction]();
+		return move_[direction](x_, y_);
 	}
 };
 
@@ -96,7 +96,6 @@ class Rover
 	Plateau plateau_;
 	Position position_;
 	Direction direction_;	
-	map<Direction, function<void()>> move_;
 	unique_ptr<InstructionParser> instruction_parser_;
 
 	static map<Direction, Direction> turnRight_;

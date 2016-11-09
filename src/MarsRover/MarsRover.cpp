@@ -129,14 +129,6 @@ Rover::Rover(Plateau plateau, Position position, Direction direction)
 	: plateau_(plateau), position_(position) , direction_(direction)
 {
 	instruction_parser_ = make_unique<InstructionParser>();
-
-	move_ =
-	{
-		{Direction::North, [this]() { position_.y_ = position_.y_ + 1;} },
-		{Direction::South, [this]() { position_.y_ = position_.y_ - 1;} },
-		{Direction::East, [this]() { position_.x_ = position_.x_ + 1;} },
-		{Direction::West, [this]() { position_.x_ = position_.x_ - 1;} },
-	};
 }
 
 void Rover::InitializeGridSize(int width, int heigth)
@@ -175,5 +167,5 @@ void Rover::TurnRight()
 
 void Rover::Move()
 {
-	move_[direction_]();
+	position_ = position_.Move(direction_);
 }

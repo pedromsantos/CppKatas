@@ -22,36 +22,37 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 				{
 					Position finalPosition(1, 2);
 
-					position.Move(Direction::North);
+					auto newPosition = position.Move(Direction::North);
 
-					REQUIRE(position == finalPosition);
+					REQUIRE(newPosition == finalPosition);
 				}
 
 				SECTION("south")
 				{
 					Position finalPosition(1, 0);
 
-					position.Move(Direction::South);
+					auto newPosition = position.Move(Direction::South);
 
-					REQUIRE(position == finalPosition);
+					REQUIRE(newPosition == finalPosition);
 				}
 
 				SECTION("east")
 				{
 					Position finalPosition(2, 1);
 
-					position.Move(Direction::East);
+					auto newPosition = position.Move(Direction::East);
 
-					REQUIRE(position == finalPosition);
+					REQUIRE(newPosition == finalPosition);
 				}
 
 				SECTION("west")
 				{
-					Position finalPosition(0, 1);
+					Position finalPosition(-1, 1);
 
-					position.Move(Direction::West);
+					auto newPosition = position.Move(Direction::West);
+					auto newPosition1 = newPosition.Move(Direction::West);
 
-					REQUIRE(position == finalPosition);
+					REQUIRE(newPosition1 == finalPosition);
 				}
 			}
 		}
