@@ -15,7 +15,7 @@ class InstructionParser
 {	
 	static InstructionsToDirections instructionsToDirections_;
 	
-	std::vector<std::string> InstructionParser::Split(const std::string &text, char sep) const;
+	std::vector<std::string> Split(const std::string &text, char sep) const;
 	void ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
 	void ParsePositionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
 	void ParseDirectionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
