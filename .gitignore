@@ -75,3 +75,4 @@ LastTestsFailed.log
 /.vscode
 /build
 /src/MarsRover/d1.diff
+CMakeCache.txt
