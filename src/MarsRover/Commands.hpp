@@ -15,10 +15,9 @@ class GridSizeCommand : public Command
 {
 public:
 	GridSizeCommand(int width, int heigth);
-
-	void Execute(Rover* rover) override;	
-
 	~GridSizeCommand();
+
+	void Execute(Rover* rover) override;
 
 private:
 	struct PImpl;
@@ -29,7 +28,6 @@ class PositionCommand : public Command
 {
 public:
 	PositionCommand(int x, int y);
-
 	~PositionCommand();
 
 	void Execute(Rover* rover) override;
@@ -39,18 +37,16 @@ private:
 	std::unique_ptr<PImpl> pimpl;
 };
 
-
 class DirectionCommand : public Command
 {
-	Direction direction_;
-
-public:
-	DirectionCommand(Direction direction)
-		: direction_(direction)
-	{
-	}
+	DirectionCommand(Direction direction);
+	~DirectionCommand();
 
 	void Execute(Rover* rover) override;
+
+private:
+	struct PImpl;
+	std::unique_ptr<PImpl> pimpl;
 };
 
 class TurnLeftCommand : public Command

@@ -41,9 +41,23 @@ void PositionCommand::Execute(Rover* rover)
 	rover->InitializePosition(pimpl->x_, pimpl->y_);
 }
 
+struct DirectionCommand::PImpl
+{
+	Direction direction_;
+};
+
+DirectionCommand::DirectionCommand(Direction direction) : pimpl(new PImpl())
+{
+	pimpl->direction_ = direction;
+}
+
+DirectionCommand::~DirectionCommand()
+{
+}
+
 void DirectionCommand::Execute(Rover* rover)
 {
-	rover->InitializeDirection(direction_);
+	rover->InitializeDirection(pimpl->direction_);
 }
 
 void TurnLeftCommand::Execute(Rover* rover)
