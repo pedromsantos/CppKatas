@@ -1,6 +1,9 @@
 #pragma once
-#include <vector>
-#include "MarsRover.hpp"
+ #include "Directions.hpp"
+ #include <vector>
+ #include <memory>
+
+class Rover;
 
 class Command
 {
@@ -70,14 +73,9 @@ public:
 
 class Commands
 {
-	vector<unique_ptr<Command >> commands;
+	std::vector<std::unique_ptr<Command >> commands;
 
 public:
-	void AddGridSizeCommand(int width, int heigth);
-	void AddPositionCommand(int x, int y);
+	void AddCommand(std::unique_ptr<Command> &&cmd);
 	void Execute(Rover* rover);
-	void AddDirectionCommand(Direction direction);
-	void AddTurnLeftCommand();
-	void AddTurnRightCommand();
-	void AddMoveCommand();
 };

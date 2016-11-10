@@ -13,12 +13,12 @@ InstructionsToDirections InstructionParser::instructionsToDirections_ =
 		{ "W", Direction::West }
 	};
 
-vector<string> InstructionParser::Split(const string &text, char sep) const
+std::vector<std::string> InstructionParser::Split(const std::string &text, char sep) const
 {
-	vector<string> tokens;
+	std::vector<std::string> tokens;
 	size_t start = 0, end;
 	
-	while ((end = text.find(sep, start)) != string::npos) 
+	while ((end = text.find(sep, start)) != std::string::npos) 
 	{
 		if (end != start) 
 		{
@@ -38,9 +38,9 @@ vector<string> InstructionParser::Split(const string &text, char sep) const
 	return tokens;
 }
 
-unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
+std::unique_ptr<Commands> InstructionParser::Parse(const std::string& instructions) const
 {
-	auto commands = make_unique<Commands>();
+	auto commands = std::make_unique<Commands>();
 
 	auto instructionLines = Split(instructions, '\n');
 
@@ -52,52 +52,52 @@ unique_ptr<Commands> InstructionParser::Parse(const string& instructions) const
 	return commands;
 }
 
-void InstructionParser::ParseGridSizeInstruction(unique_ptr<Commands>& commands, string line) const
+void InstructionParser::ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const
 {
 	auto tokens = Split(line, ' ');
-	auto width = stoi(tokens[0]);
-	auto heigth = stoi(tokens[1]);
-	commands->AddGridSizeCommand(width, heigth);
+	auto width = std::stoi(tokens[0]);
+	auto heigth = std::stoi(tokens[1]);
+	commands->AddCommand(std::make_unique<GridSizeCommand>(width, heigth));
 }
 
-void InstructionParser::ParsePositionInstruction(unique_ptr<Commands>& commands, string line) const
+void InstructionParser::ParsePositionInstruction(std::unique_ptr<Commands>& commands, std::string line) const
 {
 	auto tokens = Split(line, ' ');
-	auto x = stoi(tokens[0]);
-	auto y = stoi(tokens[1]);
-	commands->AddPositionCommand(x, y);
+	auto x = std::stoi(tokens[0]);
+	auto y = std::stoi(tokens[1]);
+	commands->AddCommand(std::make_unique<PositionCommand>(x, y));
 }
 
-void InstructionParser::ParseDirectionInstruction(unique_ptr<Commands>& commands, string line) const
+void InstructionParser::ParseDirectionInstruction(std::unique_ptr<Commands>& commands, std::string line) const
 {
 	auto tokens = Split(line, ' ');
-	auto rawDirection= tokens.back();
+	auto rawDirection = tokens.back();
 	auto direction = instructionsToDirections_[rawDirection];
-	commands->AddDirectionCommand(direction);
+	commands->AddCommand(std::make_unique<DirectionCommand>(direction));
 }
 
-void InstructionParser::ParseMovementCommands(const unique_ptr<Commands>& commands, string line) const
+void InstructionParser::ParseMovementCommands(const std::unique_ptr<Commands>& commands, std::string line) const
 {
 	for (auto movement : line) 
 	{
 		if (movement == 'R')
 		{
-			commands->AddTurnRightCommand();
+			commands->AddCommand(std::make_unique<TurnRightCommand>());
 		}
 
 		if (movement == 'L')
 		{
-			commands->AddTurnLeftCommand();
+			commands->AddCommand(std::make_unique<TurnLeftCommand>());
 		}
 		
 		if (movement == 'M')
 		{
-			commands->AddMoveCommand();
+			commands->AddCommand(std::make_unique<MoveCommand>());
 		}
 	}
 }
 
-map<Direction, Direction> Rover::turnRight_ =
+std::map<Direction, Direction> Rover::turnRight_ =
 {
 	{Direction::North, Direction::East},
 	{Direction::East, Direction::South},
@@ -105,7 +105,7 @@ map<Direction, Direction> Rover::turnRight_ =
 	{Direction::West, Direction::North}
 };
 
-map<Direction, Direction> Rover::turnLeft_ =
+std::map<Direction, Direction> Rover::turnLeft_ =
 {
 	{Direction::North, Direction::West },
 	{Direction::East, Direction::North },
@@ -113,7 +113,7 @@ map<Direction, Direction> Rover::turnLeft_ =
 	{Direction::West, Direction::South }
 };
 
-map<Direction, string> Rover::directions_ =
+std::map<Direction, std::string> Rover::directions_ =
 {
 	{Direction::North, "N" },
 	{Direction::East, "E" },
@@ -129,7 +129,7 @@ Rover::Rover()
 Rover::Rover(Plateau plateau, Position position, Direction direction)
 	: plateau_(plateau), position_(position) , direction_(direction)
 {
-	instruction_parser_ = make_unique<InstructionParser>();
+	instruction_parser_ = std::make_unique<InstructionParser>();
 }
 
 void Rover::InitializeGridSize(int width, int heigth)
@@ -147,7 +147,7 @@ void Rover::InitializeDirection(Direction direction)
 	direction_ = direction;
 }
 
-string Rover::Execute(const string& instructions)
+std::string Rover::Execute(const std::string& instructions)
 {
 	instruction_parser_
 		->Parse(instructions)	

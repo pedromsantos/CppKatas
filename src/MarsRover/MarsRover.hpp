@@ -7,28 +7,26 @@
 
 #include "Directions.hpp"
 
-using namespace std;
-
 class Commands;
 
-typedef map<string, Direction> InstructionsToDirections;
+typedef std::map<std::string, Direction> InstructionsToDirections;
 
 class InstructionParser
 {	
 	static InstructionsToDirections instructionsToDirections_;
 	
-	vector<string> InstructionParser::Split(const string &text, char sep) const;
-	void ParseGridSizeInstruction(unique_ptr<Commands>& commands, string line) const;
-	void ParsePositionInstruction(unique_ptr<Commands>& commands, string line) const;
-	void ParseDirectionInstruction(unique_ptr<Commands>& commands, string line) const;
-	void ParseMovementCommands(const unique_ptr<Commands>& commands, string line) const;
+	std::vector<std::string> InstructionParser::Split(const std::string &text, char sep) const;
+	void ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
+	void ParsePositionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
+	void ParseDirectionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
+	void ParseMovementCommands(const std::unique_ptr<Commands>& commands, std::string line) const;
 	
 public:
 	virtual ~InstructionParser()
 	{
 	}
 	
-	unique_ptr<Commands> Parse(const string& instructions) const;
+	std::unique_ptr<Commands> Parse(const std::string& instructions) const;
 };
 
 struct Plateau
@@ -61,7 +59,7 @@ private:
 	int x_;
 	int y_;
 
-	map<Direction, function<Position(int, int)>> move_;
+	std::map<Direction, std::function<Position(int, int)>> move_;
 
 public:
 	Position(int x, int y)
@@ -87,9 +85,9 @@ public:
 		return move_[direction](x_, y_);
 	}
 
-	string ToString()
+	std::string ToString()
 	{
-		return to_string(x_) + " " + to_string(y_);
+		return std::to_string(x_) + " " + std::to_string(y_);
 	}
 };
 
@@ -103,11 +101,11 @@ class Rover
 	Plateau plateau_;
 	Position position_;
 	Direction direction_;	
-	unique_ptr<InstructionParser> instruction_parser_;
+	std::unique_ptr<InstructionParser> instruction_parser_;
 
-	static map<Direction, Direction> turnRight_;
-	static map<Direction, Direction> turnLeft_;
-	static map<Direction, string> directions_;
+	static std::map<Direction, Direction> turnRight_;
+	static std::map<Direction, Direction> turnLeft_;
+	static std::map<Direction, std::string> directions_;
 	
 public:
 	Rover();
@@ -117,7 +115,7 @@ public:
 	void virtual InitializePosition(int x, int y);
 	void virtual InitializeDirection(Direction direction);
 
-	string Execute(const string& instructions);
+	std::string Execute(const std::string& instructions);
 	
 	void virtual TurnLeft();
 	void virtual TurnRight();

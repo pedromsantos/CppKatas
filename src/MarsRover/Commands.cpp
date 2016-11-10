@@ -1,5 +1,5 @@
-#include "MarsRover.hpp"
 #include "Commands.hpp"
+#include "MarsRover.hpp"
 
 void Commands::Execute(Rover* rover)
 {
@@ -9,40 +9,9 @@ void Commands::Execute(Rover* rover)
 	}
 }
 
-void Commands::AddGridSizeCommand(int width, int heigth)
+void Commands::AddCommand(std::unique_ptr<Command>&& command)
 {
-	auto command = make_unique<GridSizeCommand>(width, heigth);
-	commands.push_back(move(command));
-}
-
-void Commands::AddPositionCommand(int x, int y)
-{
-	auto command = make_unique<PositionCommand>(x, y);
-	commands.push_back(move(command));
-}
-
-void Commands::AddDirectionCommand(Direction direction)
-{
-	auto command = make_unique<DirectionCommand>(direction);
-	commands.push_back(move(command));
-}
-
-void Commands::AddTurnLeftCommand()
-{
-	auto command = make_unique<TurnLeftCommand>();
-	commands.push_back(move(command));
-}
-
-void Commands::AddTurnRightCommand()
-{
-	auto command = make_unique<TurnRightCommand>();
-	commands.push_back(move(command));
-}
-
-void Commands::AddMoveCommand()
-{
-	auto command = make_unique<MoveCommand>();
-	commands.push_back(move(command));
+	commands.push_back(std::move(command));
 }
 
 void GridSizeCommand::Execute(Rover* rover)

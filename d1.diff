@@ -1,0 +1,286 @@
+diff --git a/src/MarsRover/Commands.cpp b/src/MarsRover/Commands.cpp
+index 7778a57..9495d98 100644
+--- a/src/MarsRover/Commands.cpp
++++ b/src/MarsRover/Commands.cpp
+@@ -1,7 +1,21 @@
++#include "Commands.hpp" // always start by including your own
++                        // header. that way you will be sure that your
++                        // header compiles cleanly even if nothing is
++                        // included before it. For example imagine
++                        // Commands.hpp uses something defined in
++                        // MarsRover.hpp. If in this cpp you first
++                        // include MarsRover.hpp you will not need to
++                        // make Commands.hpp include MarsRover.hpp
++                        // (since the cpp is doing that for
++                        // you). However clients of your class will be
++                        // confused and upset because now they have to
++                        // figur out what headers they must manually
++                        // include before being able to use
++                        // Commands. hpp
++
+ #include "MarsRover.hpp"
+-#include "Commands.hpp"
+ 
+-void Commands::Execute(Rover* rover)
++void Commands::Execute(Rover& rover)
+ {
+ 	for (auto const& command : commands)
+ 	{
+@@ -11,66 +25,66 @@ void Commands::Execute(Rover* rover)
+ 
+ void Commands::AddGridSizeCommand(int width, int heigth)
+ {
+-	auto command = make_unique<GridSizeCommand>(width, heigth);
++	auto command = std::make_unique<GridSizeCommand>(width, heigth);
+ 	commands.push_back(move(command));
+ }
+ 
+ void Commands::AddPositionCommand(int x, int y)
+ {
+-	auto command = make_unique<PositionCommand>(x, y);
++	auto command = std::make_unique<PositionCommand>(x, y);
+ 	commands.push_back(move(command));
+ }
+ 
+ void Commands::AddDirectionCommand(Direction direction)
+ {
+-	auto command = make_unique<DirectionCommand>(direction);
++	auto command = std::make_unique<DirectionCommand>(direction);
+ 	commands.push_back(move(command));
+ }
+ 
+ void Commands::AddTurnLeftCommand()
+ {
+-	auto command = make_unique<TurnLeftCommand>();
++	auto command = std::make_unique<TurnLeftCommand>();
+ 	commands.push_back(move(command));
+ }
+ 
+ void Commands::AddTurnRightCommand()
+ {
+-	auto command = make_unique<TurnRightCommand>();
++	auto command = std::make_unique<TurnRightCommand>();
+ 	commands.push_back(move(command));
+ }
+ 
+ void Commands::AddMoveCommand()
+ {
+-	auto command = make_unique<MoveCommand>();
++	auto command = std::make_unique<MoveCommand>();
+ 	commands.push_back(move(command));
+ }
+ 
+-void GridSizeCommand::Execute(Rover* rover)
++void GridSizeCommand::Execute(Rover& rover)
+ {
+-	rover->InitializeGridSize(width_, heigth_);
++	rover.InitializeGridSize(width_, heigth_);
+ }
+ 
+-void PositionCommand::Execute(Rover* rover)
++void PositionCommand::Execute(Rover& rover)
+ {
+-	rover->InitializePosition(x_, y_);
++	rover.InitializePosition(x_, y_);
+ }
+ 
+-void DirectionCommand::Execute(Rover* rover)
++void DirectionCommand::Execute(Rover& rover)
+ {
+-	rover->InitializeDirection(direction_);
++	rover.InitializeDirection(direction_);
+ }
+ 
+-void TurnLeftCommand::Execute(Rover* rover)
++void TurnLeftCommand::Execute(Rover& rover)
+ {
+-	rover->TurnLeft();
++	rover.TurnLeft();
+ }
+ 
+-void TurnRightCommand::Execute(Rover* rover)
++void TurnRightCommand::Execute(Rover& rover)
+ {
+-	rover->TurnRight();
++	rover.TurnRight();
+ }
+ 
+-void MoveCommand::Execute(Rover* rover)
++void MoveCommand::Execute(Rover& rover)
+ {
+-	rover->Move();
+-}
+\ No newline at end of file
++	rover.Move();
++}
+diff --git a/src/MarsRover/Commands.hpp b/src/MarsRover/Commands.hpp
+index 7122c30..c3f56f2 100644
+--- a/src/MarsRover/Commands.hpp
++++ b/src/MarsRover/Commands.hpp
+@@ -1,11 +1,44 @@
+ #pragma once
+ #include <vector>
+-#include "MarsRover.hpp"
++
++// include as little as possible (something that has not changed in
++// C++ is how quickly build times spiral out of cotrol).
++//#include "MarsRover.hpp"
++
++// instead forward declare anything you can and include only what you
++// need. this is not important in a small example like this but it is
++// *absolutely* vital in a large project (>50KLOC). See the PImpl
++// idiom for ways to do more of it.
++// http://stackoverflow.com/questions/60570/why-should-the-pimpl-idiom-be-used
++
++// I like to do:
++// class MyClass {
++// public:
++//     blah, blah my public methods
++// private:
++//     struct PImpl;
++//     std::unique_ptr<PImpl> me;
++// };
++/// and then, in the cpp:
++// struct MyClass::PImpl {
++//     blah, blah, my data members
++// };
++// MyClass::MyClass() : me (new PImpl()) {}
++
++
++#include "Directions.hpp"
++#include <vector>
++#include <memory>
++
++class Rover;
+ 
+ class Command
+ {
+ public:
+-	void virtual Execute(Rover* rover) {};
++   // void virtual Execute(Rover* rover) {};
++   void virtual Execute (Rover &r) = 0;
++   // 1) Don't use a pointer unless you allow for nulls to be passed
++   // 2) If there is no sensible default implementation then it should be a pure virtual
+ };
+ 
+ class GridSizeCommand : public Command
+@@ -19,7 +52,7 @@ public:
+ 	{
+ 	}
+ 
+-	void Execute(Rover* rover) override;	
++	void Execute( Rover& rover) override;	
+ };
+ 
+ class PositionCommand : public Command
+@@ -33,7 +66,7 @@ public:
+ 	{
+ 	}
+ 
+-	void Execute(Rover* rover) override;
++	void Execute( Rover& rover) override;
+ };
+ 
+ 
+@@ -47,37 +80,72 @@ public:
+ 	{
+ 	}
+ 
+-	void Execute(Rover* rover) override;
++	void Execute( Rover& rover) override;
+ };
+ 
+ class TurnLeftCommand : public Command
+ {
+ public:
+-	void Execute(Rover* rover) override;
++	void Execute( Rover& rover) override;
+ };
+ 
+ class TurnRightCommand : public Command
+ {
+ public:
+-	void Execute(Rover* rover) override;
++	void Execute( Rover& rover) override;
+ };
+ 
+ class MoveCommand : public Command
+ {
+ public:
+-	void Execute(Rover* rover) override;
++	void Execute( Rover& rover) override;
+ };
+ 
+ class Commands
+ {
+-	vector<unique_ptr<Command >> commands;
++  // always qualify library types with their namespace, i.e. never,
++  // ever put a using namespace blah in an header file the reason is
++  // that you do not know in what context people will include your
++  // header. if you do a using namespace blah in there, they will be
++  // forced to add all those names to their namespace and that
++  // completely defeates the idea of namespacing. for example imagine
++  // I want to use Commands.h and you have a using namespace std
++  // there. That means that I cannot have any classes of my own that
++  // colide with *any* names in std, even if I was super carefull to
++  // use my own namespace. This is the sort of issue that makes C++
++  // compilation a complete nightmare. Trust me.
++  std::vector<std::unique_ptr<Command >> commands;
+ 
+ public:
++
++  // I would not do this. Notice that you are duplicating your type
++  // structure above, i.e. for every command type you have a method
++  // here. whenever you want a new command you will need to create the
++  // new command type and then replicate the signature and name
++  // here. Better to have this take an abstract Command that you take
++  // ownership for as in:
++  //    void AddCommand (std::unique_ptr<Command> &&cmd) ;
++  // move constructor that means you own it you would call
++  // it like this:
++  //    cmds.AddCommand(std::make_unique<YourCommand>(args))
++
++  // Alternatively if the caller is supposed to manage ownership of
++  // the Command objects you could just take a Command&. 
++
++  // finnally if none of these are to your liking you can do:
++
++  // template<class CommandClass> void AddCommand (Args&&... args)
++  // {
++  //   commands.push_back(std::make_unique<CommandClass> (std::forward<Args(args)...));
++  // }
++  // which you can call like this:
++  // commands.AddCommand<GridSizeCommand>(w,h);
++  
+ 	void AddGridSizeCommand(int width, int heigth);
+ 	void AddPositionCommand(int x, int y);
+-	void Execute(Rover* rover);
++	void Execute( Rover& rover);
+ 	void AddDirectionCommand(Direction direction);
+ 	void AddTurnLeftCommand();
+ 	void AddTurnRightCommand();
+ 	void AddMoveCommand();
+-};
+\ No newline at end of file
++};
+diff --git a/src/MarsRover/MarsRover.hpp b/src/MarsRover/MarsRover.hpp
+index f1478cd..b1aaeab 100644
+--- a/src/MarsRover/MarsRover.hpp
++++ b/src/MarsRover/MarsRover.hpp
+@@ -17,7 +17,8 @@ class InstructionParser
+ {	
+ 	static InstructionsToDirections instructionsToDirections_;
+ 	
+-	vector<string> InstructionParser::Split(const string &text, char sep) const;
++   //vector<string> InstructionParser::Split(const string &text, char sep) const; (this was an error in gcc)
++   vector<string> Split(const string &text, char sep) const;
+ 	void ParseGridSizeInstruction(unique_ptr<Commands>& commands, string line) const;
+ 	void ParsePositionInstruction(unique_ptr<Commands>& commands, string line) const;
+ 	void ParseDirectionInstruction(unique_ptr<Commands>& commands, string line) const;
+@@ -135,4 +136,4 @@ public:
+ inline bool operator==(const Rover& lRover, const Rover& rRover) {
+ 	return typeid(lRover) == typeid(rRover)
+ 		&& lRover.IsEqual(rRover);
+-}
+\ No newline at end of file
++}

@@ -275,7 +275,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				Commands commands;	
 
-				commands.AddGridSizeCommand(0, 0);
+				commands.AddCommand(std::make_unique<GridSizeCommand>(0, 0));
 				commands.Execute(&rover.get());
 
 				Verify(Method(rover, InitializeGridSize));
@@ -285,7 +285,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				Commands commands;
 
-				commands.AddPositionCommand(0, 0);
+				commands.AddCommand(std::make_unique<PositionCommand>(0, 0));
 				commands.Execute(&rover.get());
 
 				Verify(Method(rover, InitializePosition));
@@ -295,7 +295,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				Commands commands;
 
-				commands.AddDirectionCommand(Direction::North);
+				commands.AddCommand(std::make_unique<DirectionCommand>(Direction::North));
 				commands.Execute(&rover.get());
 
 				Verify(Method(rover, InitializeDirection));
@@ -305,7 +305,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				Commands commands;
 
-				commands.AddTurnLeftCommand();
+				commands.AddCommand(std::make_unique<TurnLeftCommand>());
 				commands.Execute(&rover.get());
 
 				Verify(Method(rover, TurnLeft));
@@ -315,7 +315,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				Commands commands;
 
-				commands.AddTurnRightCommand();
+				commands.AddCommand(std::make_unique<TurnRightCommand>());
 				commands.Execute(&rover.get());
 
 				Verify(Method(rover, TurnRight));
@@ -325,7 +325,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
 			{
 				Commands commands;
 
-				commands.AddMoveCommand();
+				commands.AddCommand(std::make_unique<MoveCommand>());
 				commands.Execute(&rover.get());
 
 				Verify(Method(rover, Move));
