@@ -13,16 +13,16 @@ public:
 
 class GridSizeCommand : public Command
 {
-	int width_;
-	int heigth_;
-
 public:
-	GridSizeCommand(int width, int heigth)
-		: width_(width), heigth_(heigth)
-	{
-	}
+	GridSizeCommand(int width, int heigth);
 
 	void Execute(Rover* rover) override;	
+
+	~GridSizeCommand();
+
+private:
+	struct PImpl;
+	std::unique_ptr<PImpl> pimpl;
 };
 
 class PositionCommand : public Command

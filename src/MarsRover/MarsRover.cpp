@@ -1,9 +1,9 @@
+#include "MarsRover.hpp"
+#include "Commands.hpp"
+
 #include <memory>
 #include <string>
 #include <functional>
-
-#include "MarsRover.hpp"
-#include "Commands.hpp"
 
 InstructionsToDirections InstructionParser::instructionsToDirections_ =
 	{
@@ -47,7 +47,7 @@ std::unique_ptr<Commands> InstructionParser::Parse(const std::string& instructio
 	ParseGridSizeInstruction(commands, instructionLines[0]);	
 	ParsePositionInstruction(commands, instructionLines[1]);
 	ParseDirectionInstruction(commands, instructionLines[1]);
-	ParseMovementCommands(commands, instructionLines[2]);
+	ParseMovementsInstruction(commands, instructionLines[2]);
 
 	return commands;
 }
@@ -76,7 +76,7 @@ void InstructionParser::ParseDirectionInstruction(std::unique_ptr<Commands>& com
 	commands->AddCommand(std::make_unique<DirectionCommand>(direction));
 }
 
-void InstructionParser::ParseMovementCommands(const std::unique_ptr<Commands>& commands, std::string line) const
+void InstructionParser::ParseMovementsInstruction(const std::unique_ptr<Commands>& commands, std::string line) const
 {
 	for (auto movement : line) 
 	{

@@ -1,11 +1,12 @@
 #pragma once
+
+#include "Directions.hpp"
+
 #include <memory>
 #include <vector>
 #include <functional>
 #include <string>
 #include <map>
-
-#include "Directions.hpp"
 
 class Commands;
 
@@ -19,7 +20,7 @@ class InstructionParser
 	void ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
 	void ParsePositionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
 	void ParseDirectionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
-	void ParseMovementCommands(const std::unique_ptr<Commands>& commands, std::string line) const;
+	void ParseMovementsInstruction(const std::unique_ptr<Commands>& commands, std::string line) const;
 	
 public:
 	virtual ~InstructionParser()
