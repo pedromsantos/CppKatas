@@ -94,7 +94,7 @@ void Commands::Execute(Rover* rover) const
 	}
 }
 
-void Commands::AddCommand(std::unique_ptr<Command>&& command)
+void Commands::AddCommand(std::unique_ptr<Command>&& command) const
 {
 	pimpl->commands.push_back(std::move(command));
 }

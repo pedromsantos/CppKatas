@@ -74,7 +74,7 @@ public:
 	Commands();
 	~Commands();
 
-	void AddCommand(std::unique_ptr<Command> &&cmd);
+	void AddCommand(std::unique_ptr<Command> &&cmd) const;
 	void Execute(Rover* rover) const;
 
 private:
