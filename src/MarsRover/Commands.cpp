@@ -13,17 +13,32 @@ GridSizeCommand::GridSizeCommand(int width, int heigth) : pimpl(new PImpl())
 	pimpl->heigth_ = heigth;
 }
 
+GridSizeCommand::~GridSizeCommand()
+{}
+
 void GridSizeCommand::Execute(Rover* rover)
 {
 	rover->InitializeGridSize(pimpl->width_, pimpl->heigth_);
 }
 
-GridSizeCommand::~GridSizeCommand()
+struct PositionCommand::PImpl
+{
+	int x_;
+	int y_;
+};
+
+PositionCommand::PositionCommand(int x, int y) : pimpl(new PImpl())
+{
+	pimpl->x_ = x;
+	pimpl->y_ = y;
+}
+
+PositionCommand::~PositionCommand()
 {}
 
 void PositionCommand::Execute(Rover* rover)
 {
-	rover->InitializePosition(x_, y_);
+	rover->InitializePosition(pimpl->x_, pimpl->y_);
 }
 
 void DirectionCommand::Execute(Rover* rover)

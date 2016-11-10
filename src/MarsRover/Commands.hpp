@@ -27,16 +27,16 @@ private:
 
 class PositionCommand : public Command
 {
-	int x_;
-	int y_;
-
 public:
-	PositionCommand(int x, int y)
-		: x_(x), y_(y)
-	{
-	}
+	PositionCommand(int x, int y);
+
+	~PositionCommand();
 
 	void Execute(Rover* rover) override;
+
+private:
+	struct PImpl;
+	std::unique_ptr<PImpl> pimpl;
 };
 
 
