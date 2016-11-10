@@ -1,10 +1,6 @@
 #include "MarsRover.hpp"
 #include "Commands.hpp"
 
-#include <memory>
-#include <string>
-#include <functional>
-
 struct InstructionParser::PImpl
 {
 	static InstructionsToDirections instructionsToDirections_;
@@ -75,8 +71,8 @@ void InstructionParser::PImpl::ParseGridSizeInstruction(std::unique_ptr<Commands
 {
 	auto tokens = Split(line, ' ');
 	auto width = std::stoi(tokens[0]);
-	auto heigth = std::stoi(tokens[1]);
-	commands->AddCommand(std::make_unique<GridSizeCommand>(width, heigth));
+	auto height = std::stoi(tokens[1]);
+	commands->AddCommand(std::make_unique<GridSizeCommand>(width, height));
 }
 
 void InstructionParser::PImpl::ParsePositionInstruction(std::unique_ptr<Commands>& commands, std::string line) const
@@ -151,9 +147,9 @@ Rover::Rover(Plateau plateau, Position position, Direction direction)
 	instruction_parser_ = std::make_unique<InstructionParser>();
 }
 
-void Rover::InitializeGridSize(int width, int heigth)
+void Rover::InitializeGridSize(int width, int height)
 {
-	plateau_ = Plateau(width, heigth);
+	plateau_ = Plateau(width, height);
 }
 
 void Rover::InitializePosition(int x, int y)

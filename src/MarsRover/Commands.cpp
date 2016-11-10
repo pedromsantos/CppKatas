@@ -4,13 +4,13 @@
 struct GridSizeCommand::PImpl
 {
 	int width_;
-	int heigth_;
+	int height_;
 };
 
-GridSizeCommand::GridSizeCommand(int width, int heigth) : pimpl(new PImpl())
+GridSizeCommand::GridSizeCommand(int width, int height) : pimpl(new PImpl())
 {
 	pimpl->width_ = width;
-	pimpl->heigth_ = heigth;
+	pimpl->height_ = height;
 }
 
 GridSizeCommand::~GridSizeCommand()
@@ -18,7 +18,7 @@ GridSizeCommand::~GridSizeCommand()
 
 void GridSizeCommand::Execute(Rover* rover)
 {
-	rover->InitializeGridSize(pimpl->width_, pimpl->heigth_);
+	rover->InitializeGridSize(pimpl->width_, pimpl->height_);
 }
 
 struct PositionCommand::PImpl

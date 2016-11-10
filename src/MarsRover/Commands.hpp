@@ -14,7 +14,7 @@ public:
 class GridSizeCommand : public Command
 {
 public:
-	GridSizeCommand(int width, int heigth);
+	GridSizeCommand(int width, int height);
 	~GridSizeCommand();
 
 	void Execute(Rover* rover) override;

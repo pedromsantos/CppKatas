@@ -29,17 +29,17 @@ struct Plateau
 {
 private:
 	int width_;
-	int heigth_;
+	int height_;
 
 public:
 	Plateau(int width, int height)
-		:width_(width), heigth_(height)
+		:width_(width), height_(height)
 	{
 	}
 
 	bool IsEqual(const Plateau& other) const
 	{
-		return heigth_ == other.heigth_
+		return height_ == other.height_
 			&& width_ == other.width_;
 	}
 };
@@ -63,10 +63,10 @@ public:
 	{
 		move_ =
 		{
-			{ Direction::North, [](int x, int y) { return Position(x, y + 1);} },
-			{ Direction::South, [](int x, int y) {return Position(x, y - 1);} },
-			{ Direction::East, [](int x, int y) { return Position(x + 1, y);} },
-			{ Direction::West, [](int x, int y) { return Position(x - 1, y);} },
+			{ Direction::North, [](int xx, int yy) { return Position(xx, yy + 1);} },
+			{ Direction::South, [](int xx, int yy) {return Position(xx, yy - 1);} },
+			{ Direction::East, [](int xx, int yy) { return Position(xx + 1, yy);} },
+			{ Direction::West, [](int xx, int yy) { return Position(xx - 1, yy);} },
 		};
 	}
 	
@@ -107,7 +107,7 @@ public:
 	Rover();
 	Rover(Plateau plateau, Position position, Direction direction);
 	
-	void virtual InitializeGridSize(int width, int heigth);
+	void virtual InitializeGridSize(int width, int height);
 	void virtual InitializePosition(int x, int y);
 	void virtual InitializeDirection(Direction direction);
 
