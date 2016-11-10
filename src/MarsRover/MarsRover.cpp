@@ -5,15 +5,34 @@
 #include <string>
 #include <functional>
 
-InstructionsToDirections InstructionParser::instructionsToDirections_ =
-	{
-		{ "N", Direction::North },
-		{ "E", Direction::East },
-		{ "S", Direction::South },
-		{ "W", Direction::West }
-	};
+struct InstructionParser::PImpl
+{
+	static InstructionsToDirections instructionsToDirections_;
 
-std::vector<std::string> InstructionParser::Split(const std::string &text, char sep) const
+	std::vector<std::string> Split(const std::string &text, char sep) const;
+	void ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
+	void ParsePositionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
+	void ParseDirectionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
+	void ParseMovementsInstruction(const std::unique_ptr<Commands>& commands, std::string line) const;
+};
+
+InstructionsToDirections InstructionParser::PImpl::instructionsToDirections_ =
+{
+	{ "N", Direction::North },
+	{ "E", Direction::East },
+	{ "S", Direction::South },
+	{ "W", Direction::West }
+};
+
+InstructionParser::InstructionParser() : pimpl(new PImpl())
+{
+}
+
+InstructionParser::~InstructionParser()
+{
+}
+
+std::vector<std::string> InstructionParser::PImpl::Split(const std::string &text, char sep) const
 {
 	std::vector<std::string> tokens;
 	size_t start = 0, end;
@@ -42,17 +61,17 @@ std::unique_ptr<Commands> InstructionParser::Parse(const std::string& instructio
 {
 	auto commands = std::make_unique<Commands>();
 
-	auto instructionLines = Split(instructions, '\n');
+	auto instructionLines = pimpl->Split(instructions, '\n');
 
-	ParseGridSizeInstruction(commands, instructionLines[0]);	
-	ParsePositionInstruction(commands, instructionLines[1]);
-	ParseDirectionInstruction(commands, instructionLines[1]);
-	ParseMovementsInstruction(commands, instructionLines[2]);
+	pimpl->ParseGridSizeInstruction(commands, instructionLines[0]);
+	pimpl->ParsePositionInstruction(commands, instructionLines[1]);
+	pimpl->ParseDirectionInstruction(commands, instructionLines[1]);
+	pimpl->ParseMovementsInstruction(commands, instructionLines[2]);
 
 	return commands;
 }
 
-void InstructionParser::ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const
+void InstructionParser::PImpl::ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const
 {
 	auto tokens = Split(line, ' ');
 	auto width = std::stoi(tokens[0]);
@@ -60,7 +79,7 @@ void InstructionParser::ParseGridSizeInstruction(std::unique_ptr<Commands>& comm
 	commands->AddCommand(std::make_unique<GridSizeCommand>(width, heigth));
 }
 
-void InstructionParser::ParsePositionInstruction(std::unique_ptr<Commands>& commands, std::string line) const
+void InstructionParser::PImpl::ParsePositionInstruction(std::unique_ptr<Commands>& commands, std::string line) const
 {
 	auto tokens = Split(line, ' ');
 	auto x = std::stoi(tokens[0]);
@@ -68,7 +87,7 @@ void InstructionParser::ParsePositionInstruction(std::unique_ptr<Commands>& comm
 	commands->AddCommand(std::make_unique<PositionCommand>(x, y));
 }
 
-void InstructionParser::ParseDirectionInstruction(std::unique_ptr<Commands>& commands, std::string line) const
+void InstructionParser::PImpl::ParseDirectionInstruction(std::unique_ptr<Commands>& commands, std::string line) const
 {
 	auto tokens = Split(line, ' ');
 	auto rawDirection = tokens.back();
@@ -76,7 +95,7 @@ void InstructionParser::ParseDirectionInstruction(std::unique_ptr<Commands>& com
 	commands->AddCommand(std::make_unique<DirectionCommand>(direction));
 }
 
-void InstructionParser::ParseMovementsInstruction(const std::unique_ptr<Commands>& commands, std::string line) const
+void InstructionParser::PImpl::ParseMovementsInstruction(const std::unique_ptr<Commands>& commands, std::string line) const
 {
 	for (auto movement : line) 
 	{

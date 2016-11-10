@@ -14,20 +14,15 @@ typedef std::map<std::string, Direction> InstructionsToDirections;
 
 class InstructionParser
 {	
-	static InstructionsToDirections instructionsToDirections_;
-	
-	std::vector<std::string> Split(const std::string &text, char sep) const;
-	void ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
-	void ParsePositionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
-	void ParseDirectionInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
-	void ParseMovementsInstruction(const std::unique_ptr<Commands>& commands, std::string line) const;
-	
 public:
-	virtual ~InstructionParser()
-	{
-	}
+	InstructionParser();
+	virtual ~InstructionParser();
 	
 	std::unique_ptr<Commands> Parse(const std::string& instructions) const;
+
+private:
+	struct PImpl;
+	std::unique_ptr<PImpl> pimpl;	
 };
 
 struct Plateau
