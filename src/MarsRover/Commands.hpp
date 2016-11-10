@@ -75,7 +75,7 @@ public:
 	~Commands();
 
 	void AddCommand(std::unique_ptr<Command> &&cmd);
-	void Execute(Rover* rover);
+	void Execute(Rover* rover) const;
 
 private:
 	struct PImpl;

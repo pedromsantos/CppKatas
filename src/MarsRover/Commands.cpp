@@ -86,7 +86,7 @@ Commands::Commands() : pimpl(new PImpl())
 Commands::~Commands()
 {}
 
-void Commands::Execute(Rover* rover)
+void Commands::Execute(Rover* rover) const
 {
 	for (auto const& command : pimpl->commands)
 	{
