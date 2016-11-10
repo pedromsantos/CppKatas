@@ -16,14 +16,6 @@ struct InstructionParser::PImpl
 	void ParseMovementsInstruction(const std::unique_ptr<Commands>& commands, std::string line) const;
 };
 
-InstructionsToDirections InstructionParser::PImpl::instructionsToDirections_ =
-{
-	{ "N", Direction::North },
-	{ "E", Direction::East },
-	{ "S", Direction::South },
-	{ "W", Direction::West }
-};
-
 InstructionParser::InstructionParser() : pimpl(new PImpl())
 {
 }
@@ -31,6 +23,28 @@ InstructionParser::InstructionParser() : pimpl(new PImpl())
 InstructionParser::~InstructionParser()
 {
 }
+
+std::unique_ptr<Commands> InstructionParser::Parse(const std::string& instructions) const
+{
+	auto commands = std::make_unique<Commands>();
+
+	auto instructionLines = pimpl->Split(instructions, '\n');
+
+	pimpl->ParseGridSizeInstruction(commands, instructionLines[0]);
+	pimpl->ParsePositionInstruction(commands, instructionLines[1]);
+	pimpl->ParseDirectionInstruction(commands, instructionLines[1]);
+	pimpl->ParseMovementsInstruction(commands, instructionLines[2]);
+
+	return commands;
+}
+
+InstructionsToDirections InstructionParser::PImpl::instructionsToDirections_ =
+{
+	{ "N", Direction::North },
+	{ "E", Direction::East },
+	{ "S", Direction::South },
+	{ "W", Direction::West }
+};
 
 std::vector<std::string> InstructionParser::PImpl::Split(const std::string &text, char sep) const
 {
@@ -55,20 +69,6 @@ std::vector<std::string> InstructionParser::PImpl::Split(const std::string &text
 	}
 
 	return tokens;
-}
-
-std::unique_ptr<Commands> InstructionParser::Parse(const std::string& instructions) const
-{
-	auto commands = std::make_unique<Commands>();
-
-	auto instructionLines = pimpl->Split(instructions, '\n');
-
-	pimpl->ParseGridSizeInstruction(commands, instructionLines[0]);
-	pimpl->ParsePositionInstruction(commands, instructionLines[1]);
-	pimpl->ParseDirectionInstruction(commands, instructionLines[1]);
-	pimpl->ParseMovementsInstruction(commands, instructionLines[2]);
-
-	return commands;
 }
 
 void InstructionParser::PImpl::ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const
