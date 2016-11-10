@@ -39,6 +39,7 @@ private:
 
 class DirectionCommand : public Command
 {
+public:
 	DirectionCommand(Direction direction);
 	~DirectionCommand();
 
@@ -69,9 +70,14 @@ public:
 
 class Commands
 {
-	std::vector<std::unique_ptr<Command >> commands;
-
 public:
+	Commands();
+	~Commands();
+
 	void AddCommand(std::unique_ptr<Command> &&cmd);
 	void Execute(Rover* rover);
+
+private:
+	struct PImpl;
+	std::unique_ptr<PImpl> pimpl;
 };
