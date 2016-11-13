@@ -57,7 +57,7 @@ private:
     int x_;
     int y_;
 
-    std::map<Direction, std::function<Position(int, int)>> move_;
+    std::map<Direction, std::function<std::unique_ptr<Position> (int, int)>> move_;
 
 public:
     Position(int x, int y)
@@ -65,10 +65,10 @@ public:
     {
         move_ =
                 {
-                    {Direction::North, [](int xx, int yy) { return Position(xx, yy + 1); }},
-                    {Direction::South, [](int xx, int yy) { return Position(xx, yy - 1); }},
-                    {Direction::East,  [](int xx, int yy) { return Position(xx + 1, yy); }},
-                    {Direction::West,  [](int xx, int yy) { return Position(xx - 1, yy); }},
+                    {Direction::North, [](int xx, int yy) { return std::make_unique<Position>(xx, yy + 1); }},
+                    {Direction::South, [](int xx, int yy) { return std::make_unique<Position>(xx, yy - 1); }},
+                    {Direction::East,  [](int xx, int yy) { return std::make_unique<Position>(xx + 1, yy); }},
+                    {Direction::West,  [](int xx, int yy) { return std::make_unique<Position>(xx - 1, yy); }},
                 };
     }
 
@@ -78,7 +78,7 @@ public:
                && y_ == other.y_;
     }
 
-    Position Move(Direction direction)
+    std::unique_ptr<Position> Move(Direction direction)
     {
         return move_[direction](x_, y_);
     }
@@ -97,9 +97,9 @@ inline bool operator==(const Position &lPosition, const Position &rPosition)
 
 class Rover
 {
-    Plateau plateau_;
-    Position position_;
     Direction direction_;
+    std::unique_ptr<Plateau> plateau_;
+    std::unique_ptr<Position> position_;
     std::unique_ptr<InstructionParser> instruction_parser_;
 
     static std::map<Direction, Direction> turnRight_;
@@ -109,11 +109,11 @@ class Rover
 public:
     Rover();
 
-    Rover(Plateau plateau, Position position, Direction direction);
+    Rover(std::unique_ptr<Plateau>&& plateau, std::unique_ptr<Position>&& position, Direction direction);
 
-    void virtual InitializeGridSize(int width, int height);
+    void virtual InitializeGridSize(std::unique_ptr<Plateau>&& plateau);
 
-    void virtual InitializePosition(int x, int y);
+    void virtual InitializePosition(std::unique_ptr<Position>&& position);
 
     void virtual InitializeDirection(Direction direction);
 
@@ -128,13 +128,13 @@ public:
     virtual bool IsEqual(const Rover &rover) const
     {
         return
-                rover.plateau_ == plateau_
-                && rover.position_ == position_
+                *rover.plateau_ == *plateau_
+                && *rover.position_ == *position_
                 && rover.direction_ == direction_;
     }
 };
 
-inline bool operator==(const Rover &lRover, const Rover &rRover)
+inline bool operator==(const Rover &lRover, const Rover& rRover)
 {
     return typeid(lRover) == typeid(rRover)
            && lRover.IsEqual(rRover);

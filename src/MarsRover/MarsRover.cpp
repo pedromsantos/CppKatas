@@ -140,24 +140,24 @@ std::map<Direction, std::string> Rover::directions_ =
 };
 
 Rover::Rover()
-        : Rover(Plateau(0, 0), Position(0, 0), Direction::North)
+        : Rover(std::make_unique<Plateau>(0, 0), std::make_unique<Position>(0, 0), Direction::North)
 {
 }
 
-Rover::Rover(Plateau plateau, Position position, Direction direction)
-        : plateau_(plateau), position_(position), direction_(direction)
+Rover::Rover(std::unique_ptr<Plateau>&& plateau, std::unique_ptr<Position>&& position, Direction direction)
+        : plateau_(std::move(plateau)), position_(std::move(position)), direction_(direction)
 {
     instruction_parser_ = std::make_unique<InstructionParser>();
 }
 
-void Rover::InitializeGridSize(int width, int height)
+void Rover::InitializeGridSize(std::unique_ptr<Plateau>&& plateau)
 {
-    plateau_ = Plateau(width, height);
+    plateau_ = std::move(plateau);
 }
 
-void Rover::InitializePosition(int x, int y)
+void Rover::InitializePosition(std::unique_ptr<Position>&& position)
 {
-    position_ = Position(x, y);
+    position_ = std::move(position);
 }
 
 void Rover::InitializeDirection(Direction direction)
@@ -171,7 +171,7 @@ std::string Rover::Execute(const std::string &instructions)
             ->Parse(instructions)
             ->Execute(*this);
 
-    return position_.ToString() + " " + directions_[direction_];
+    return position_->ToString() + " " + directions_[direction_];
 }
 
 void Rover::TurnLeft()
@@ -186,5 +186,5 @@ void Rover::TurnRight()
 
 void Rover::Move()
 {
-    position_ = position_.Move(direction_);
+    position_ = position_->Move(direction_);
 }

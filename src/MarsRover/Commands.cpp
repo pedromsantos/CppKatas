@@ -18,7 +18,7 @@ GridSizeCommand::~GridSizeCommand()
 
 void GridSizeCommand::Execute(Rover &rover)
 {
-    rover.InitializeGridSize(pimpl->width_, pimpl->height_);
+    rover.InitializeGridSize(std::make_unique<Plateau>(pimpl->width_, pimpl->height_));
 }
 
 struct PositionCommand::PImpl
@@ -38,7 +38,7 @@ PositionCommand::~PositionCommand()
 
 void PositionCommand::Execute(Rover &rover)
 {
-    rover.InitializePosition(pimpl->x_, pimpl->y_);
+    rover.InitializePosition(std::make_unique<Position>(pimpl->x_, pimpl->y_));
 }
 
 struct DirectionCommand::PImpl
