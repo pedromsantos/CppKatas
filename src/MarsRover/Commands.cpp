@@ -3,81 +3,81 @@
 
 struct GridSizeCommand::PImpl
 {
-	int width_;
-	int height_;
+    int width_;
+    int height_;
 };
 
 GridSizeCommand::GridSizeCommand(int width, int height) : pimpl(new PImpl())
 {
-	pimpl->width_ = width;
-	pimpl->height_ = height;
+    pimpl->width_ = width;
+    pimpl->height_ = height;
 }
 
 GridSizeCommand::~GridSizeCommand()
 {}
 
-void GridSizeCommand::Execute(Rover& rover)
+void GridSizeCommand::Execute(Rover &rover)
 {
-	rover.InitializeGridSize(pimpl->width_, pimpl->height_);
+    rover.InitializeGridSize(pimpl->width_, pimpl->height_);
 }
 
 struct PositionCommand::PImpl
 {
-	int x_;
-	int y_;
+    int x_;
+    int y_;
 };
 
 PositionCommand::PositionCommand(int x, int y) : pimpl(new PImpl())
 {
-	pimpl->x_ = x;
-	pimpl->y_ = y;
+    pimpl->x_ = x;
+    pimpl->y_ = y;
 }
 
 PositionCommand::~PositionCommand()
 {}
 
-void PositionCommand::Execute(Rover& rover)
+void PositionCommand::Execute(Rover &rover)
 {
-	rover.InitializePosition(pimpl->x_, pimpl->y_);
+    rover.InitializePosition(pimpl->x_, pimpl->y_);
 }
 
 struct DirectionCommand::PImpl
 {
-	Direction direction_;
+    Direction direction_;
 };
 
 DirectionCommand::DirectionCommand(Direction direction) : pimpl(new PImpl())
 {
-	pimpl->direction_ = direction;
+    pimpl->direction_ = direction;
 }
 
 DirectionCommand::~DirectionCommand()
 {
 }
 
-void DirectionCommand::Execute(Rover& rover)
+void DirectionCommand::Execute(Rover &rover)
 {
-	rover.InitializeDirection(pimpl->direction_);
+    rover.InitializeDirection(pimpl->direction_);
 }
 
-void TurnLeftCommand::Execute(Rover& rover)
+void TurnLeftCommand::Execute(Rover &rover)
 {
-	rover.TurnLeft();
+    rover.TurnLeft();
 }
 
-void TurnRightCommand::Execute(Rover& rover)
+void TurnRightCommand::Execute(Rover &rover)
 {
-	rover.TurnRight();
+    rover.TurnRight();
 }
 
-void MoveCommand::Execute(Rover& rover)
+void MoveCommand::Execute(Rover &rover)
 {
-	rover.Move();
+    rover.Move();
 }
 
 struct Commands::PImpl
 {
-	std::vector<std::unique_ptr<Command >> commands;
+    std::vector<std::unique_ptr<Command >> commands;
 };
 
 Commands::Commands() : pimpl(new PImpl())
@@ -86,15 +86,15 @@ Commands::Commands() : pimpl(new PImpl())
 Commands::~Commands()
 {}
 
-void Commands::Execute(Rover& rover) const
+void Commands::Execute(Rover &rover) const
 {
-	for (auto const& command : pimpl->commands)
-	{
-		command->Execute(rover);
-	}
+    for (auto const &command : pimpl->commands)
+    {
+        command->Execute(rover);
+    }
 }
 
-void Commands::AddCommand(std::unique_ptr<Command>&& command) const
+void Commands::AddCommand(std::unique_ptr<Command> &&command) const
 {
-	pimpl->commands.push_back(std::move(command));
+    pimpl->commands.push_back(std::move(command));
 }
