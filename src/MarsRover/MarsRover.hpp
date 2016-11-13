@@ -72,19 +72,12 @@ inline bool operator==(const Position &lPosition, const Position &rPosition)
 
 class Rover
 {
-    Direction direction_;
-    std::unique_ptr<Plateau> plateau_;
-    std::unique_ptr<Position> position_;
-    std::unique_ptr<InstructionParser> instruction_parser_;
-
-    static std::map<Direction, Direction> turnRight_;
-    static std::map<Direction, Direction> turnLeft_;
-    static std::map<Direction, std::string> directions_;
-
 public:
     Rover();
 
     Rover(std::unique_ptr<Plateau>&& plateau, std::unique_ptr<Position>&& position, Direction direction);
+
+    ~Rover();
 
     void virtual InitializeGridSize(std::unique_ptr<Plateau>&& plateau);
 
@@ -100,13 +93,11 @@ public:
 
     void virtual Move();
 
-    virtual bool IsEqual(const Rover &rover) const
-    {
-        return
-                *rover.plateau_ == *plateau_
-                && *rover.position_ == *position_
-                && rover.direction_ == direction_;
-    }
+    bool IsEqual(const Rover &rover) const;
+
+private:
+    struct PImpl;
+    std::unique_ptr<PImpl> pimpl;
 };
 
 inline bool operator==(const Rover &lRover, const Rover& rRover)

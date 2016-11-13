@@ -178,7 +178,19 @@ std::string Position::ToString()
     return std::to_string(pimpl->x_) + " " + std::to_string(pimpl->y_);
 }
 
-std::map<Direction, Direction> Rover::turnRight_ =
+struct Rover::PImpl
+{
+    Direction direction_;
+    std::unique_ptr<Plateau> plateau_;
+    std::unique_ptr<Position> position_;
+    std::unique_ptr<InstructionParser> instruction_parser_;
+
+    static std::map<Direction, Direction> turnRight_;
+    static std::map<Direction, Direction> turnLeft_;
+    static std::map<Direction, std::string> directions_;
+};
+
+std::map<Direction, Direction> Rover::PImpl::turnRight_ =
 {
     {Direction::North, Direction::East},
     {Direction::East,  Direction::South},
@@ -186,7 +198,7 @@ std::map<Direction, Direction> Rover::turnRight_ =
     {Direction::West,  Direction::North}
 };
 
-std::map<Direction, Direction> Rover::turnLeft_ =
+std::map<Direction, Direction> Rover::PImpl::turnLeft_ =
 {
     {Direction::North, Direction::West},
     {Direction::East,  Direction::North},
@@ -194,7 +206,7 @@ std::map<Direction, Direction> Rover::turnLeft_ =
     {Direction::West,  Direction::South}
 };
 
-std::map<Direction, std::string> Rover::directions_ =
+std::map<Direction, std::string> Rover::PImpl::directions_ =
 {
     {Direction::North, "N"},
     {Direction::East,  "E"},
@@ -208,46 +220,61 @@ Rover::Rover()
 }
 
 Rover::Rover(std::unique_ptr<Plateau>&& plateau, std::unique_ptr<Position>&& position, Direction direction)
-        : plateau_(std::move(plateau)), position_(std::move(position)), direction_(direction)
+        : pimpl(new PImpl)
 {
-    instruction_parser_ = std::make_unique<InstructionParser>();
+    pimpl->plateau_ = std::move(plateau);
+    pimpl->position_ = std::move(position);
+    pimpl->direction_ = direction;
+    pimpl->instruction_parser_ = std::make_unique<InstructionParser>();
+}
+
+Rover::~Rover()
+{
 }
 
 void Rover::InitializeGridSize(std::unique_ptr<Plateau>&& plateau)
 {
-    plateau_ = std::move(plateau);
+    pimpl->plateau_ = std::move(plateau);
 }
 
 void Rover::InitializePosition(std::unique_ptr<Position>&& position)
 {
-    position_ = std::move(position);
+    pimpl->position_ = std::move(position);
 }
 
 void Rover::InitializeDirection(Direction direction)
 {
-    direction_ = direction;
+    pimpl->direction_ = direction;
 }
 
 std::string Rover::Execute(const std::string &instructions)
 {
-    instruction_parser_
+    pimpl->instruction_parser_
             ->Parse(instructions)
             ->Execute(*this);
 
-    return position_->ToString() + " " + directions_[direction_];
+    return pimpl->position_->ToString() + " " + pimpl->directions_[pimpl->direction_];
 }
 
 void Rover::TurnLeft()
 {
-    direction_ = turnLeft_[direction_];
+    pimpl->direction_ = pimpl->turnLeft_[pimpl->direction_];
 }
 
 void Rover::TurnRight()
 {
-    direction_ = turnRight_[direction_];
+    pimpl->direction_ = pimpl->turnRight_[pimpl->direction_];
 }
 
 void Rover::Move()
 {
-    position_ = position_->Move(direction_);
+    pimpl->position_ = pimpl->position_->Move(pimpl->direction_);
+}
+
+bool Rover::IsEqual(const Rover &rover) const
+{
+    return
+        *rover.pimpl->plateau_ == *pimpl->plateau_
+        && *rover.pimpl->position_ == *pimpl->position_
+        && rover.pimpl->direction_ == pimpl->direction_;
 }
