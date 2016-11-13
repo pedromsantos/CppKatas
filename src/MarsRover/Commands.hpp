@@ -8,7 +8,7 @@ class Rover;
 class Command
 {
 public:
-	void virtual Execute(Rover& rover) {};
+	virtual void Execute(Rover& rover) = 0;
 };
 
 class GridSizeCommand : public Command
