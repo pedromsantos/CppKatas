@@ -50,7 +50,8 @@ InstructionsToCommands InstructionParser::PImpl::instructionsToCommands_ =
 {
         { 'R', [](Commands& commands) { commands.AddCommand(std::make_unique<TurnRightCommand>()); }},
         { 'L', [](Commands& commands) { commands.AddCommand(std::make_unique<TurnLeftCommand>()); }},
-        { 'M', [](Commands& commands) { commands.AddCommand(std::make_unique<MoveCommand>()); }}
+        { 'M', [](Commands& commands) { commands.AddCommand(std::make_unique<MoveCommand>()); }},
+        { 0, [](Commands& commands) {}}
 };
 
 std::vector<std::string> InstructionParser::PImpl::Split(const std::string &text, char sep) const
@@ -106,10 +107,7 @@ void InstructionParser::PImpl::ParseMovementsInstruction(const std::unique_ptr<C
 {
 	for (auto movement : line)
     {
-        if(movement != 0)
-        {
-            instructionsToCommands_[movement](*commands);
-        }
+        instructionsToCommands_[movement](*commands);
 	}
 }
 
