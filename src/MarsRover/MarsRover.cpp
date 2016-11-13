@@ -136,6 +136,48 @@ bool Plateau::IsEqual(const Plateau &other) const
            && pimpl->width_ == other.pimpl->width_;
 }
 
+struct Position::PImpl
+{
+    int x_;
+    int y_;
+
+    std::map<Direction, std::function<std::unique_ptr<Position> (int, int)>> move_;
+};
+
+Position::Position(int x, int y) : pimpl(new PImpl)
+{
+    pimpl->x_ = x;
+    pimpl->y_ = y;
+
+    pimpl->move_ =
+        {
+                {Direction::North, [](int xx, int yy) { return std::make_unique<Position>(xx, yy + 1); }},
+                {Direction::South, [](int xx, int yy) { return std::make_unique<Position>(xx, yy - 1); }},
+                {Direction::East,  [](int xx, int yy) { return std::make_unique<Position>(xx + 1, yy); }},
+                {Direction::West,  [](int xx, int yy) { return std::make_unique<Position>(xx - 1, yy); }},
+        };
+}
+
+Position::~Position()
+{
+}
+
+bool Position::IsEqual(const Position &other) const
+{
+    return pimpl->x_ == other.pimpl->x_
+           && pimpl->y_ == other.pimpl->y_;
+}
+
+std::unique_ptr<Position> Position::Move(Direction direction)
+{
+    return pimpl->move_[direction](pimpl->x_, pimpl->y_);
+}
+
+std::string Position::ToString()
+{
+    return std::to_string(pimpl->x_) + " " + std::to_string(pimpl->y_);
+}
+
 std::map<Direction, Direction> Rover::turnRight_ =
 {
     {Direction::North, Direction::East},

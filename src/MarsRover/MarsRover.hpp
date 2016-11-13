@@ -48,40 +48,20 @@ inline bool operator==(const Plateau &lPlateau, const Plateau &rPlateau)
 
 struct Position
 {
-private:
-    int x_;
-    int y_;
-
-    std::map<Direction, std::function<std::unique_ptr<Position> (int, int)>> move_;
-
 public:
-    Position(int x, int y)
-            : x_(x), y_(y)
-    {
-        move_ =
-                {
-                    {Direction::North, [](int xx, int yy) { return std::make_unique<Position>(xx, yy + 1); }},
-                    {Direction::South, [](int xx, int yy) { return std::make_unique<Position>(xx, yy - 1); }},
-                    {Direction::East,  [](int xx, int yy) { return std::make_unique<Position>(xx + 1, yy); }},
-                    {Direction::West,  [](int xx, int yy) { return std::make_unique<Position>(xx - 1, yy); }},
-                };
-    }
+    Position(int x, int y);
 
-    bool IsEqual(const Position &other) const
-    {
-        return x_ == other.x_
-               && y_ == other.y_;
-    }
+    ~Position();
 
-    std::unique_ptr<Position> Move(Direction direction)
-    {
-        return move_[direction](x_, y_);
-    }
+    bool IsEqual(const Position &other) const;
 
-    std::string ToString()
-    {
-        return std::to_string(x_) + " " + std::to_string(y_);
-    }
+    std::unique_ptr<Position> Move(Direction direction);
+
+    std::string ToString();
+
+private:
+    struct PImpl;
+    std::unique_ptr<PImpl> pimpl;
 };
 
 inline bool operator==(const Position &lPosition, const Position &rPosition)
