@@ -106,13 +106,34 @@ void InstructionParser::PImpl::ParseDirectionInstruction(std::unique_ptr<Command
     commands->AddCommand(std::make_unique<DirectionCommand>(direction));
 }
 
-void
-InstructionParser::PImpl::ParseMovementsInstruction(const std::unique_ptr<Commands> &commands, std::string line) const
+void InstructionParser::PImpl::ParseMovementsInstruction(const std::unique_ptr<Commands> &commands, std::string line) const
 {
     for (auto movement : line)
     {
         instructionsToCommands_[movement](*commands);
     }
+}
+
+struct Plateau::PImpl
+{
+    int width_;
+    int height_;
+};
+
+Plateau::Plateau(int width, int height) : pimpl(new PImpl)
+{
+    pimpl->width_ = width;
+    pimpl->height_ = height;
+}
+
+Plateau::~Plateau()
+{
+}
+
+bool Plateau::IsEqual(const Plateau &other) const
+{
+    return pimpl->height_ == other.pimpl->height_
+           && pimpl->width_ == other.pimpl->width_;
 }
 
 std::map<Direction, Direction> Rover::turnRight_ =

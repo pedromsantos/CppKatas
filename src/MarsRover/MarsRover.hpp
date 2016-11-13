@@ -28,21 +28,16 @@ private:
 
 struct Plateau
 {
-private:
-    int width_;
-    int height_;
-
 public:
-    Plateau(int width, int height)
-            : width_(width), height_(height)
-    {
-    }
+    Plateau(int width, int height);
 
-    bool IsEqual(const Plateau &other) const
-    {
-        return height_ == other.height_
-               && width_ == other.width_;
-    }
+    ~Plateau();
+
+    bool IsEqual(const Plateau &other) const;
+
+private:
+    struct PImpl;
+    std::unique_ptr<PImpl> pimpl;
 };
 
 inline bool operator==(const Plateau &lPlateau, const Plateau &rPlateau)
