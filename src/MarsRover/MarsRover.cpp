@@ -188,6 +188,21 @@ struct Rover::PImpl
     static std::map<Direction, Direction> turnRight_;
     static std::map<Direction, Direction> turnLeft_;
     static std::map<Direction, std::string> directions_;
+
+    void TurnLeft()
+    {
+        direction_ = turnLeft_[direction_];
+    }
+
+    void TurnRight()
+    {
+        direction_ = turnRight_[direction_];
+    }
+
+    void Move()
+    {
+        position_ = position_->Move(direction_);
+    }
 };
 
 std::map<Direction, Direction> Rover::PImpl::turnRight_ =
@@ -258,17 +273,17 @@ std::string Rover::Execute(const std::string &instructions)
 
 void Rover::TurnLeft()
 {
-    pimpl->direction_ = pimpl->turnLeft_[pimpl->direction_];
+    pimpl->TurnLeft();
 }
 
 void Rover::TurnRight()
 {
-    pimpl->direction_ = pimpl->turnRight_[pimpl->direction_];
+    pimpl->TurnRight();
 }
 
 void Rover::Move()
 {
-    pimpl->position_ = pimpl->position_->Move(pimpl->direction_);
+    pimpl->Move();
 }
 
 bool Rover::IsEqual(const Rover &rover) const
