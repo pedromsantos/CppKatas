@@ -118,6 +118,12 @@ struct Plateau::PImpl
 {
     int width_;
     int height_;
+
+    bool IsEqual(const PImpl &other) const
+    {
+        return height_ == other.height_
+               && width_ == other.width_;
+    }
 };
 
 Plateau::Plateau(int width, int height) : pimpl(new PImpl)
@@ -132,8 +138,7 @@ Plateau::~Plateau()
 
 bool Plateau::IsEqual(const Plateau &other) const
 {
-    return pimpl->height_ == other.pimpl->height_
-           && pimpl->width_ == other.pimpl->width_;
+    return pimpl->IsEqual(*other.pimpl);
 }
 
 struct Position::PImpl
@@ -142,6 +147,12 @@ struct Position::PImpl
     int y_;
 
     std::map<Direction, std::function<std::unique_ptr<Position> (int, int)>> move_;
+
+    bool IsEqual(const Position::PImpl &other) const
+    {
+        return x_ == other.x_
+               && y_ == other.y_;
+    }
 };
 
 Position::Position(int x, int y) : pimpl(new PImpl)
@@ -164,8 +175,7 @@ Position::~Position()
 
 bool Position::IsEqual(const Position &other) const
 {
-    return pimpl->x_ == other.pimpl->x_
-           && pimpl->y_ == other.pimpl->y_;
+    return pimpl->IsEqual(*other.pimpl);
 }
 
 std::unique_ptr<Position> Position::Move(Direction direction)
@@ -202,6 +212,14 @@ struct Rover::PImpl
     void Move()
     {
         position_ = position_->Move(direction_);
+    }
+
+    bool IsEqual(const Rover::PImpl &rover) const
+    {
+        return
+                *rover.plateau_ == *plateau_
+                && *rover.position_ == *position_
+                && rover.direction_ == direction_;
     }
 };
 
@@ -288,8 +306,5 @@ void Rover::Move()
 
 bool Rover::IsEqual(const Rover &rover) const
 {
-    return
-        *rover.pimpl->plateau_ == *pimpl->plateau_
-        && *rover.pimpl->position_ == *pimpl->position_
-        && rover.pimpl->direction_ == pimpl->direction_;
+    return rover.pimpl->IsEqual(*rover.pimpl);
 }
