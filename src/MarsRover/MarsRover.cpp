@@ -166,7 +166,7 @@ std::string Rover::Execute(const std::string& instructions)
 {
 	instruction_parser_
 		->Parse(instructions)	
-		->Execute(this);
+		->Execute(*this);
 
 	return position_.ToString() + " " + directions_[direction_];
 }

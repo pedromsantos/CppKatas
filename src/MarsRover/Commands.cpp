@@ -16,9 +16,9 @@ GridSizeCommand::GridSizeCommand(int width, int height) : pimpl(new PImpl())
 GridSizeCommand::~GridSizeCommand()
 {}
 
-void GridSizeCommand::Execute(Rover* rover)
+void GridSizeCommand::Execute(Rover& rover)
 {
-	rover->InitializeGridSize(pimpl->width_, pimpl->height_);
+	rover.InitializeGridSize(pimpl->width_, pimpl->height_);
 }
 
 struct PositionCommand::PImpl
@@ -36,9 +36,9 @@ PositionCommand::PositionCommand(int x, int y) : pimpl(new PImpl())
 PositionCommand::~PositionCommand()
 {}
 
-void PositionCommand::Execute(Rover* rover)
+void PositionCommand::Execute(Rover& rover)
 {
-	rover->InitializePosition(pimpl->x_, pimpl->y_);
+	rover.InitializePosition(pimpl->x_, pimpl->y_);
 }
 
 struct DirectionCommand::PImpl
@@ -55,24 +55,24 @@ DirectionCommand::~DirectionCommand()
 {
 }
 
-void DirectionCommand::Execute(Rover* rover)
+void DirectionCommand::Execute(Rover& rover)
 {
-	rover->InitializeDirection(pimpl->direction_);
+	rover.InitializeDirection(pimpl->direction_);
 }
 
-void TurnLeftCommand::Execute(Rover* rover)
+void TurnLeftCommand::Execute(Rover& rover)
 {
-	rover->TurnLeft();
+	rover.TurnLeft();
 }
 
-void TurnRightCommand::Execute(Rover* rover)
+void TurnRightCommand::Execute(Rover& rover)
 {
-	rover->TurnRight();
+	rover.TurnRight();
 }
 
-void MoveCommand::Execute(Rover* rover)
+void MoveCommand::Execute(Rover& rover)
 {
-	rover->Move();
+	rover.Move();
 }
 
 struct Commands::PImpl
@@ -86,7 +86,7 @@ Commands::Commands() : pimpl(new PImpl())
 Commands::~Commands()
 {}
 
-void Commands::Execute(Rover* rover) const
+void Commands::Execute(Rover& rover) const
 {
 	for (auto const& command : pimpl->commands)
 	{

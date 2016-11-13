@@ -1,14 +1,14 @@
 #pragma once
- #include "Directions.hpp"
- #include <vector>
- #include <memory>
+#include "Directions.hpp"
+#include <vector>
+#include <memory>
 
 class Rover;
 
 class Command
 {
 public:
-	void virtual Execute(Rover* rover) {};
+	void virtual Execute(Rover& rover) {};
 };
 
 class GridSizeCommand : public Command
@@ -17,7 +17,7 @@ public:
 	GridSizeCommand(int width, int height);
 	~GridSizeCommand();
 
-	void Execute(Rover* rover) override;
+	void Execute(Rover& rover) override;
 
 private:
 	struct PImpl;
@@ -30,7 +30,7 @@ public:
 	PositionCommand(int x, int y);
 	~PositionCommand();
 
-	void Execute(Rover* rover) override;
+	void Execute(Rover& rover) override;
 
 private:
 	struct PImpl;
@@ -43,7 +43,7 @@ public:
 	DirectionCommand(Direction direction);
 	~DirectionCommand();
 
-	void Execute(Rover* rover) override;
+	void Execute(Rover& rover) override;
 
 private:
 	struct PImpl;
@@ -53,19 +53,19 @@ private:
 class TurnLeftCommand : public Command
 {
 public:
-	void Execute(Rover* rover) override;
+	void Execute(Rover& rover) override;
 };
 
 class TurnRightCommand : public Command
 {
 public:
-	void Execute(Rover* rover) override;
+	void Execute(Rover& rover) override;
 };
 
 class MoveCommand : public Command
 {
 public:
-	void Execute(Rover* rover) override;
+	void Execute(Rover& rover) override;
 };
 
 class Commands
@@ -75,7 +75,7 @@ public:
 	~Commands();
 
 	void AddCommand(std::unique_ptr<Command> &&cmd) const;
-	void Execute(Rover* rover) const;
+	void Execute(Rover& rover) const;
 
 private:
 	struct PImpl;
