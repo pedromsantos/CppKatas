@@ -1,9 +1,13 @@
 #include "MarsRover.hpp"
 #include "Commands.hpp"
 
+typedef std::map<char, std::function<void(Commands&)>>  InstructionsToCommands;
+
 struct InstructionParser::PImpl
 {
 	static InstructionsToDirections instructionsToDirections_;
+
+    static InstructionsToCommands instructionsToCommands_;
 
 	std::vector<std::string> Split(const std::string &text, char sep) const;
 	void ParseGridSizeInstruction(std::unique_ptr<Commands>& commands, std::string line) const;
@@ -40,6 +44,13 @@ InstructionsToDirections InstructionParser::PImpl::instructionsToDirections_ =
 	{ "E", Direction::East },
 	{ "S", Direction::South },
 	{ "W", Direction::West }
+};
+
+InstructionsToCommands InstructionParser::PImpl::instructionsToCommands_ =
+{
+        { 'R', [](Commands& commands) { commands.AddCommand(std::make_unique<TurnRightCommand>()); }},
+        { 'L', [](Commands& commands) { commands.AddCommand(std::make_unique<TurnLeftCommand>()); }},
+        { 'M', [](Commands& commands) { commands.AddCommand(std::make_unique<MoveCommand>()); }}
 };
 
 std::vector<std::string> InstructionParser::PImpl::Split(const std::string &text, char sep) const
@@ -93,22 +104,12 @@ void InstructionParser::PImpl::ParseDirectionInstruction(std::unique_ptr<Command
 
 void InstructionParser::PImpl::ParseMovementsInstruction(const std::unique_ptr<Commands>& commands, std::string line) const
 {
-	for (auto movement : line) 
-	{
-		if (movement == 'R')
-		{
-			commands->AddCommand(std::make_unique<TurnRightCommand>());
-		}
-
-		if (movement == 'L')
-		{
-			commands->AddCommand(std::make_unique<TurnLeftCommand>());
-		}
-		
-		if (movement == 'M')
-		{
-			commands->AddCommand(std::make_unique<MoveCommand>());
-		}
+	for (auto movement : line)
+    {
+        if(movement != 0)
+        {
+            instructionsToCommands_[movement](*commands);
+        }
 	}
 }
 
