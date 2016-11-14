@@ -10,8 +10,6 @@
 
 class Commands;
 
-typedef std::map<std::string, Direction> InstructionsToDirections;
-
 class InstructionParser
 {
 public:

@@ -2,6 +2,7 @@
 #include "Commands.hpp"
 
 typedef std::map<char, std::function<void(Commands &)>> InstructionsToCommands;
+typedef std::map<std::string, Direction> InstructionsToDirections;
 
 struct InstructionParser::PImpl
 {
