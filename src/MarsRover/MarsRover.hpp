@@ -79,19 +79,19 @@ public:
 
     ~Rover();
 
-    void virtual InitializeGridSize(std::unique_ptr<Plateau>&& plateau);
+    virtual void InitializeGridSize(std::unique_ptr<Plateau>&& plateau);
 
-    void virtual InitializePosition(std::unique_ptr<Position>&& position);
+    virtual void InitializePosition(std::unique_ptr<Position>&& position);
 
-    void virtual InitializeDirection(Direction direction);
+    virtual void InitializeDirection(Direction direction);
 
     std::string Execute(const std::string &instructions);
 
-    void virtual TurnLeft();
+    virtual void TurnLeft();
 
-    void virtual TurnRight();
+    virtual void TurnRight();
 
-    void virtual Move();
+    virtual void Move();
 
     bool IsEqual(const Rover &rover) const;
 
