@@ -141,32 +141,44 @@ bool Plateau::IsEqual(const Plateau &other) const
     return pimpl->IsEqual(*other.pimpl);
 }
 
+typedef std::map<Direction, std::function<std::unique_ptr<Position>(int, int)>> Moves;
+
 struct Position::PImpl
 {
     int x_;
     int y_;
 
-    std::map<Direction, std::function<std::unique_ptr<Position> (int, int)>> move_;
+	static Moves moves_;
 
     bool IsEqual(const Position::PImpl &other) const
     {
         return x_ == other.x_
                && y_ == other.y_;
     }
+
+	std::string ToString() const
+	{
+		return std::to_string(x_) + " " + std::to_string(y_);
+	}	
+
+	std::unique_ptr<Position> Move(Direction direction) const
+	{
+		return moves_[direction](x_, y_);
+	}
+};
+
+Moves Position::PImpl::moves_ =
+{
+	{ Direction::North, [](int xx, int yy) { return std::make_unique<Position>(xx, yy + 1); } },
+	{ Direction::South, [](int xx, int yy) { return std::make_unique<Position>(xx, yy - 1); } },
+	{ Direction::East,  [](int xx, int yy) { return std::make_unique<Position>(xx + 1, yy); } },
+	{ Direction::West,  [](int xx, int yy) { return std::make_unique<Position>(xx - 1, yy); } },
 };
 
 Position::Position(int x, int y) : pimpl(new PImpl)
 {
     pimpl->x_ = x;
     pimpl->y_ = y;
-
-    pimpl->move_ =
-        {
-                {Direction::North, [](int xx, int yy) { return std::make_unique<Position>(xx, yy + 1); }},
-                {Direction::South, [](int xx, int yy) { return std::make_unique<Position>(xx, yy - 1); }},
-                {Direction::East,  [](int xx, int yy) { return std::make_unique<Position>(xx + 1, yy); }},
-                {Direction::West,  [](int xx, int yy) { return std::make_unique<Position>(xx - 1, yy); }},
-        };
 }
 
 Position::~Position()
@@ -178,14 +190,14 @@ bool Position::IsEqual(const Position &other) const
     return pimpl->IsEqual(*other.pimpl);
 }
 
-std::unique_ptr<Position> Position::Move(Direction direction)
+std::unique_ptr<Position> Position::Move(Direction direction) const
 {
-    return pimpl->move_[direction](pimpl->x_, pimpl->y_);
+	return pimpl->Move(direction);
 }
 
-std::string Position::ToString()
+std::string Position::ToString() const
 {
-    return std::to_string(pimpl->x_) + " " + std::to_string(pimpl->y_);
+    return pimpl->ToString();
 }
 
 struct Rover::PImpl
@@ -306,5 +318,5 @@ void Rover::Move()
 
 bool Rover::IsEqual(const Rover &rover) const
 {
-    return rover.pimpl->IsEqual(*rover.pimpl);
+    return pimpl->IsEqual(*rover.pimpl);
 }

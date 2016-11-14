@@ -78,6 +78,11 @@ void MoveCommand::Execute(Rover &rover)
 struct Commands::PImpl
 {
     std::vector<std::unique_ptr<Command >> commands;
+
+	void AddCommand(std::unique_ptr<Command> &&command)
+	{
+		commands.push_back(std::move(command));
+	}
 };
 
 Commands::Commands() : pimpl(new PImpl())
@@ -96,5 +101,5 @@ void Commands::Execute(Rover &rover) const
 
 void Commands::AddCommand(std::unique_ptr<Command> &&command) const
 {
-    pimpl->commands.push_back(std::move(command));
+	pimpl->AddCommand(std::move(command));
 }

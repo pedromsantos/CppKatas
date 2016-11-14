@@ -55,9 +55,9 @@ public:
 
     bool IsEqual(const Position &other) const;
 
-    std::unique_ptr<Position> Move(Direction direction);
+    std::unique_ptr<Position> Move(Direction direction) const;
 
-    std::string ToString();
+    std::string ToString() const;
 
 private:
     struct PImpl;
