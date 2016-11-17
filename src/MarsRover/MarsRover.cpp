@@ -142,7 +142,7 @@ bool Plateau::IsEqual(const Plateau &other) const
     return pimpl->IsEqual(*other.pimpl);
 }
 
-typedef std::map<Direction, std::function<std::unique_ptr<Position>(int, int)>> Moves;
+using Moves = std::map<Direction, std::function<std::unique_ptr<Position>(int, int)>>;
 
 struct Position::PImpl
 {
