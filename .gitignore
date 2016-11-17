@@ -76,3 +76,6 @@ LastTestsFailed.log
 /build
 /src/MarsRover/d1.diff
 CMakeCache.txt
+/Katas.dir/MinSizeRel
+/packages
+/packages.config

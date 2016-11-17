@@ -1,8 +1,8 @@
 #include "MarsRover.hpp"
 #include "Commands.hpp"
 
-typedef std::map<char, std::function<void(Commands &)>> InstructionsToCommands;
-typedef std::map<std::string, Direction> InstructionsToDirections;
+using InstructionsToCommands = std::map<char, std::function<void(Commands &)>>;
+using InstructionsToDirections = std::map<std::string, Direction>;
 
 struct InstructionParser::PImpl
 {
@@ -203,7 +203,7 @@ std::string Position::ToString() const
 
 struct Rover::PImpl
 {
-    Direction direction_;
+    Direction direction_ = Direction::North;
     std::unique_ptr<Plateau> plateau_;
     std::unique_ptr<Position> position_;
     std::unique_ptr<InstructionParser> instruction_parser_;
