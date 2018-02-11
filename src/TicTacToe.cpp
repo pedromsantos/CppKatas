@@ -1,18 +1,20 @@
 #include "TicTacToe.hpp"
 
 struct InvalidPlayerException : public std::exception {
-    const char * what () const throw () {
+    const char * what () const throw () override
+    {
         return "Invalid player turn";
     }
 };
 
 struct InvalidPositionException : public std::exception {
-    const char * what () const throw () {
+    const char * what () const throw () override
+    {
         return "Position has already been played";
     }
 };
 
-struct Board::PImpl
+struct Board::BoardImpl
 {
     const std::vector<std::vector<Player>> starting_turns{{NONE, NONE, NONE},
                                                           {NONE, NONE, NONE},
@@ -27,7 +29,7 @@ struct Board::PImpl
     void SaveTurn(const Player &player, const Row &row, const Column &column);
 };
 
-bool Board::PImpl::WinnerOnRows(const Player &player) const
+bool Board::BoardImpl::WinnerOnRows(const Player &player) const
 {
     for (const auto row : {TOP, MIDDLE, BOTTOM})
     {
@@ -39,7 +41,7 @@ bool Board::PImpl::WinnerOnRows(const Player &player) const
     return false;
 }
 
-bool Board::PImpl::WinnerOnColumns(const Player &player) const
+bool Board::BoardImpl::WinnerOnColumns(const Player &player) const
 {
     for (const auto column : {LEFT, CENTER, RIGHT})
     {
@@ -53,19 +55,19 @@ bool Board::PImpl::WinnerOnColumns(const Player &player) const
     return false;
 }
 
-bool Board::PImpl::WinnerOnDiagonals(const Player &player, Column start, Column end) const
+bool Board::BoardImpl::WinnerOnDiagonals(const Player &player, Column start, Column end) const
 {
     return (player == turns[TOP][start]
             && player == turns[MIDDLE][CENTER]
             && player == turns[BOTTOM][end]);
 }
 
-bool Board::PImpl::PositionIsTaken(const Row &row, const Column &column) const
+bool Board::BoardImpl::PositionIsTaken(const Row &row, const Column &column) const
 {
     return turns[row][column] != NONE;
 }
 
-void Board::PImpl::SaveTurn(const Player &player, const Row &row, const Column &column)
+void Board::BoardImpl::SaveTurn(const Player &player, const Row &row, const Column &column)
 {
     if(PositionIsTaken(row, column))
     {
@@ -88,13 +90,13 @@ bool Board::IsWinner(const Player &player) const
            || pimpl->WinnerOnDiagonals(player, RIGHT, LEFT);
 }
 
-Board::Board() : pimpl(new PImpl())
+Board::Board() : pimpl(new BoardImpl())
 {
 }
 
 Board::~Board() = default;
 
-struct TicTacToe::PImpl
+struct TicTacToe::TicTacToeImpl
 {
     std::unique_ptr<Board> board_;
     Player lastPlayer_ = O;
@@ -103,12 +105,12 @@ struct TicTacToe::PImpl
     void SaveTurn(const Player &player, const Row &row, const Column &column);
 };
 
-bool TicTacToe::PImpl::IsWinner(const Player &player) const
+bool TicTacToe::TicTacToeImpl::IsWinner(const Player &player) const
 {
     return board_->IsWinner(player);
 }
 
-void TicTacToe::PImpl::SaveTurn(const Player &player, const Row &row, const Column &column)
+void TicTacToe::TicTacToeImpl::SaveTurn(const Player &player, const Row &row, const Column &column)
 {
     if(player == lastPlayer_)
     {
@@ -125,7 +127,7 @@ TicTacToe::TicTacToe()
 {
 }
 
-TicTacToe::TicTacToe(std::unique_ptr<Board>&& board) : pimpl(new PImpl())
+TicTacToe::TicTacToe(std::unique_ptr<Board>&& board) : pimpl(new TicTacToeImpl())
 {
     pimpl->board_ = std::move(board);
 }

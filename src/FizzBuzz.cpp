@@ -2,7 +2,7 @@
 
 std::string FizzBuzz(const unsigned int number)
 {
-    std::string fizzBuzz = "";
+    std::string fizzBuzz;
 
     if (number % 3 == 0)
     {

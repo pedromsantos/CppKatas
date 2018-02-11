@@ -1,59 +1,55 @@
 #include "Commands.hpp"
 #include "MarsRover.hpp"
 
-struct GridSizeCommand::PImpl
+struct GridSizeCommand::GridSizeCommandImpl
 {
     int width_;
     int height_;
 };
 
-GridSizeCommand::GridSizeCommand(int width, int height) : pimpl(new PImpl())
+GridSizeCommand::GridSizeCommand(int width, int height) : pimpl(new GridSizeCommandImpl())
 {
     pimpl->width_ = width;
     pimpl->height_ = height;
 }
 
-GridSizeCommand::~GridSizeCommand()
-{}
+GridSizeCommand::~GridSizeCommand() = default;
 
 void GridSizeCommand::Execute(Rover &rover)
 {
     rover.InitializeGridSize(std::make_unique<Plateau>(pimpl->width_, pimpl->height_));
 }
 
-struct PositionCommand::PImpl
+struct PositionCommand::Impl
 {
     int x_;
     int y_;
 };
 
-PositionCommand::PositionCommand(int x, int y) : pimpl(new PImpl())
+PositionCommand::PositionCommand(int x, int y) : pimpl(new Impl())
 {
     pimpl->x_ = x;
     pimpl->y_ = y;
 }
 
-PositionCommand::~PositionCommand()
-{}
+PositionCommand::~PositionCommand() = default;
 
 void PositionCommand::Execute(Rover &rover)
 {
     rover.InitializePosition(std::make_unique<Position>(pimpl->x_, pimpl->y_));
 }
 
-struct DirectionCommand::PImpl
+struct DirectionCommand::DirectionCommandImpl
 {
     Direction direction_;
 };
 
-DirectionCommand::DirectionCommand(Direction direction) : pimpl(new PImpl())
+DirectionCommand::DirectionCommand(Direction direction) : pimpl(new DirectionCommandImpl())
 {
     pimpl->direction_ = direction;
 }
 
-DirectionCommand::~DirectionCommand()
-{
-}
+DirectionCommand::~DirectionCommand() = default;
 
 void DirectionCommand::Execute(Rover &rover)
 {
@@ -75,7 +71,7 @@ void MoveCommand::Execute(Rover &rover)
     rover.Move();
 }
 
-struct Commands::PImpl
+struct Commands::CommandsImpl
 {
     std::vector<std::unique_ptr<Command >> commands;
 
@@ -85,11 +81,10 @@ struct Commands::PImpl
 	}
 };
 
-Commands::Commands() : pimpl(new PImpl())
+Commands::Commands() : pimpl(new CommandsImpl())
 {}
 
-Commands::~Commands()
-{}
+Commands::~Commands() = default;
 
 void Commands::Execute(Rover &rover) const
 {

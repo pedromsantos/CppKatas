@@ -22,8 +22,8 @@ public:
     void Execute(Rover &rover) override;
 
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct GridSizeCommandImpl;
+    std::unique_ptr<GridSizeCommandImpl> pimpl;
 };
 
 class PositionCommand : public Command
@@ -36,22 +36,22 @@ public:
     void Execute(Rover &rover) override;
 
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct Impl;
+    std::unique_ptr<Impl> pimpl;
 };
 
 class DirectionCommand : public Command
 {
 public:
-    DirectionCommand(Direction direction);
+    explicit DirectionCommand(Direction direction);
 
     ~DirectionCommand();
 
     void Execute(Rover &rover) override;
 
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct DirectionCommandImpl;
+    std::unique_ptr<DirectionCommandImpl> pimpl;
 };
 
 class TurnLeftCommand : public Command
@@ -84,6 +84,6 @@ public:
     void Execute(Rover &rover) const;
 
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct CommandsImpl;
+    std::unique_ptr<CommandsImpl> pimpl;
 };

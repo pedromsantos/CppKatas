@@ -2,4 +2,4 @@
 
 #include <string>
 
-std::string FizzBuzz(const unsigned int number);
+std::string FizzBuzz(unsigned int number);

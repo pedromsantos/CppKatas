@@ -35,8 +35,8 @@ enum Column
 class Board
 {
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct BoardImpl;
+    std::unique_ptr<BoardImpl> pimpl;
 
 public:
 
@@ -56,10 +56,10 @@ public:
     TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column) throw();
 
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct TicTacToeImpl;
+    std::unique_ptr<TicTacToeImpl> pimpl;
 
-    TicTacToe(std::unique_ptr<Board>&& board);
+    explicit TicTacToe(std::unique_ptr<Board>&& board);
 };
 
 #endif //CPPKATAS_TICTACTOE_H

@@ -20,8 +20,8 @@ public:
     std::unique_ptr<Commands> Parse(const std::string &instructions) const;
 
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct InstructionParserImpl;
+    std::unique_ptr<InstructionParserImpl> pimpl;
 };
 
 struct Plateau
@@ -34,8 +34,8 @@ public:
     bool IsEqual(const Plateau &other) const;
 
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct PlateauImpl;
+    std::unique_ptr<PlateauImpl> pimpl;
 };
 
 inline bool operator==(const Plateau &lPlateau, const Plateau &rPlateau)
@@ -58,8 +58,8 @@ public:
     std::string ToString() const;
 
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct PositionImpl;
+    std::unique_ptr<PositionImpl> pimpl;
 };
 
 inline bool operator==(const Position &lPosition, const Position &rPosition)
@@ -94,8 +94,8 @@ public:
     bool IsEqual(const Rover &rover) const;
 
 private:
-    struct PImpl;
-    std::unique_ptr<PImpl> pimpl;
+    struct RoverImpl;
+    std::unique_ptr<RoverImpl> pimpl;
 };
 
 inline bool operator==(const Rover &lRover, const Rover& rRover)
