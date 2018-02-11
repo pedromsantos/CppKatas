@@ -1,114 +1,171 @@
 #include "catch.hpp"
 #include "../src/TicTacToe.hpp"
 
-TEST_CASE("Play game of tic tac toe", "[TicTacToe]")
+SCENARIO("Play game of tic tac toe", "[TicTacToe]")
 {
-    auto game = new TicTacToe();
-
-    SECTION("Player X plays first")
+    GIVEN("A tic tac toe game")
     {
-        REQUIRE(game->PlayTurn(X, TOP, LEFT) == InProgress);
-    }
+        auto game = new TicTacToe();
 
-    SECTION("Player O cannot play first")
-    {
-        REQUIRE(game->PlayTurn(O, TOP, LEFT) == InvalidPlayer);
-    }
+        WHEN("its the first move")
+        {
+            THEN("player X can play")
+            {
+                REQUIRE(game->PlayTurn(X, TOP, LEFT) == InProgress);
+            }
+        }
 
-    SECTION("Player O plays second")
-    {
-        game->PlayTurn(X, TOP, LEFT);
-        REQUIRE(game->PlayTurn(O, MIDLDE, LEFT) == InProgress);
-    }
+        WHEN("its the first move")
+        {
+            THEN("player O cannot play")
+            {
+                REQUIRE(game->PlayTurn(O, TOP, LEFT) == InvalidPlayer);
+            }
+        }
 
-    SECTION("Players must alternate")
-    {
-        game->PlayTurn(X, TOP, LEFT);
-        REQUIRE(game->PlayTurn(X, MIDLDE, LEFT) == InvalidPlayer);
-    }
+        WHEN("its the second move")
+        {
+            game->PlayTurn(X, TOP, LEFT);
 
-    SECTION("Player cannot play in same position as previous player")
-    {
-        game->PlayTurn(X, TOP, LEFT);
-        REQUIRE(game->PlayTurn(O, TOP, LEFT) == InvalidPosition);
-    }
+            THEN("player O can play")
+            {
+                REQUIRE(game->PlayTurn(O, MIDDLE, LEFT) == InProgress);
+            }
+        }
 
-    SECTION("Player cannot play in any previous played position")
-    {
-        game->PlayTurn(X, TOP, LEFT);
-        game->PlayTurn(O, TOP, CENTER);
-        REQUIRE(game->PlayTurn(X, TOP, LEFT) == InvalidPosition);
-    }
+        WHEN("players do not alternate")
+        {
+            game->PlayTurn(X, TOP, LEFT);
 
-    SECTION("Player X wins if it fills all columns in top row")
-    {
-        game->PlayTurn(X, TOP, LEFT);
-        game->PlayTurn(O, MIDLDE, CENTER);
-        game->PlayTurn(X, TOP, CENTER);
-        game->PlayTurn(O, MIDLDE, LEFT);
-        REQUIRE(game->PlayTurn(X, TOP, RIGHT) == Win);
-    }
+            THEN("it signals an invalid player")
+            {
+                REQUIRE(game->PlayTurn(X, MIDDLE, LEFT) == InvalidPlayer);
+            }
+        }
 
-    SECTION("Player X wins if it fills all columns middle row")
-    {
-        game->PlayTurn(X, MIDLDE, LEFT);
-        game->PlayTurn(O, BOTTOM, CENTER);
-        game->PlayTurn(X, MIDLDE, CENTER);
-        game->PlayTurn(O, BOTTOM, LEFT);
-        REQUIRE(game->PlayTurn(X, MIDLDE, RIGHT) == Win);
-    }
+        WHEN("player plays in same position as previous player")
+        {
+            game->PlayTurn(X, TOP, LEFT);
 
-    SECTION("Player X wins if it fills all columns bottom row")
-    {
-        game->PlayTurn(X, BOTTOM, LEFT);
-        game->PlayTurn(O, MIDLDE, CENTER);
-        game->PlayTurn(X, BOTTOM, CENTER);
-        game->PlayTurn(O, MIDLDE, LEFT);
-        REQUIRE(game->PlayTurn(X, BOTTOM, RIGHT) == Win);
-    }
+            THEN("it signals an invalid position")
+            {
+                REQUIRE(game->PlayTurn(O, TOP, LEFT) == InvalidPosition);
+            }
+        }
 
-    SECTION("Player X wins if it fills all rows in left column")
-    {
-        game->PlayTurn(X, TOP, LEFT);
-        game->PlayTurn(O, MIDLDE, CENTER);
-        game->PlayTurn(X, MIDLDE, LEFT);
-        game->PlayTurn(O, MIDLDE, RIGHT);
-        REQUIRE(game->PlayTurn(X, BOTTOM, LEFT) == Win);
-    }
+        WHEN("player plays in any played positions")
+        {
+            game->PlayTurn(X, TOP, LEFT);
+            game->PlayTurn(O, TOP, CENTER);
 
-    SECTION("Player X wins if it fills all rows in center column")
-    {
-        game->PlayTurn(X, TOP, CENTER);
-        game->PlayTurn(O, MIDLDE, LEFT);
-        game->PlayTurn(X, MIDLDE, CENTER);
-        game->PlayTurn(O, MIDLDE, RIGHT);
-        REQUIRE(game->PlayTurn(X, BOTTOM, CENTER) == Win);
-    }
+            THEN("it signals an invalid position")
+            {
+                REQUIRE(game->PlayTurn(X, TOP, LEFT) == InvalidPosition);
+            }
+        }
 
-    SECTION("Player X wins if it fills all rows in rigth column")
-    {
-        game->PlayTurn(X, TOP, RIGHT);
-        game->PlayTurn(O, MIDLDE, LEFT);
-        game->PlayTurn(X, MIDLDE, RIGHT);
-        game->PlayTurn(O, MIDLDE, CENTER);
-        REQUIRE(game->PlayTurn(X, BOTTOM, RIGHT) == Win);
-    }
+        WHEN("player X fills all columns in top row")
+        {
+            game->PlayTurn(X, TOP, LEFT);
+            game->PlayTurn(O, MIDDLE, CENTER);
+            game->PlayTurn(X, TOP, CENTER);
+            game->PlayTurn(O, MIDDLE, LEFT);
 
-    SECTION("Player X wins if he has three in left to rigth diagonal")
-    {
-        game->PlayTurn(X, TOP, LEFT);
-        game->PlayTurn(O, TOP, CENTER);
-        game->PlayTurn(X, MIDLDE, CENTER);
-        game->PlayTurn(O, TOP, RIGHT);
-        REQUIRE(game->PlayTurn(X, BOTTOM, RIGHT) == Win);
-    }
+            THEN("player X wins")
+            {
+                REQUIRE(game->PlayTurn(X, TOP, RIGHT) == Win);
+            }
+        }
 
-    SECTION("Player X wins if he has three in rigth to left diagonal")
-    {
-        game->PlayTurn(X, TOP, RIGHT);
-        game->PlayTurn(O, TOP, CENTER);
-        game->PlayTurn(X, MIDLDE, CENTER);
-        game->PlayTurn(O, TOP, LEFT);
-        REQUIRE(game->PlayTurn(X, BOTTOM, LEFT) == Win);
+        WHEN("player X fills all columns middle row")
+        {
+            game->PlayTurn(X, MIDDLE, LEFT);
+            game->PlayTurn(O, BOTTOM, CENTER);
+            game->PlayTurn(X, MIDDLE, CENTER);
+            game->PlayTurn(O, BOTTOM, LEFT);
+
+            THEN("player X wins")
+            {
+                REQUIRE(game->PlayTurn(X, MIDDLE, RIGHT) == Win);
+            }
+        }
+
+        WHEN("player X fills all columns bottom row")
+        {
+            game->PlayTurn(X, BOTTOM, LEFT);
+            game->PlayTurn(O, MIDDLE, CENTER);
+            game->PlayTurn(X, BOTTOM, CENTER);
+            game->PlayTurn(O, MIDDLE, LEFT);
+
+            THEN("player X wins")
+            {
+                REQUIRE(game->PlayTurn(X, BOTTOM, RIGHT) == Win);
+            }
+        }
+
+        WHEN("player X fills all rows in left column")
+        {
+            game->PlayTurn(X, TOP, LEFT);
+            game->PlayTurn(O, MIDDLE, CENTER);
+            game->PlayTurn(X, MIDDLE, LEFT);
+            game->PlayTurn(O, MIDDLE, RIGHT);
+
+            THEN("player X wins")
+            {
+                REQUIRE(game->PlayTurn(X, BOTTOM, LEFT) == Win);
+            }
+        }
+
+        WHEN("player X fills all rows in center column")
+        {
+            game->PlayTurn(X, TOP, CENTER);
+            game->PlayTurn(O, MIDDLE, LEFT);
+            game->PlayTurn(X, MIDDLE, CENTER);
+            game->PlayTurn(O, MIDDLE, RIGHT);
+
+            THEN("player X wins")
+            {
+                REQUIRE(game->PlayTurn(X, BOTTOM, CENTER) == Win);
+            }
+        }
+
+        WHEN("player X fills all rows in right column")
+        {
+            game->PlayTurn(X, TOP, RIGHT);
+            game->PlayTurn(O, MIDDLE, LEFT);
+            game->PlayTurn(X, MIDDLE, RIGHT);
+            game->PlayTurn(O, MIDDLE, CENTER);
+
+            THEN("player X wins")
+            {
+                REQUIRE(game->PlayTurn(X, BOTTOM, RIGHT) == Win);
+            }
+        }
+
+        WHEN("pPlayer X has three in left to right diagonal")
+        {
+            game->PlayTurn(X, TOP, LEFT);
+            game->PlayTurn(O, TOP, CENTER);
+            game->PlayTurn(X, MIDDLE, CENTER);
+            game->PlayTurn(O, TOP, RIGHT);
+
+            THEN("player X wins")
+            {
+                REQUIRE(game->PlayTurn(X, BOTTOM, RIGHT) == Win);
+            }
+        }
+
+        WHEN("player X has three in right to left diagonal")
+        {
+            game->PlayTurn(X, TOP, RIGHT);
+            game->PlayTurn(O, TOP, CENTER);
+            game->PlayTurn(X, MIDDLE, CENTER);
+            game->PlayTurn(O, TOP, LEFT);
+
+            THEN("player X wins")
+            {
+                REQUIRE(game->PlayTurn(X, BOTTOM, LEFT) == Win);
+            }
+        }
     }
 }

@@ -1,54 +1,35 @@
 #include "TicTacToe.hpp"
 
-TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Column &column)
-{
-    auto status = InProgress;
-
-    if (IsPlayerInvalid(player))
-    {
-        status = InvalidPlayer;
+struct InvalidPlayerException : public std::exception {
+    const char * what () const throw () {
+        return "Invalid player turn";
     }
+};
 
-    if (IsPositionTaken(row, column))
-    {
-        status = InvalidPosition;
+struct InvalidPositionException : public std::exception {
+    const char * what () const throw () {
+        return "Position has already been played";
     }
+};
 
-    SaveTurn(player, row, column);
-
-    if (IsWinner(player))
-    {
-        status = Win;
-    }
-
-    return status;
-}
-
-bool TicTacToe::IsPlayerInvalid(const Player &player) const
+struct Board::PImpl
 {
-    return player == lastPlayer;
-}
+    const std::vector<std::vector<Player>> starting_turns{{NONE, NONE, NONE},
+                                                          {NONE, NONE, NONE},
+                                                          {NONE, NONE, NONE}};
 
-bool TicTacToe::IsPositionTaken(const Row &row, const Column &column) const
-{
-    return turns[row][column] != NONE;
-}
+    std::vector<std::vector<Player>> turns = starting_turns;
 
-void TicTacToe::SaveTurn(const Player &player, const Row &row, const Column &column)
-{
-    lastPlayer = player;
-    turns[row][column] = player;
-}
+    bool PositionIsTaken(const Row &row, const Column &column) const;
+    bool WinnerOnColumns(const Player &player) const;
+    bool WinnerOnRows(const Player &player) const;
+    bool WinnerOnDiagonals(const Player &player, Column start, Column end) const;
+    void SaveTurn(const Player &player, const Row &row, const Column &column);
+};
 
-bool TicTacToe::IsWinner(const Player &player) const
+bool Board::PImpl::WinnerOnRows(const Player &player) const
 {
-    return WinnerOnRows(player) || WinnerOnColumns(player) || WinnerOnDiagonals(player, LEFT, RIGHT) ||
-           WinnerOnDiagonals(player, RIGHT, LEFT);
-}
-
-bool TicTacToe::WinnerOnRows(const Player &player) const
-{
-    for (const auto row : {TOP, MIDLDE, BOTTOM})
+    for (const auto row : {TOP, MIDDLE, BOTTOM})
     {
         if (player == turns[row][LEFT] && player == turns[row][CENTER] && player == turns[row][RIGHT])
         {
@@ -58,11 +39,13 @@ bool TicTacToe::WinnerOnRows(const Player &player) const
     return false;
 }
 
-bool TicTacToe::WinnerOnColumns(const Player &player) const
+bool Board::PImpl::WinnerOnColumns(const Player &player) const
 {
     for (const auto column : {LEFT, CENTER, RIGHT})
     {
-        if (player == turns[TOP][column] && player == turns[MIDLDE][column] && player == turns[BOTTOM][column])
+        if (player == turns[TOP][column]
+            && player == turns[MIDDLE][column]
+            && player == turns[BOTTOM][column])
         {
             return true;
         }
@@ -70,7 +53,104 @@ bool TicTacToe::WinnerOnColumns(const Player &player) const
     return false;
 }
 
-bool TicTacToe::WinnerOnDiagonals(const Player &player, Column start, Column end) const
+bool Board::PImpl::WinnerOnDiagonals(const Player &player, Column start, Column end) const
 {
-    return (player == turns[TOP][start] && player == turns[MIDLDE][CENTER] && player == turns[BOTTOM][end]);
+    return (player == turns[TOP][start]
+            && player == turns[MIDDLE][CENTER]
+            && player == turns[BOTTOM][end]);
+}
+
+bool Board::PImpl::PositionIsTaken(const Row &row, const Column &column) const
+{
+    return turns[row][column] != NONE;
+}
+
+void Board::PImpl::SaveTurn(const Player &player, const Row &row, const Column &column)
+{
+    if(PositionIsTaken(row, column))
+    {
+        throw InvalidPositionException();
+    }
+
+    turns[row][column] = player;
+}
+
+void Board::SaveTurn(const Player &player, const Row &row, const Column &column)
+{
+    pimpl->SaveTurn(player, row, column);
+}
+
+bool Board::IsWinner(const Player &player) const
+{
+    return pimpl->WinnerOnRows(player)
+           || pimpl->WinnerOnColumns(player)
+           || pimpl->WinnerOnDiagonals(player, LEFT, RIGHT)
+           || pimpl->WinnerOnDiagonals(player, RIGHT, LEFT);
+}
+
+Board::Board() : pimpl(new PImpl())
+{
+}
+
+Board::~Board() = default;
+
+struct TicTacToe::PImpl
+{
+    std::unique_ptr<Board> board_;
+    Player lastPlayer_ = O;
+
+    bool IsWinner(const Player &player) const;
+    void SaveTurn(const Player &player, const Row &row, const Column &column);
+};
+
+bool TicTacToe::PImpl::IsWinner(const Player &player) const
+{
+    return board_->IsWinner(player);
+}
+
+void TicTacToe::PImpl::SaveTurn(const Player &player, const Row &row, const Column &column)
+{
+    if(player == lastPlayer_)
+    {
+        throw InvalidPlayerException();
+    }
+
+    lastPlayer_ = player;
+
+    return board_->SaveTurn(player, row, column);
+}
+
+TicTacToe::TicTacToe()
+        : TicTacToe(std::make_unique<Board>())
+{
+}
+
+TicTacToe::TicTacToe(std::unique_ptr<Board>&& board) : pimpl(new PImpl())
+{
+    pimpl->board_ = std::move(board);
+}
+
+TicTacToe::~TicTacToe() = default;
+
+TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row, const Column &column) throw()
+{
+    try
+    {
+        pimpl->SaveTurn(player, row, column);
+    }
+    catch(InvalidPositionException& exception)
+    {
+        return TurnStatus::InvalidPosition;
+    }
+    catch(InvalidPlayerException& exception)
+    {
+        return TurnStatus::InvalidPlayer;
+    }
+
+    if (pimpl->IsWinner(player))
+    {
+        return TurnStatus::Win;
+    }
+
+    return TurnStatus::InProgress;
 }

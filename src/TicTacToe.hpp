@@ -21,7 +21,7 @@ enum Player
 enum Row
 {
     TOP = 0,
-    MIDLDE = 1,
+    MIDDLE = 1,
     BOTTOM = 2
 };
 
@@ -32,31 +32,34 @@ enum Column
     RIGHT = 2
 };
 
-class TicTacToe
+class Board
 {
-    Player lastPlayer = O;
-
-    const std::vector<std::vector<Player>> starting_turns{{NONE, NONE, NONE},
-                                                          {NONE, NONE, NONE},
-                                                          {NONE, NONE, NONE}};
-    std::vector<std::vector<Player>> turns = starting_turns;
-
-    void SaveTurn(const Player &player, const Row &row, const Column &column);
-
-    bool IsPositionTaken(const Row &row, const Column &column) const;
-
-    bool IsPlayerInvalid(const Player &player) const;
-
-    bool IsWinner(const Player &player) const;
-
-    bool WinnerOnColumns(const Player &player) const;
-
-    bool WinnerOnRows(const Player &player) const;
-
-    bool WinnerOnDiagonals(const Player &player, Column start, Column end) const;
+private:
+    struct PImpl;
+    std::unique_ptr<PImpl> pimpl;
 
 public:
-    TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column);
+
+    Board();
+    virtual ~Board();
+
+    bool IsWinner(const Player &player) const;
+    void SaveTurn(const Player &player, const Row &row, const Column &column);
+};
+
+class TicTacToe
+{
+public:
+    TicTacToe();
+    virtual ~TicTacToe();
+
+    TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column) throw();
+
+private:
+    struct PImpl;
+    std::unique_ptr<PImpl> pimpl;
+
+    TicTacToe(std::unique_ptr<Board>&& board);
 };
 
 #endif //CPPKATAS_TICTACTOE_H
