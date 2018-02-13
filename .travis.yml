@@ -42,5 +42,6 @@ before_install:
   - sudo apt-get update -qq
   - sudo apt-get install -y libopencv-dev
 script:
-  - cmake -DCMAKE_CXX_COMPILER=$COMPILER .. && make
+  - cmake -G 'Unix Makefiles' -DCMAKE_BUILD_TYPE=Debug .. -DCMAKE_CXX_COMPILER=$COMPILER
+  - make
   - ./bin/Tests
