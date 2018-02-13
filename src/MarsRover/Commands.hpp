@@ -18,6 +18,8 @@ public:
     GridSizeCommand(int width, int height);
 
     ~GridSizeCommand();
+    GridSizeCommand(GridSizeCommand&&) noexcept;
+    GridSizeCommand& operator=(GridSizeCommand&&) noexcept;
 
     void Execute(Rover &rover) override;
 
@@ -32,12 +34,14 @@ public:
     PositionCommand(int x, int y);
 
     ~PositionCommand();
+    PositionCommand(PositionCommand&&) noexcept;
+    PositionCommand& operator=(PositionCommand&&) noexcept;
 
     void Execute(Rover &rover) override;
 
 private:
-    struct Impl;
-    std::unique_ptr<Impl> pimpl;
+    struct PositionCommandImpl;
+    std::unique_ptr<PositionCommandImpl> pimpl;
 };
 
 class DirectionCommand : public Command
@@ -46,6 +50,8 @@ public:
     explicit DirectionCommand(Direction direction);
 
     ~DirectionCommand();
+    DirectionCommand(DirectionCommand&&) noexcept;
+    DirectionCommand& operator=(DirectionCommand&&) noexcept;
 
     void Execute(Rover &rover) override;
 
@@ -78,6 +84,8 @@ public:
     Commands();
 
     ~Commands();
+    Commands(Commands&&) noexcept;
+    Commands& operator=(Commands&&) noexcept;
 
     void AddCommand(std::unique_ptr<Command> &&cmd) const;
 

@@ -4,7 +4,7 @@
 
 std::string RomanNumeral(const unsigned int arabicNumber)
 {
-    std::map<unsigned int, std::string> arabicToRoman =
+    std::map<unsigned int, std::string> arabicsToRomans =
             {
                     {1,    "I"},
                     {4,    "IV"},
@@ -21,11 +21,11 @@ std::string RomanNumeral(const unsigned int arabicNumber)
                     {1000, "M"},
             };
 
-    for (auto i = arabicToRoman.rbegin(); i != arabicToRoman.rend(); ++i)
+    for (auto arabicToRoman = arabicsToRomans.rbegin(); arabicToRoman != arabicsToRomans.rend(); ++arabicToRoman)
     {
-        if (arabicNumber >= i->first)
+        if (arabicNumber >= arabicToRoman->first)
         {
-            return i->second + RomanNumeral(arabicNumber - i->first);
+            return arabicToRoman->second + RomanNumeral(arabicNumber - arabicToRoman->first);
         }
     }
 

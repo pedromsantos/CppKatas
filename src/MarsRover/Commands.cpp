@@ -5,34 +5,46 @@ struct GridSizeCommand::GridSizeCommandImpl
 {
     int width_;
     int height_;
+
+    GridSizeCommandImpl(int width, int height) {
+        width_ = width;
+        height_ = height;
+    }
 };
 
-GridSizeCommand::GridSizeCommand(int width, int height) : pimpl(new GridSizeCommandImpl())
+GridSizeCommand::GridSizeCommand(int width, int height)
+        : pimpl(std::make_unique<GridSizeCommandImpl>(width, height))
 {
-    pimpl->width_ = width;
-    pimpl->height_ = height;
 }
 
 GridSizeCommand::~GridSizeCommand() = default;
+GridSizeCommand::GridSizeCommand(GridSizeCommand && op) noexcept = default;
+GridSizeCommand& GridSizeCommand::operator=(GridSizeCommand && op) noexcept = default;
 
 void GridSizeCommand::Execute(Rover &rover)
 {
     rover.InitializeGridSize(std::make_unique<Plateau>(pimpl->width_, pimpl->height_));
 }
 
-struct PositionCommand::Impl
+struct PositionCommand::PositionCommandImpl
 {
     int x_;
     int y_;
+
+    PositionCommandImpl(int x, int y) {
+        x_ = x;
+        y_ = y;
+    }
 };
 
-PositionCommand::PositionCommand(int x, int y) : pimpl(new Impl())
+PositionCommand::PositionCommand(int x, int y)
+        : pimpl(std::make_unique<PositionCommandImpl>(x, y))
 {
-    pimpl->x_ = x;
-    pimpl->y_ = y;
 }
 
 PositionCommand::~PositionCommand() = default;
+PositionCommand::PositionCommand(PositionCommand && op) noexcept = default;
+PositionCommand& PositionCommand::operator=(PositionCommand && op) noexcept = default;
 
 void PositionCommand::Execute(Rover &rover)
 {
@@ -42,19 +54,26 @@ void PositionCommand::Execute(Rover &rover)
 struct DirectionCommand::DirectionCommandImpl
 {
     Direction direction_;
+
+    explicit DirectionCommandImpl(Direction direction)
+    {
+        direction_ = direction;
+    }
 };
 
-DirectionCommand::DirectionCommand(Direction direction) : pimpl(new DirectionCommandImpl())
+DirectionCommand::DirectionCommand(Direction direction)
+        : pimpl(std::make_unique<DirectionCommandImpl>(direction))
 {
-    pimpl->direction_ = direction;
 }
-
-DirectionCommand::~DirectionCommand() = default;
 
 void DirectionCommand::Execute(Rover &rover)
 {
     rover.InitializeDirection(pimpl->direction_);
 }
+
+DirectionCommand::~DirectionCommand() = default;
+DirectionCommand::DirectionCommand(DirectionCommand && op) noexcept = default;
+DirectionCommand& DirectionCommand::operator=(DirectionCommand && op) noexcept = default;
 
 void TurnLeftCommand::Execute(Rover &rover)
 {
@@ -73,18 +92,22 @@ void MoveCommand::Execute(Rover &rover)
 
 struct Commands::CommandsImpl
 {
-    std::vector<std::unique_ptr<Command >> commands;
+    std::vector<std::unique_ptr<Command>> commands;
 
-	void AddCommand(std::unique_ptr<Command> &&command)
-	{
-		commands.push_back(std::move(command));
-	}
+    void AddCommand(std::unique_ptr<Command> &&command)
+    {
+        commands.push_back(std::move(command));
+    }
 };
 
-Commands::Commands() : pimpl(new CommandsImpl())
-{}
+Commands::Commands()
+        : pimpl(std::make_unique<CommandsImpl>())
+{
+}
 
 Commands::~Commands() = default;
+Commands::Commands(Commands && op) noexcept = default;
+Commands& Commands::operator=(Commands && op) noexcept = default;
 
 void Commands::Execute(Rover &rover) const
 {
@@ -96,5 +119,5 @@ void Commands::Execute(Rover &rover) const
 
 void Commands::AddCommand(std::unique_ptr<Command> &&command) const
 {
-	pimpl->AddCommand(std::move(command));
+    pimpl->AddCommand(std::move(command));
 }

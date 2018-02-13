@@ -5,7 +5,7 @@ SCENARIO("Play game of tic tac toe", "[TicTacToe]")
 {
     GIVEN("A tic tac toe game")
     {
-        auto game = new TicTacToe();
+        std::unique_ptr<TicTacToe> game = std::make_unique<TicTacToe>();
 
         WHEN("its the first move")
         {
