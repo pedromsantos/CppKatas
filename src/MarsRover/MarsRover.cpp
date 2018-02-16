@@ -16,7 +16,15 @@ public:
     InstructionToCommand
     InstructionForCommand(const char instruction) const
     {
-        return InstructionsToCommands::map.at(instruction);
+        try
+        {
+            return InstructionsToCommands::map.at(instruction);
+        }
+        catch(...)
+        {
+            return []() { return std::make_unique<NoMoveCommand>(); };
+        }
+
     }
 };
 
@@ -52,7 +60,7 @@ public:
 
     std::unique_ptr<DirectionCommand> ParseDirectionInstruction(const std::string &line) const;
 
-    std::vector<std::unique_ptr<Command>> ParseMovementsInstruction(const std::string &line) const;
+    std::vector<std::unique_ptr<Command>> ParseMovementInstructions(const std::string &line) const;
 };
 
 InstructionParser::InstructionParser()
@@ -72,7 +80,7 @@ InstructionParser::Parse(const std::string &instructions) const
     commands.AddCommand(pimpl->ParsePositionInstruction(instructionLines[1]));
     commands.AddCommand(pimpl->ParseDirectionInstruction(instructionLines[1]));
 
-    auto moveCommands = pimpl->ParseMovementsInstruction(instructionLines[2]);
+    auto moveCommands = pimpl->ParseMovementInstructions(instructionLines[2]);
 
     for(auto& moveCommand : moveCommands)
     {
@@ -140,16 +148,13 @@ InstructionParser::InstructionParserImpl::ParseDirectionInstruction(const std::s
 }
 
 std::vector<std::unique_ptr<Command>>
-InstructionParser::InstructionParserImpl::ParseMovementsInstruction(const std::string &line) const
+InstructionParser::InstructionParserImpl::ParseMovementInstructions(const std::string &line) const
 {
     auto moveCommands = std::vector<std::unique_ptr<Command>>();
 
     for (auto movement : line)
     {
-        if(movement != '\0')
-        {
-            moveCommands.emplace_back(instructionsToCommands_.InstructionForCommand(movement)());
-        }
+        moveCommands.emplace_back(instructionsToCommands_.InstructionForCommand(movement)());
     }
 
     return moveCommands;

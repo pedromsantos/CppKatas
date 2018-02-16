@@ -90,6 +90,10 @@ void MoveCommand::Execute(Rover &rover) const
     rover.Move();
 }
 
+void NoMoveCommand::Execute(Rover &rover) const
+{
+}
+
 struct Commands::CommandsImpl
 {
     std::vector<std::unique_ptr<Command>> commands;

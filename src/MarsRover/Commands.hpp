@@ -78,6 +78,12 @@ public:
     void Execute(Rover &rover) const override;
 };
 
+class NoMoveCommand : public Command
+{
+public:
+    void Execute(Rover &rover) const override;
+};
+
 class Commands
 {
 public:
