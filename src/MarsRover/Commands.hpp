@@ -9,7 +9,7 @@ class Rover;
 class Command
 {
 public:
-    virtual void Execute(Rover &rover) = 0;
+    virtual void Execute(Rover &rover) const = 0;
 };
 
 class GridSizeCommand : public Command
@@ -21,7 +21,7 @@ public:
     GridSizeCommand(GridSizeCommand&&) noexcept;
     GridSizeCommand& operator=(GridSizeCommand&&) noexcept;
 
-    void Execute(Rover &rover) override;
+    void Execute(Rover &rover) const override;
 
 private:
     struct GridSizeCommandImpl;
@@ -37,7 +37,7 @@ public:
     PositionCommand(PositionCommand&&) noexcept;
     PositionCommand& operator=(PositionCommand&&) noexcept;
 
-    void Execute(Rover &rover) override;
+    void Execute(Rover &rover) const override;
 
 private:
     struct PositionCommandImpl;
@@ -53,7 +53,7 @@ public:
     DirectionCommand(DirectionCommand&&) noexcept;
     DirectionCommand& operator=(DirectionCommand&&) noexcept;
 
-    void Execute(Rover &rover) override;
+    void Execute(Rover &rover) const override;
 
 private:
     struct DirectionCommandImpl;
@@ -63,19 +63,19 @@ private:
 class TurnLeftCommand : public Command
 {
 public:
-    void Execute(Rover &rover) override;
+    void Execute(Rover &rover) const override;
 };
 
 class TurnRightCommand : public Command
 {
 public:
-    void Execute(Rover &rover) override;
+    void Execute(Rover &rover) const override;
 };
 
 class MoveCommand : public Command
 {
 public:
-    void Execute(Rover &rover) override;
+    void Execute(Rover &rover) const override;
 };
 
 class Commands
@@ -87,7 +87,7 @@ public:
     Commands(Commands&&) noexcept;
     Commands& operator=(Commands&&) noexcept;
 
-    void AddCommand(std::unique_ptr<Command> &&cmd) const;
+    void AddCommand(std::unique_ptr<Command> &&cmd);
 
     void Execute(Rover &rover) const;
 

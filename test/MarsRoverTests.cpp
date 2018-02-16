@@ -350,7 +350,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
                 InstructionParser parser;
 
                 auto commands = parser.Parse("5 5\n1 1 W\nL");
-                commands->Execute(rover.get());
+                commands.Execute(rover.get());
 
                 Verify(Method(rover, InitializeGridSize));
             }
@@ -360,7 +360,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
                 InstructionParser parser;
 
                 auto commands = parser.Parse("5 5\n1 1 W\nL");
-                commands->Execute(rover.get());
+                commands.Execute(rover.get());
 
                 Verify(Method(rover, InitializePosition));
             }
@@ -370,7 +370,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
                 InstructionParser parser;
 
                 auto commands = parser.Parse("5 5\n1 1 W\nL");
-                commands->Execute(rover.get());
+                commands.Execute(rover.get());
 
                 Verify(Method(rover, InitializeDirection));
             }
@@ -380,7 +380,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
                 InstructionParser parser;
 
                 auto commands = parser.Parse("5 5\n1 1 W\nL");
-                commands->Execute(rover.get());
+                commands.Execute(rover.get());
 
                 Verify(Method(rover, TurnLeft));
             }
@@ -390,7 +390,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
                 InstructionParser parser;
 
                 auto commands = parser.Parse("5 5\n1 1 W\nR");
-                commands->Execute(rover.get());
+                commands.Execute(rover.get());
 
                 Verify(Method(rover, TurnRight));
             }
@@ -400,7 +400,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
                 InstructionParser parser;
 
                 auto commands = parser.Parse("5 5\n1 1 W\nM");
-                commands->Execute(rover.get());
+                commands.Execute(rover.get());
 
                 Verify(Method(rover, Move));
             }
@@ -410,7 +410,7 @@ TEST_CASE("Mars Rover", "[Mars Rover]")
                 InstructionParser parser;
 
                 auto commands = parser.Parse("5 5\n1 1 W\nLRM");
-                commands->Execute(rover.get());
+                commands.Execute(rover.get());
 
                 Verify(Method(rover, TurnLeft));
                 Verify(Method(rover, TurnRight));

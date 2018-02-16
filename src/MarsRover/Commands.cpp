@@ -21,7 +21,7 @@ GridSizeCommand::~GridSizeCommand() = default;
 GridSizeCommand::GridSizeCommand(GridSizeCommand && op) noexcept = default;
 GridSizeCommand& GridSizeCommand::operator=(GridSizeCommand && op) noexcept = default;
 
-void GridSizeCommand::Execute(Rover &rover)
+void GridSizeCommand::Execute(Rover &rover) const
 {
     rover.InitializeGridSize(std::make_unique<Plateau>(pimpl->width_, pimpl->height_));
 }
@@ -46,7 +46,7 @@ PositionCommand::~PositionCommand() = default;
 PositionCommand::PositionCommand(PositionCommand && op) noexcept = default;
 PositionCommand& PositionCommand::operator=(PositionCommand && op) noexcept = default;
 
-void PositionCommand::Execute(Rover &rover)
+void PositionCommand::Execute(Rover &rover) const
 {
     rover.InitializePosition(std::make_unique<Position>(pimpl->x_, pimpl->y_));
 }
@@ -66,7 +66,7 @@ DirectionCommand::DirectionCommand(Direction direction)
 {
 }
 
-void DirectionCommand::Execute(Rover &rover)
+void DirectionCommand::Execute(Rover &rover) const
 {
     rover.InitializeDirection(pimpl->direction_);
 }
@@ -75,17 +75,17 @@ DirectionCommand::~DirectionCommand() = default;
 DirectionCommand::DirectionCommand(DirectionCommand && op) noexcept = default;
 DirectionCommand& DirectionCommand::operator=(DirectionCommand && op) noexcept = default;
 
-void TurnLeftCommand::Execute(Rover &rover)
+void TurnLeftCommand::Execute(Rover &rover) const
 {
     rover.TurnLeft();
 }
 
-void TurnRightCommand::Execute(Rover &rover)
+void TurnRightCommand::Execute(Rover &rover) const
 {
     rover.TurnRight();
 }
 
-void MoveCommand::Execute(Rover &rover)
+void MoveCommand::Execute(Rover &rover) const
 {
     rover.Move();
 }
@@ -117,7 +117,7 @@ void Commands::Execute(Rover &rover) const
     }
 }
 
-void Commands::AddCommand(std::unique_ptr<Command> &&command) const
+void Commands::AddCommand(std::unique_ptr<Command> &&command)
 {
     pimpl->AddCommand(std::move(command));
 }

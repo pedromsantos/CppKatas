@@ -17,7 +17,7 @@ public:
 
     virtual ~InstructionParser();
 
-    std::unique_ptr<Commands> Parse(const std::string &instructions) const;
+    Commands Parse(const std::string &instructions) const;
 
 private:
     struct InstructionParserImpl;
