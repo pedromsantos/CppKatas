@@ -10,9 +10,11 @@ class Command
 {
 public:
     virtual void Execute(Rover &rover) const = 0;
+    Command() = default;
+    virtual ~Command() = default;
 };
 
-class GridSizeCommand : public Command
+class GridSizeCommand final : public Command
 {
 public:
     GridSizeCommand(int width, int height);
@@ -21,14 +23,14 @@ public:
     GridSizeCommand(GridSizeCommand&&) noexcept;
     GridSizeCommand& operator=(GridSizeCommand&&) noexcept;
 
-    void Execute(Rover &rover) const override;
+    void Execute(Rover &rover) const final override;
 
 private:
     struct GridSizeCommandImpl;
     std::unique_ptr<GridSizeCommandImpl> pimpl;
 };
 
-class PositionCommand : public Command
+class PositionCommand final : public Command
 {
 public:
     PositionCommand(int x, int y);
@@ -37,14 +39,14 @@ public:
     PositionCommand(PositionCommand&&) noexcept;
     PositionCommand& operator=(PositionCommand&&) noexcept;
 
-    void Execute(Rover &rover) const override;
+    void Execute(Rover &rover) const final override;
 
 private:
     struct PositionCommandImpl;
     std::unique_ptr<PositionCommandImpl> pimpl;
 };
 
-class DirectionCommand : public Command
+class DirectionCommand final : public Command
 {
 public:
     explicit DirectionCommand(Direction direction);
@@ -53,35 +55,35 @@ public:
     DirectionCommand(DirectionCommand&&) noexcept;
     DirectionCommand& operator=(DirectionCommand&&) noexcept;
 
-    void Execute(Rover &rover) const override;
+    void Execute(Rover &rover) const final override;
 
 private:
     struct DirectionCommandImpl;
     std::unique_ptr<DirectionCommandImpl> pimpl;
 };
 
-class TurnLeftCommand : public Command
+class TurnLeftCommand final : public Command
 {
 public:
-    void Execute(Rover &rover) const override;
+    void Execute(Rover &rover) const final override;
 };
 
-class TurnRightCommand : public Command
+class TurnRightCommand final : public Command
 {
 public:
-    void Execute(Rover &rover) const override;
+    void Execute(Rover &rover) const final override;
 };
 
-class MoveCommand : public Command
+class MoveCommand final : public Command
 {
 public:
-    void Execute(Rover &rover) const override;
+    void Execute(Rover &rover) const final override;
 };
 
-class NoMoveCommand : public Command
+class NoMoveCommand final : public Command
 {
 public:
-    void Execute(Rover &rover) const override;
+    void Execute(Rover &rover) const final override;
 };
 
 class Commands
