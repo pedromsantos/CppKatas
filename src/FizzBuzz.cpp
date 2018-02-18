@@ -1,6 +1,6 @@
 #include "FizzBuzz.hpp"
 
-std::string FizzBuzz(const unsigned int number)
+std::string FizzBuzz(unsigned short number)
 {
     std::string fizzBuzz;
 
