@@ -2,7 +2,7 @@
 
 #include "RomanNumerals.hpp"
 
-std::string RomanNumeral(unsigned short arabicNumber)
+std::string RomanNumeral(const unsigned short arabicNumber)
 {
     std::map<unsigned int, std::string> arabicsToRomans =
             {

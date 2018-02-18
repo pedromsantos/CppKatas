@@ -6,14 +6,14 @@ struct GridSizeCommand::GridSizeCommandImpl
     int width_;
     int height_;
 
-    GridSizeCommandImpl(int width, int height)
+    GridSizeCommandImpl(const int width, const int height)
     {
         width_ = width;
         height_ = height;
     }
 };
 
-GridSizeCommand::GridSizeCommand(int width, int height)
+GridSizeCommand::GridSizeCommand(const int width, const int height)
         : pimpl(std::make_unique<GridSizeCommandImpl>(width, height))
 {
 }
@@ -34,14 +34,14 @@ struct PositionCommand::PositionCommandImpl
     int x_;
     int y_;
 
-    PositionCommandImpl(int x, int y)
+    PositionCommandImpl(const int x, const int y)
     {
         x_ = x;
         y_ = y;
     }
 };
 
-PositionCommand::PositionCommand(int x, int y)
+PositionCommand::PositionCommand(const int x, const int y)
         : pimpl(std::make_unique<PositionCommandImpl>(x, y))
 {
 }
@@ -61,13 +61,13 @@ struct DirectionCommand::DirectionCommandImpl
 {
     Direction direction_;
 
-    explicit DirectionCommandImpl(Direction direction)
+    explicit DirectionCommandImpl(const Direction direction)
     {
         direction_ = direction;
     }
 };
 
-DirectionCommand::DirectionCommand(Direction direction)
+DirectionCommand::DirectionCommand(const Direction direction)
         : pimpl(std::make_unique<DirectionCommandImpl>(direction))
 {
 }

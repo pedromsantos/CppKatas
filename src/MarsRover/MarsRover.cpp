@@ -171,7 +171,7 @@ struct Plateau::PlateauImpl
     }
 };
 
-Plateau::Plateau(int width, int height)
+Plateau::Plateau(const int width, const int height)
         : pimpl(std::make_unique<PlateauImpl>())
 {
     pimpl->width_ = width;
@@ -239,7 +239,7 @@ struct Position::PositionImpl
     }
 };
 
-Position::Position(int x, int y) : pimpl(std::make_unique<PositionImpl>())
+Position::Position(const int x, const int y) : pimpl(std::make_unique<PositionImpl>())
 {
     pimpl->x_ = x;
     pimpl->y_ = y;

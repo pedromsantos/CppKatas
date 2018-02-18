@@ -1,3 +1,3 @@
 #pragma once
 
-unsigned int Fibonacci(unsigned short index);
+unsigned int Fibonacci(const unsigned short index);

@@ -19,7 +19,7 @@ public:
 class GridSizeCommand final : public Command
 {
 public:
-    GridSizeCommand(int width, int height);
+    GridSizeCommand(const int width, const int height);
 
     ~GridSizeCommand();
 
@@ -37,7 +37,7 @@ private:
 class PositionCommand final : public Command
 {
 public:
-    PositionCommand(int x, int y);
+    PositionCommand(const int x, const int y);
 
     ~PositionCommand();
 
@@ -55,7 +55,7 @@ private:
 class DirectionCommand final : public Command
 {
 public:
-    explicit DirectionCommand(Direction direction);
+    explicit DirectionCommand(const Direction direction);
 
     ~DirectionCommand();
 

@@ -27,7 +27,7 @@ private:
 struct Plateau
 {
 public:
-    Plateau(int width, int height);
+    Plateau(const int width, const int height);
 
     ~Plateau();
 
@@ -47,7 +47,7 @@ inline bool operator==(const Plateau &lPlateau, const Plateau &rPlateau)
 struct Position
 {
 public:
-    Position(int x, int y);
+    Position(const int x, const int y);
 
     ~Position();
 
