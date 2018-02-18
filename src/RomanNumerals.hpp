@@ -2,4 +2,4 @@
 
 #include <string>
 
-std::string RomanNumeral(unsigned int arabicNumber);
+std::string RomanNumeral(unsigned short arabicNumber);
