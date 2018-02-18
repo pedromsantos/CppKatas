@@ -1,15 +1,15 @@
 #include "MarsRover.hpp"
 #include "Commands.hpp"
 
-typedef std::function<std::unique_ptr<Command> ()> InstructionToCommand;
+typedef std::function<std::unique_ptr<Command>()> InstructionToCommand;
 
 class InstructionsToCommands
 {
 private:
     std::map<const char, InstructionToCommand> map = {
-            {'R', []() { return std::make_unique<TurnRightCommand>(); } },
-            {'L', []() { return std::make_unique<TurnLeftCommand>(); } },
-            {'M', []() { return std::make_unique<MoveCommand>(); } },
+            {'R', []() { return std::make_unique<TurnRightCommand>(); }},
+            {'L', []() { return std::make_unique<TurnLeftCommand>(); }},
+            {'M', []() { return std::make_unique<MoveCommand>(); }},
     };
 
 public:
@@ -20,7 +20,7 @@ public:
         {
             return InstructionsToCommands::map.at(instruction);
         }
-        catch(...)
+        catch (...)
         {
             return []() { return std::make_unique<NoMoveCommand>(); };
         }
@@ -82,7 +82,7 @@ InstructionParser::Parse(const std::string &instructions) const
 
     auto moveCommands = pimpl->ParseMovementInstructions(instructionLines[2]);
 
-    for(auto& moveCommand : moveCommands)
+    for (auto &moveCommand : moveCommands)
     {
         commands.AddCommand(std::move(moveCommand));
     }

@@ -6,7 +6,8 @@ struct GridSizeCommand::GridSizeCommandImpl
     int width_;
     int height_;
 
-    GridSizeCommandImpl(int width, int height) {
+    GridSizeCommandImpl(int width, int height)
+    {
         width_ = width;
         height_ = height;
     }
@@ -18,8 +19,10 @@ GridSizeCommand::GridSizeCommand(int width, int height)
 }
 
 GridSizeCommand::~GridSizeCommand() = default;
-GridSizeCommand::GridSizeCommand(GridSizeCommand && op) noexcept = default;
-GridSizeCommand& GridSizeCommand::operator=(GridSizeCommand && op) noexcept = default;
+
+GridSizeCommand::GridSizeCommand(GridSizeCommand &&op) noexcept = default;
+
+GridSizeCommand &GridSizeCommand::operator=(GridSizeCommand &&op) noexcept = default;
 
 void GridSizeCommand::Execute(Rover &rover) const
 {
@@ -31,7 +34,8 @@ struct PositionCommand::PositionCommandImpl
     int x_;
     int y_;
 
-    PositionCommandImpl(int x, int y) {
+    PositionCommandImpl(int x, int y)
+    {
         x_ = x;
         y_ = y;
     }
@@ -43,8 +47,10 @@ PositionCommand::PositionCommand(int x, int y)
 }
 
 PositionCommand::~PositionCommand() = default;
-PositionCommand::PositionCommand(PositionCommand && op) noexcept = default;
-PositionCommand& PositionCommand::operator=(PositionCommand && op) noexcept = default;
+
+PositionCommand::PositionCommand(PositionCommand &&op) noexcept = default;
+
+PositionCommand &PositionCommand::operator=(PositionCommand &&op) noexcept = default;
 
 void PositionCommand::Execute(Rover &rover) const
 {
@@ -72,8 +78,10 @@ void DirectionCommand::Execute(Rover &rover) const
 }
 
 DirectionCommand::~DirectionCommand() = default;
-DirectionCommand::DirectionCommand(DirectionCommand && op) noexcept = default;
-DirectionCommand& DirectionCommand::operator=(DirectionCommand && op) noexcept = default;
+
+DirectionCommand::DirectionCommand(DirectionCommand &&op) noexcept = default;
+
+DirectionCommand &DirectionCommand::operator=(DirectionCommand &&op) noexcept = default;
 
 void TurnLeftCommand::Execute(Rover &rover) const
 {
@@ -110,8 +118,10 @@ Commands::Commands()
 }
 
 Commands::~Commands() = default;
-Commands::Commands(Commands && op) noexcept = default;
-Commands& Commands::operator=(Commands && op) noexcept = default;
+
+Commands::Commands(Commands &&op) noexcept = default;
+
+Commands &Commands::operator=(Commands &&op) noexcept = default;
 
 void Commands::Execute(Rover &rover) const
 {

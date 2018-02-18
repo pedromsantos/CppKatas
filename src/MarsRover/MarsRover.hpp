@@ -73,13 +73,13 @@ class Rover
 public:
     Rover();
 
-    Rover(std::unique_ptr<Plateau>&& plateau, std::unique_ptr<Position>&& position, Direction direction);
+    Rover(std::unique_ptr<Plateau> &&plateau, std::unique_ptr<Position> &&position, Direction direction);
 
     ~Rover();
 
-    virtual void InitializeGridSize(std::unique_ptr<Plateau>&& plateau);
+    virtual void InitializeGridSize(std::unique_ptr<Plateau> &&plateau);
 
-    virtual void InitializePosition(std::unique_ptr<Position>&& position);
+    virtual void InitializePosition(std::unique_ptr<Position> &&position);
 
     virtual void InitializeDirection(Direction direction);
 
@@ -98,7 +98,7 @@ private:
     std::unique_ptr<RoverImpl> pimpl;
 };
 
-inline bool operator==(const Rover &lRover, const Rover& rRover)
+inline bool operator==(const Rover &lRover, const Rover &rRover)
 {
     return typeid(lRover) == typeid(rRover)
            && lRover.IsEqual(rRover);

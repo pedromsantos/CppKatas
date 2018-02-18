@@ -10,7 +10,9 @@ class Command
 {
 public:
     virtual void Execute(Rover &rover) const = 0;
+
     Command() = default;
+
     virtual ~Command() = default;
 };
 
@@ -20,8 +22,10 @@ public:
     GridSizeCommand(int width, int height);
 
     ~GridSizeCommand();
-    GridSizeCommand(GridSizeCommand&&) noexcept;
-    GridSizeCommand& operator=(GridSizeCommand&&) noexcept;
+
+    GridSizeCommand(GridSizeCommand &&) noexcept;
+
+    GridSizeCommand &operator=(GridSizeCommand &&) noexcept;
 
     void Execute(Rover &rover) const final override;
 
@@ -36,8 +40,10 @@ public:
     PositionCommand(int x, int y);
 
     ~PositionCommand();
-    PositionCommand(PositionCommand&&) noexcept;
-    PositionCommand& operator=(PositionCommand&&) noexcept;
+
+    PositionCommand(PositionCommand &&) noexcept;
+
+    PositionCommand &operator=(PositionCommand &&) noexcept;
 
     void Execute(Rover &rover) const final override;
 
@@ -52,8 +58,10 @@ public:
     explicit DirectionCommand(Direction direction);
 
     ~DirectionCommand();
-    DirectionCommand(DirectionCommand&&) noexcept;
-    DirectionCommand& operator=(DirectionCommand&&) noexcept;
+
+    DirectionCommand(DirectionCommand &&) noexcept;
+
+    DirectionCommand &operator=(DirectionCommand &&) noexcept;
 
     void Execute(Rover &rover) const final override;
 
@@ -92,8 +100,10 @@ public:
     Commands();
 
     ~Commands();
-    Commands(Commands&&) noexcept;
-    Commands& operator=(Commands&&) noexcept;
+
+    Commands(Commands &&) noexcept;
+
+    Commands &operator=(Commands &&) noexcept;
 
     void AddCommand(std::unique_ptr<Command> &&cmd);
 

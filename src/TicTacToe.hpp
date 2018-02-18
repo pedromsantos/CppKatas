@@ -41,12 +41,15 @@ private:
 public:
 
     Board();
+
     virtual ~Board();
 
-    Board(Board && op) noexcept;
-    Board& operator=(Board && op) noexcept;
+    Board(Board &&op) noexcept;
+
+    Board &operator=(Board &&op) noexcept;
 
     bool IsWinner(const Player &player) const;
+
     void SaveTurn(const Player &player, const Row &row, const Column &column);
 };
 
@@ -54,10 +57,12 @@ class TicTacToe
 {
 public:
     TicTacToe();
+
     virtual ~TicTacToe();
 
-    TicTacToe(TicTacToe && op) noexcept;
-    TicTacToe& operator=(TicTacToe && op) noexcept;
+    TicTacToe(TicTacToe &&op) noexcept;
+
+    TicTacToe &operator=(TicTacToe &&op) noexcept;
 
     TurnStatus PlayTurn(const Player &player, const Row &row, const Column &column) throw();
 
@@ -65,7 +70,7 @@ private:
     struct TicTacToeImpl;
     std::unique_ptr<TicTacToeImpl> pimpl;
 
-    explicit TicTacToe(std::unique_ptr<Board>&& board);
+    explicit TicTacToe(std::unique_ptr<Board> &&board);
 };
 
 #endif //CPPKATAS_TICTACTOE_H
