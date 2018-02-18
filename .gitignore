@@ -81,3 +81,11 @@ CMakeCache.txt
 /packages.config
 /bin
 CppKatas.cbp
+CppKatas.xcodeproj/xcuserdata/pedros.xcuserdatad/xcschemes
+CMakeScripts
+CppKatas.build/Debug/ALL_BUILD.build
+CppKatas.build/Debug/Katas.build
+CppKatas.build/Debug/RUN_TESTS.build
+CppKatas.build/Debug/Tests.build
+CppKatas.build/Debug/ZERO_CHECK.build
+CppKatas.xcodeproj
