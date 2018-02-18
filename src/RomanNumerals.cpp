@@ -1,5 +1,4 @@
 #include <map>
-
 #include "RomanNumerals.hpp"
 
 std::string RomanNumeral(const unsigned short arabicNumber)

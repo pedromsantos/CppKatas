@@ -89,3 +89,4 @@ CppKatas.build/Debug/RUN_TESTS.build
 CppKatas.build/Debug/Tests.build
 CppKatas.build/Debug/ZERO_CHECK.build
 CppKatas.xcodeproj
+compile_commands.json

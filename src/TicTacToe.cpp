@@ -97,14 +97,13 @@ bool Board::IsWinner(const Player &player) const
            pimpl->WinnerOnDiagonals(player, RIGHT, LEFT);
 }
 
-Board::Board() : pimpl(new BoardImpl())
-{}
+Board::Board() : pimpl(new BoardImpl()) {}
 
 Board::~Board() = default;
 
-Board::Board(Board &&op) noexcept = default;
+Board::Board(Board &&) noexcept = default;
 
-Board &Board::operator=(Board &&op) noexcept = default;
+Board &Board::operator=(Board &&) noexcept = default;
 
 struct TicTacToe::TicTacToeImpl
 {
@@ -145,9 +144,9 @@ TicTacToe::TicTacToe(std::unique_ptr<Board> &&board)
 
 TicTacToe::~TicTacToe() = default;
 
-TicTacToe::TicTacToe(TicTacToe &&op) noexcept = default;
+TicTacToe::TicTacToe(TicTacToe &&) noexcept = default;
 
-TicTacToe &TicTacToe::operator=(TicTacToe &&op) noexcept = default;
+TicTacToe &TicTacToe::operator=(TicTacToe &&) noexcept = default;
 
 TurnStatus TicTacToe::PlayTurn(const Player &player, const Row &row,
                                const Column &column) throw()

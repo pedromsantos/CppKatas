@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CPPKATAS_SRC_MARSROVER_COMMANDS_H
+#define CPPKATAS_SRC_MARSROVER_COMMANDS_H
 
 #include "Directions.hpp"
 #include <vector>
@@ -19,15 +20,15 @@ public:
 class GridSizeCommand final : public Command
 {
 public:
-    GridSizeCommand(const int width, const int height);
+    GridSizeCommand(int width, int height);
 
-    ~GridSizeCommand();
+    ~GridSizeCommand() override;
 
     GridSizeCommand(GridSizeCommand &&) noexcept;
 
     GridSizeCommand &operator=(GridSizeCommand &&) noexcept;
 
-    void Execute(Rover &rover) const final override;
+    void Execute(Rover &rover) const final;
 
 private:
     struct GridSizeCommandImpl;
@@ -37,15 +38,15 @@ private:
 class PositionCommand final : public Command
 {
 public:
-    PositionCommand(const int x, const int y);
+    PositionCommand(int x, int y);
 
-    ~PositionCommand();
+    ~PositionCommand() override;
 
     PositionCommand(PositionCommand &&) noexcept;
 
     PositionCommand &operator=(PositionCommand &&) noexcept;
 
-    void Execute(Rover &rover) const final override;
+    void Execute(Rover &rover) const final;
 
 private:
     struct PositionCommandImpl;
@@ -55,15 +56,15 @@ private:
 class DirectionCommand final : public Command
 {
 public:
-    explicit DirectionCommand(const Direction direction);
+    explicit DirectionCommand(Direction direction);
 
-    ~DirectionCommand();
+    ~DirectionCommand() override;
 
     DirectionCommand(DirectionCommand &&) noexcept;
 
     DirectionCommand &operator=(DirectionCommand &&) noexcept;
 
-    void Execute(Rover &rover) const final override;
+    void Execute(Rover &rover) const final;
 
 private:
     struct DirectionCommandImpl;
@@ -73,25 +74,25 @@ private:
 class TurnLeftCommand final : public Command
 {
 public:
-    void Execute(Rover &rover) const final override;
+    void Execute(Rover &rover) const final;
 };
 
 class TurnRightCommand final : public Command
 {
 public:
-    void Execute(Rover &rover) const final override;
+    void Execute(Rover &rover) const final;
 };
 
 class MoveCommand final : public Command
 {
 public:
-    void Execute(Rover &rover) const final override;
+    void Execute(Rover &rover) const final;
 };
 
 class NoMoveCommand final : public Command
 {
 public:
-    void Execute(Rover &rover) const final override;
+    void Execute(Rover &rover) const final;
 };
 
 class Commands
@@ -113,3 +114,5 @@ private:
     struct CommandsImpl;
     std::unique_ptr<CommandsImpl> pimpl;
 };
+
+#endif

@@ -1,4 +1,5 @@
-#pragma once
+#ifndef CPPKATAS_SRC_MARSROVER_MARSROVER__H
+#define CPPKATAS_SRC_MARSROVER_MARSROVER__H
 
 #include "Directions.hpp"
 
@@ -27,7 +28,7 @@ private:
 struct Plateau
 {
 public:
-    Plateau(const int width, const int height);
+    Plateau(int width, int height);
 
     ~Plateau();
 
@@ -47,7 +48,7 @@ inline bool operator==(const Plateau &lPlateau, const Plateau &rPlateau)
 struct Position
 {
 public:
-    Position(const int x, const int y);
+    Position(int x, int y);
 
     ~Position();
 
@@ -103,3 +104,5 @@ inline bool operator==(const Rover &lRover, const Rover &rRover)
     return typeid(lRover) == typeid(rRover)
            && lRover.IsEqual(rRover);
 }
+
+#endif

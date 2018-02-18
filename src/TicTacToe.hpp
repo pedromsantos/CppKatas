@@ -1,5 +1,5 @@
-#ifndef CPPKATAS_TICTACTOE_H
-#define CPPKATAS_TICTACTOE_H
+#ifndef CPPKATAS_SRC_TICTACTOE_H
+#define CPPKATAS_SRC_TICTACTOE_H
 
 #include <vector>
 
@@ -73,4 +73,4 @@ private:
     explicit TicTacToe(std::unique_ptr<Board> &&board);
 };
 
-#endif //CPPKATAS_TICTACTOE_H
+#endif //CPPKATAS__SRC_TICTACTOE_H

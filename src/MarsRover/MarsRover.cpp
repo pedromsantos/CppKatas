@@ -1,5 +1,5 @@
-#include "MarsRover.hpp"
 #include "Commands.hpp"
+#include "MarsRover.hpp"
 
 typedef std::function<std::unique_ptr<Command>()> InstructionToCommand;
 

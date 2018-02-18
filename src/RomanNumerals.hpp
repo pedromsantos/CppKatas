@@ -1,5 +1,8 @@
-#pragma once
+#ifndef CPPKATAS_SRC_ROMMANNUMERALS_H
+#define CPPKATAS_SRC_ROMMANNUMERALS_H
 
 #include <string>
 
-std::string RomanNumeral(const unsigned short arabicNumber);
+std::string RomanNumeral(unsigned short arabicNumber);
+
+#endif
