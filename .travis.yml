@@ -1,39 +1,42 @@
 sudo: required
-dist: precise
+dist: trusty
+
 language: cpp
-matrix:
-  include:
-    - compiler: gcc
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-          packages:
-            - g++-5
-      env: COMPILER=g++-5
-    - compiler: clang
-      addons:
-        apt:
-          sources:
-            - ubuntu-toolchain-r-test
-            - llvm-toolchain-precise-3.7
-          packages:
-            - clang-3.7
-      env: COMPILER=clang++-3.7
+
+services:
+    - docker
 
 before_install:
-  - sudo apt-get update -qq
-  - sudo apt-get install -y libopencv-dev
-install:
-  - CMAKE_VERSION=3.7.2
-  - |
-    if [[ "${TRAVIS_OS_NAME}" == "linux" ]]; then
-      CMAKE_URL="https://cmake.org/files/v${CMAKE_VERSION%.[0-9]}/cmake-${CMAKE_VERSION}-Linux-x86_64.tar.gz"
-      mkdir cmake && travis_retry wget --no-check-certificate -O - ${CMAKE_URL} | tar --strip-components=1 -xz -C cmake
-      export PATH=${DEPS_DIR}/cmake/bin:${PATH}
-    fi
-  - cmake --version
+    - docker pull htfy96/build-image:lite
+    - docker run -ti -v $(pwd):/data htfy96/build-image:lite bash -c "cd /data; mkdir -p build && cd build && rm -rf *; cmake -Dexample-build_tests=ON -DCMAKE_C_COMPILER=${X_CC} -DCMAKE_CXX_COMPILER=${X_CXX} -DCMAKE_BUILD_TYPE=${BUILD_TYPE} .."
+
 script:
-  - cmake -G 'Unix Makefiles' -D CMAKE_BUILD_TYPE=Debug -D CMAKE_CXX_COMPILER=$COMPILER .
-  - make
-  - ./bin/Tests
+    - docker run -ti -v $(pwd):/data htfy96/build-image:lite bash -c 'cd /data/build; make -j4'
+    - docker run -ti -v $(pwd):/data htfy96/build-image:lite bash -c 'cd /data/build; ctest --output-on-failure; valgrind --track-fds=yes ctest --output-on-failure'
+
+matrix:
+  include:
+    - env:
+          - X_CC=gcc-4.9
+          - X_CXX=g++-4.9
+          - BUILD_TYPE=Debug
+    - env:
+          - X_CC=gcc-4.9
+          - X_CXX=g++-4.9
+          - BUILD_TYPE=Release
+    - env:
+          - X_CC=gcc-5
+          - X_CXX=g++-5
+          - BUILD_TYPE=Debug
+    - env:
+          - X_CC=gcc-5
+          - X_CXX=g++-5
+          - BUILD_TYPE=Release
+    - env:
+          - X_CC=clang-3.8
+          - X_CXX=clang++-3.8
+          - BUILD_TYPE=Debug
+    - env:
+          - X_CC=clang-3.8
+          - X_CXX=clang++-3.8
+          - BUILD_TYPE=Release
